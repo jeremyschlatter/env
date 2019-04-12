@@ -17,8 +17,8 @@ in
 with pkgs; [
   bat
   gitAndTools.hub
+  httpie
   ripgrep
   tldr
-  httpie
   tree
 ] ++ maybe-nix
