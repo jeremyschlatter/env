@@ -16,6 +16,7 @@ in
 
 with pkgs; [
   bat
+  gitAndTools.hub
   ripgrep
   tldr
   httpie
