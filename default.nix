@@ -10,4 +10,5 @@ with pkgs; [
   tldr
   httpie
   tree
+  nix
 ]
