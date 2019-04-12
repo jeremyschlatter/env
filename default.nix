@@ -10,5 +10,4 @@ with pkgs; [
   tldr
   httpie
   tree
-  hello
 ]
