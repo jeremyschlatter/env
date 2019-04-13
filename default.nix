@@ -22,6 +22,7 @@ with pkgs; [
   git
   gitAndTools.hub
   go
+  goimports
   htop
   httpie
   jq
