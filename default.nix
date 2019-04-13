@@ -20,6 +20,10 @@ with pkgs; [
   gitAndTools.hub
   go
   httpie
+  (neovim.override {
+    viAlias = true;
+    vimAlias = true;
+  })
   python3
   ripgrep
   tldr
