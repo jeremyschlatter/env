@@ -1,6 +1,6 @@
 let
   pkgs = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/tarball/19.03;
+    url = https://github.com/NixOS/nixpkgs/tarball/release-19.03;
   }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
@@ -20,6 +20,7 @@ with pkgs; [
   gitAndTools.hub
   go
   httpie
+  python3
   ripgrep
   tldr
   tree
