@@ -28,4 +28,5 @@ with pkgs; [
   ripgrep
   tldr
   tree
+  unzip
 ] ++ maybe-nix
