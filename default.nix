@@ -20,6 +20,7 @@ with pkgs; [
   gitAndTools.hub
   go
   httpie
+  jq
   (neovim.override { viAlias = true; vimAlias = true; })
   (python3.withPackages (pkgs: with pkgs; [
     ipython
