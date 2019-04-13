@@ -17,6 +17,7 @@ in
 with pkgs; [
   bat
   cacert
+  git
   gitAndTools.hub
   go
   httpie
