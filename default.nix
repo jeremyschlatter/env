@@ -17,6 +17,7 @@ in
 with pkgs; [
   bat
   cacert
+  caddy
   cloc
   git
   gitAndTools.hub
