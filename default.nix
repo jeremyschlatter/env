@@ -33,5 +33,6 @@ with pkgs; [
   tldr
   tree
   unzip
+  watch
   wget
 ] ++ maybe-nix
