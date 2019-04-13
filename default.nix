@@ -21,6 +21,7 @@ with pkgs; [
   git
   gitAndTools.hub
   go
+  htop
   httpie
   jq
   (neovim.override { viAlias = true; vimAlias = true; })
