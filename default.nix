@@ -18,6 +18,7 @@ with pkgs; [
   bat
   cacert
   gitAndTools.hub
+  go
   httpie
   ripgrep
   tldr
