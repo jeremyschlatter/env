@@ -35,4 +35,5 @@ with pkgs; [
   unzip
   watch
   wget
+  xsv
 ] ++ maybe-nix
