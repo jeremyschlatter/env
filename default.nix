@@ -20,11 +20,11 @@ with pkgs; [
   gitAndTools.hub
   go
   httpie
-  (neovim.override {
-    viAlias = true;
-    vimAlias = true;
-  })
-  python3
+  (neovim.override { viAlias = true; vimAlias = true; })
+  (python3.withPackages (pkgs: with pkgs; [
+    ipython
+    magic-wormhole
+  ]))
   ripgrep
   tldr
   tree
