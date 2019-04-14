@@ -31,6 +31,7 @@ with pkgs; [
     ipython
     magic-wormhole
   ]))
+  ngrok
   ripgrep
   tldr
   tree
