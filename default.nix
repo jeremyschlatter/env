@@ -36,6 +36,7 @@ with pkgs; [
   cloc
   git
   gitAndTools.hub
+  google-cloud-sdk
   unstable.go
   goimports
   htop
