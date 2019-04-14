@@ -33,6 +33,7 @@ with pkgs; [
   bat
   cacert
   caddy
+  click
   cloc
   git
   gitAndTools.hub
@@ -42,6 +43,9 @@ with pkgs; [
   httpie
   ivy
   jq
+  kubectl
+  kubectx
+  kubetail
   (neovim.override { viAlias = true; vimAlias = true; })
   (python3.withPackages (pkgs: with pkgs; [
     ipython
