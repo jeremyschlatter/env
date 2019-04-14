@@ -13,7 +13,7 @@ let
   # On NixOS, these tools are installed elsewhere. On other OS's, the default nix installation
   # puts them in the profile.
   maybe-nix = if builtins.pathExists ((builtins.getEnv "HOME") + "/.nix-profile/bin/nix-env")
-              then [pkgs.nix]
+              then with pkgs; [nix cacert]
               else [];
 
   ivy = (pkgs.buildGoPackage {
@@ -31,7 +31,6 @@ in
 
 with pkgs; [
   bat
-  cacert
   caddy
   click
   cloc
