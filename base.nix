@@ -34,6 +34,7 @@ let
     viAlias = true;
     vimAlias = true;
     configure = {
+      customRC = builtins.readFile ./neovim-config.vim;
       packages.mine = with pkgs.vimPlugins; {
         start = [
 	  vim-go
