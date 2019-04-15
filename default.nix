@@ -34,6 +34,7 @@ with pkgs; [
   caddy
   click
   cloc
+  du-dust
   git
   gitAndTools.hub
   google-cloud-sdk
