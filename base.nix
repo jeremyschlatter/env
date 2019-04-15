@@ -39,9 +39,9 @@ let
       '';
       packages.mine = with pkgs.vimPlugins; {
         start = [
-	  vim-go
-	  vim-nix
-	] ++ vim-plugins;
+          vim-go
+          vim-nix
+        ] ++ vim-plugins;
       };
      };
   });
