@@ -65,6 +65,7 @@ with pkgs; [
   caddy
   click
   cloc
+  docker
   du-dust
   git
   gitAndTools.hub
