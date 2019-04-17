@@ -1,44 +1,5 @@
 set nocompatible " Don't force VI compatibility when using vi
 
-let g:python_host_prog  = '/usr/local/bin/python2'
-let g:python3_host_prog = '/Users/jeremy/anaconda3/bin/python3'
-" let g:ycm_path_to_python_interpreter = '/usr/bin/python'
-let g:ycm_server_python_interpreter = '/Users/jeremy/anaconda3/bin/python3'
-
-" Vundle setup. See http://tilvim.com/2013/12/28/pathogen-for-vundle.html
-filetype on
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#begin('~/.vim/bundle/plugins-vundle')
-
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'fatih/vim-go'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'wavded/vim-stylus'
-Plugin 'othree/yajs.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'kopischke/vim-fetch'
-Plugin 'tomlion/vim-solidity'
-Plugin 'prettier/vim-prettier'
-" Plugin 'rust-lang/rust.vim'
-Plugin 'jceb/vim-orgmode'
-Plugin 'tpope/vim-speeddating' " b/c vim-orgmode complains without this
-Plugin 'elmcast/elm-vim'
-Plugin 'urbit/hoon.vim'
-Plugin 'google/vim-jsonnet'
-
-call vundle#end()
-
 " Enable file type detection. Do this after Vundle calls.
 filetype plugin indent on
 
@@ -102,11 +63,7 @@ set nolist
 set textwidth=0
 set wrapmargin=0
 
-source ~/.vim/abbreviations.vim
-
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-let g:pydiction_location = '$HOME/.vim/after/ftplugin/pydiction/complete-dict'
 
 " don't connect to the X display
 set cb="exclude:.*"
