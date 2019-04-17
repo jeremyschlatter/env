@@ -45,7 +45,6 @@ let
     };
   });
 
-
 in
   (pkgs.neovim.override {
     viAlias = true;
