@@ -69,7 +69,7 @@ with pkgs; [
   git
   gitAndTools.hub
   google-cloud-sdk
-  unstable.go
+  go
   goimports
   htop
   httpie
