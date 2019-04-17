@@ -34,9 +34,7 @@ let
     viAlias = true;
     vimAlias = true;
     configure = {
-      customRC = ''
-        set background=light
-      '';
+      customRC = builtins.readFile ./vim-config.vim;
       packages.mine = with pkgs.vimPlugins; {
         start = [
           vim-go
