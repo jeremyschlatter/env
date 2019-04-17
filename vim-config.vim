@@ -100,7 +100,8 @@ set autoindent
 set nomodeline            " Disable modeline which I don't use and is a potential security hole
 set incsearch             " Search as you type
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
-set backupdir=$HOME/.vim_runtime/bak  " Write backup files to ~/.vim_runtime/bak* if it exists
+call mkdir($HOME . "/.vim_runtime/bak", "p")
+set backupdir=$HOME/.vim_runtime/bak  " Write backup files to ~/.vim_runtime/bak/*
 set showmatch             " Show matches wile searching
 set ruler                 " Show cursor position in the last line
 set lazyredraw            " Don't redraw while executing macros
