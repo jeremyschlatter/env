@@ -30,6 +30,17 @@ let
       };
   });
 
+  my-git = (pkgs.symlinkJoin {
+    name = "myGit";
+    paths = [ pkgs.git ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      mkdir -p "$out/.config/git"
+      echo "${builtins.readFile ./gitconfig.ini}" > "$out/.config/git/config"
+      wrapProgram $out/bin/git --set XDG_CONFIG_HOME "$out/.config"
+    '';
+  });
+
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -41,7 +52,6 @@ with pkgs; [
   cloc
   docker
   du-dust
-  git
   gitAndTools.hub
   google-cloud-sdk
   go
@@ -53,6 +63,7 @@ with pkgs; [
   kubectl
   kubectx
   kubetail
+  my-git
   my-vim
   (python3.withPackages (pkgs: with pkgs; [
     ipython
