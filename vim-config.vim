@@ -89,6 +89,7 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
   au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+  au BufReadPost .bash_aliases setf sh
 augroup END
 
 " Prettier
