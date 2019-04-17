@@ -1,4 +1,4 @@
-{ pkgs, vim-plugins }:
+pkgs: vim-plugins:
 
 let
   camelcasemotion = (pkgs.vimUtils.buildVimPluginFrom2Nix {

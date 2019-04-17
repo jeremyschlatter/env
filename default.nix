@@ -30,7 +30,7 @@ let
       };
   });
 
-  my-vim = import ./neovim.nix {pkgs=pkgs; vim-plugins=vim-plugins;};
+  my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
 
