@@ -1,8 +1,6 @@
 [user]
     name = Jeremy Schlatter
     email = jeremy.schlatter@gmail.com
-[core]
-    excludesfile = ~/.nix-profile/config/gitignore_global
 [alias]
     co = checkout
     st = status
