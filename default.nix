@@ -70,6 +70,7 @@ with pkgs; [
   cloc
   docker
   du-dust
+  exa
   gitAndTools.hub
   google-cloud-sdk
   go

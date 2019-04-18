@@ -1,14 +1,21 @@
 if [ `uname` == "Darwin" ]; then
-    alias ls="ls -G"
+    alias lss="/bin/ls -G"
 else
-    alias ls="ls -G --color=auto"
+    alias lss="/bin/ls -G --color=auto"
 fi
 
-alias la="ls -A"
-alias sl="ls"
-alias l="ls"
-alias ll="ls -l"
-alias lrt="ls -lrt"
+alias ls=exa
+alias es=ls
+alias la="exa --all"
+alias ea=la
+alias ll="exa --long --header --git"
+alias el=ll
+alias ee=ll
+alias lrt="exa --long --reverse --sort time"
+alias ert=lrt
+alias l="exa"
+alias e=l
+
 alias "cd.."="cd .."
 alias python="python -tt"
 alias dot="vcsh dot"
