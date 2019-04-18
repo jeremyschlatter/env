@@ -14,6 +14,7 @@ alias lrt="exa --classify --long --reverse --sort time"
 alias ert=lrt
 alias l="exa --classify"
 alias e=l
+alias et="e --tree"
 
 alias "cd.."="cd .."
 alias python="python -tt"
