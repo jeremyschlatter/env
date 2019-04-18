@@ -39,6 +39,10 @@ light_gray='\[\033[0;37m\]'
 
 dot_ps1 ()
 {
+    # Disabled during transation away from vcsh.
+    # May eventually be deleted.
+    return
+
     # Return if not in $HOME.
     [ "`pwd`" == $HOME ] || return
 
