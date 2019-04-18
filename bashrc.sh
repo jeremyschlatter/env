@@ -119,6 +119,8 @@ export LESSCHARSET=UTF-8
 
 export BAT_THEME="Monokai Extended Light"
 
+export XDG_CONFIG_HOME=$HOME/.nix-profile/config
+
 # added by travis gem
 [ -f /Users/jeremy/.travis/travis.sh ] && source /Users/jeremy/.travis/travis.sh
 

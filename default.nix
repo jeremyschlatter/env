@@ -30,6 +30,8 @@ let
       };
   });
 
+  my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
+
   my-bash-aliases = (pkgs.writeTextFile {
     name = "my-bash-aliases";
     destination = "/bash/bash_aliases.sh";
@@ -48,17 +50,6 @@ let
     text = builtins.readFile ./git-completion.bash;
   });
 
-  my-git = (pkgs.symlinkJoin {
-    name = "myGit";
-    paths = [ pkgs.git ];
-    buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      mkdir -p "$out/.config/git"
-      echo "${builtins.readFile ./gitconfig.ini}" > "$out/.config/git/config"
-      wrapProgram $out/bin/git --set XDG_CONFIG_HOME "$out/.config"
-    '';
-  });
-
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -71,6 +62,7 @@ with pkgs; [
   docker
   du-dust
   exa
+  git
   gitAndTools.hub
   google-cloud-sdk
   go
@@ -84,9 +76,9 @@ with pkgs; [
   kubetail
   my-bash-aliases
   my-bashrc
-  my-git
   my-git-completion
   my-vim
+  my-xdg-config
   (python3.withPackages (pkgs: with pkgs; [
     ipython
     magic-wormhole
