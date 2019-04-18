@@ -117,6 +117,8 @@ export EDITOR=vim
 # Credit to http://stackoverflow.com/a/19436421
 export LESSCHARSET=UTF-8
 
+export BAT_THEME="Monokai Extended Light"
+
 # added by travis gem
 [ -f /Users/jeremy/.travis/travis.sh ] && source /Users/jeremy/.travis/travis.sh
 
