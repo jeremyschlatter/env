@@ -30,6 +30,24 @@ let
       };
   });
 
+  my-bash-aliases = (pkgs.writeTextFile {
+    name = "my-bash-aliases";
+    destination = "/bash/bash_aliases.sh";
+    text = builtins.readFile ./bash_aliases.sh;
+  });
+
+  my-bashrc = (pkgs.writeTextFile {
+    name = "my-bashrc";
+    destination = "/bash/bashrc.sh";
+    text = builtins.readFile ./bashrc.sh;
+  });
+
+  my-git-completion = (pkgs.writeTextFile {
+    name = "my-git-completion";
+    destination = "/bash/git-completion.bash";
+    text = builtins.readFile ./git-completion.bash;
+  });
+
   my-git = (pkgs.symlinkJoin {
     name = "myGit";
     paths = [ pkgs.git ];
@@ -63,7 +81,10 @@ with pkgs; [
   kubectl
   kubectx
   kubetail
+  my-bash-aliases
+  my-bashrc
   my-git
+  my-git-completion
   my-vim
   (python3.withPackages (pkgs: with pkgs; [
     ipython
