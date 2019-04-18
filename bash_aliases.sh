@@ -1,8 +1,5 @@
-if test -n "$LINUX"; then
-    alias ls="ls -G --color=auto"
-else
-    alias ls="ls -G"
-fi
+alias ls="ls -G --color=auto"
+
 alias la="ls -A"
 alias sl="ls"
 alias l="ls"
