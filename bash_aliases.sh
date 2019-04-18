@@ -1,4 +1,8 @@
-alias ls="ls -G --color=auto"
+if [ `uname` == "Darwin" ]; then
+    alias ls="ls -G"
+else
+    alias ls="ls -G --color=auto"
+fi
 
 alias la="ls -A"
 alias sl="ls"
