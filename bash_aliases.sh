@@ -5,15 +5,14 @@ else
 fi
 
 alias ls=exa
-alias es=ls
-alias la="exa --all"
+alias la="exa --classify --all"
 alias ea=la
-alias ll="exa --long --header --git"
+alias ll="exa --classify --long --header --git"
 alias el=ll
 alias ee=ll
-alias lrt="exa --long --reverse --sort time"
+alias lrt="exa --classify --long --reverse --sort time"
 alias ert=lrt
-alias l="exa"
+alias l="exa --classify"
 alias e=l
 
 alias "cd.."="cd .."
