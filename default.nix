@@ -4,9 +4,6 @@ let
   pkgs = import (fetchTarball {
     url = https://github.com/NixOS/nixpkgs/tarball/release-19.03;
   }) {};
-  unstable = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs-channels/tarball/nixos-unstable;
-  }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
   # packages. If the nix tools are in the profile now, we want them to stay in the profile
