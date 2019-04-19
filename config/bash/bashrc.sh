@@ -127,9 +127,6 @@ export XDG_CONFIG_HOME=$NIX_PROFILE/config
 # Some aliases
 . $XDG_CONFIG_HOME/bash/aliases.sh
 
-# added by travis gem
-[ -f /Users/jeremy/.travis/travis.sh ] && source /Users/jeremy/.travis/travis.sh
-
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
