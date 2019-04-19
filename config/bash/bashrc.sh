@@ -4,9 +4,6 @@
 # don't put duplicate lines in the history. See bash(1) for more options.
 HISTCONTROL=ignoredups
 
-# Some aliases
-source ~/.nix-profile/bash/bash_aliases.sh
-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -125,7 +122,10 @@ export LESSCHARSET=UTF-8
 
 export BAT_THEME="Monokai Extended Light"
 
-export XDG_CONFIG_HOME=$HOME/.nix-profile/config
+export XDG_CONFIG_HOME=$NIX_PROFILE/config
+
+# Some aliases
+. $XDG_CONFIG_HOME/bash/aliases.sh
 
 # added by travis gem
 [ -f /Users/jeremy/.travis/travis.sh ] && source /Users/jeremy/.travis/travis.sh

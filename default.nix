@@ -32,18 +32,6 @@ let
 
   my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
 
-  my-bash-aliases = (pkgs.writeTextFile {
-    name = "my-bash-aliases";
-    destination = "/bash/bash_aliases.sh";
-    text = builtins.readFile ./bash_aliases.sh;
-  });
-
-  my-bashrc = (pkgs.writeTextFile {
-    name = "my-bashrc";
-    destination = "/bash/bashrc.sh";
-    text = builtins.readFile ./bashrc.sh;
-  });
-
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -68,8 +56,6 @@ with pkgs; [
   kubectl
   kubectx
   kubetail
-  my-bash-aliases
-  my-bashrc
   my-vim
   my-xdg-config
   (python3.withPackages (pkgs: with pkgs; [
