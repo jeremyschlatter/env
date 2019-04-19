@@ -44,12 +44,6 @@ let
     text = builtins.readFile ./bashrc.sh;
   });
 
-  my-git-completion = (pkgs.writeTextFile {
-    name = "my-git-completion";
-    destination = "/bash/git-completion.bash";
-    text = builtins.readFile ./git-completion.bash;
-  });
-
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -76,7 +70,6 @@ with pkgs; [
   kubetail
   my-bash-aliases
   my-bashrc
-  my-git-completion
   my-vim
   my-xdg-config
   (python3.withPackages (pkgs: with pkgs; [

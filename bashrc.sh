@@ -108,8 +108,7 @@ for completion in $NIX_PROFILE/etc/bash_completion.d/* $NIX_PROFILE/share/bash-c
     . $completion
 done
 
-# git tab completion, with 'g' alias
-source ~/.nix-profile/bash/git-completion.bash
+# git tab completion with 'g' alias
 __git_complete g __git_main
 
 # Add timestamps to bash history.
