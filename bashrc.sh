@@ -101,6 +101,13 @@ export HISTCONTROL=
 
 set -o vi  # Use vi-mode editing on the command line.
 
+NIX_PROFILE=~/.nix-profile
+
+# source bash completions
+for completion in $NIX_PROFILE/etc/bash_completion.d/* $NIX_PROFILE/share/bash-completion/completions/*; do
+    . $completion
+done
+
 # git tab completion, with 'g' alias
 source ~/.nix-profile/bash/git-completion.bash
 __git_complete g __git_main
