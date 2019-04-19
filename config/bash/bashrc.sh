@@ -124,6 +124,12 @@ export BAT_THEME="Monokai Extended Light"
 
 export XDG_CONFIG_HOME=$NIX_PROFILE/config
 
+# Workaround for issue with nix's Go package on macOS:
+#   https://github.com/NixOS/nixpkgs/issues/56348#issuecomment-482930309
+if [ `uname` == "Darwin" ]; then
+  export CC=clang
+fi
+
 # Some aliases
 . $XDG_CONFIG_HOME/bash/aliases.sh
 
