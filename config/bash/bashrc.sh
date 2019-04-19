@@ -101,7 +101,7 @@ set -o vi  # Use vi-mode editing on the command line.
 NIX_PROFILE=~/.nix-profile
 
 # source bash completions
-for completion in $NIX_PROFILE/etc/bash_completion.d/* $NIX_PROFILE/share/bash-completion/completions/*; do
+for completion in $NIX_PROFILE/etc/bash_completion.d/*; do
     . $completion
 done
 
