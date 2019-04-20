@@ -10,8 +10,8 @@ Then use nix-env to install the rest:
 
 (the query string at the end prevents caching)
 
-Add one small change to pick up the bash config:
+Add a line to your .bashrc to pick up the bash config:
 
-    echo "source ~/.nix-profile/bash/bashrc.sh" >> ~/.profile
+    echo "source ~/.nix-profile/config/bash/bashrc.sh" >> ~/.bashrc
 
 To update, just re-run the above `nix-env` command.
