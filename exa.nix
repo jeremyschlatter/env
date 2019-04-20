@@ -1,20 +1,20 @@
 { stdenv, fetchFromGitHub, rustPlatform, cmake, perl, pkgconfig, zlib
-, darwin, libiconv
+, darwin, libiconv, ...
 }:
 
 with rustPlatform;
 
 buildRustPackage rec {
   name = "exa-${version}";
-  version = "0.8.0";
+  version = "2019-03-16";
 
-  cargoSha256 = "08zzn3a32xfjkmpawcjppn1mr26ws3iv40cckiz8ldz4qc8y9gdh";
+  cargoSha256 = "0v7z6wzjpx0wnadnm579v7h3msrk6cvlbg2k812pn6l3786r1mjw";
 
   src = fetchFromGitHub {
     owner = "ogham";
     repo = "exa";
-    rev = "v${version}";
-    sha256 = "0jy11a3xfnfnmyw1kjmv4ffavhijs8c940kw24vafklnacx5n88m";
+    rev = "35bf32abb9b8b445127c4722f45dcda25a55075a";
+    sha256 = "0zcflma7nrxr61z5j4czwmc7v4jkg7d5llbgzl6hgk8fiq19q13a";
   };
 
   nativeBuildInputs = [ cmake pkgconfig perl ];

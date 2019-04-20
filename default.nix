@@ -27,6 +27,8 @@ let
       };
   });
 
+  my-exa = import ./exa.nix pkgs;
+
   my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
 
   my-vim = import ./neovim.nix pkgs vim-plugins;
@@ -40,7 +42,6 @@ with pkgs; [
   cloc
   docker
   du-dust
-  exa
   fd
   git
   gitAndTools.hub
@@ -54,6 +55,7 @@ with pkgs; [
   kubectl
   kubectx
   kubetail
+  my-exa
   my-vim
   my-xdg-config
   (python3.withPackages (pkgs: with pkgs; [
