@@ -41,6 +41,7 @@ with pkgs; [
   docker
   du-dust
   exa
+  fd
   git
   gitAndTools.hub
   google-cloud-sdk
