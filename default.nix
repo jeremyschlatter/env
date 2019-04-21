@@ -61,11 +61,11 @@ with pkgs; [
   my-exa
   my-vim
   my-xdg-config
+  ngrok
   (python3.withPackages (pkgs: with pkgs; [
     ipython
     magic-wormhole
   ]))
-  ngrok
   ripgrep
   tldr
   tree
