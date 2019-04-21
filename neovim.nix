@@ -61,6 +61,7 @@ in
           vim-go
           vim-nix
           vim-numbertoggle
+          vim-toml
           vim-unicoder
         ] ++ vim-plugins;
       };
