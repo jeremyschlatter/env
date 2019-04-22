@@ -48,6 +48,7 @@ with pkgs; [
   fd
   git
   gitAndTools.hub
+  git-crypt
   google-cloud-sdk
   unstable.go
   goimports
