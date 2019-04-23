@@ -46,6 +46,7 @@ with pkgs; [
   docker
   du-dust
   fd
+  fzf
   git
   gitAndTools.hub
   git-crypt
