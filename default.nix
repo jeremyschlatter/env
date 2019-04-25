@@ -43,6 +43,11 @@ with pkgs; [
   caddy
   click
   cloc
+  (
+    # prioritize the coreutils "link" command over the go "link" command.
+    # (The latter is still available as "go tool link").
+    hiPrio coreutils
+  )
   docker
   du-dust
   fd
