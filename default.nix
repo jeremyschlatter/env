@@ -56,7 +56,7 @@ with pkgs; [
   gitAndTools.hub
   git-crypt
   google-cloud-sdk
-  unstable.go
+  go_1_12
   goimports
   htop
   httpie
