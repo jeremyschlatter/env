@@ -42,7 +42,6 @@ with pkgs; [
   bat
   caddy
   click
-  cloc
   (
     # prioritize the coreutils "link" command over the go "link" command.
     # (The latter is still available as "go tool link").
@@ -75,6 +74,7 @@ with pkgs; [
   ]))
   ripgrep
   tldr
+  tokei
   tree
   unzip
   watch
