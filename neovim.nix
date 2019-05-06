@@ -56,6 +56,7 @@ in
           ale
           camelcasemotion
           ctrlp-vim
+          LanguageClient-neovim
           vim-colors-solarized
           vim-fetch
           vim-go
