@@ -32,3 +32,5 @@ alias nadd="n add"
 alias ned="n edit"
 alias ncat="n cat"
 alias m="n message"
+
+alias gotop="gotop -c default-dark"

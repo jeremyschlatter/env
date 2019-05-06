@@ -57,6 +57,7 @@ with pkgs; [
   google-cloud-sdk
   go_1_12
   goimports
+  gotop
   htop
   httpie
   ivy
