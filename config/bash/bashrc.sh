@@ -124,8 +124,6 @@ export LESSCHARSET=UTF-8
 
 export BAT_THEME="Monokai Extended Light"
 
-export XDG_CONFIG_HOME=$NIX_PROFILE/config
-
 # Workaround for issue with nix's Go package on macOS:
 #   https://github.com/NixOS/nixpkgs/issues/56348#issuecomment-482930309
 if [ `uname` == "Darwin" ]; then
@@ -133,7 +131,7 @@ if [ `uname` == "Darwin" ]; then
 fi
 
 # Some aliases
-. $XDG_CONFIG_HOME/bash/aliases.sh
+. $NIX_PROFILE/config/bash/aliases.sh
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 

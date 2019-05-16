@@ -34,6 +34,13 @@ let
 
   my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
 
+  xdg = bin: pkg: pkgs.symlinkJoin {
+    name = "my-" + bin;
+    paths = [ pkg ];
+    buildInputs = [ pkgs.makeWrapper my-xdg-config ];
+    postBuild = "wrapProgram $out/bin/${bin} --set XDG_CONFIG_HOME ${my-xdg-config}/config";
+  };
+
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -51,7 +58,7 @@ with pkgs; [
   du-dust
   fd
   fzf
-  git
+  (xdg "git" git)
   gitAndTools.hub
   git-crypt
   google-cloud-sdk
