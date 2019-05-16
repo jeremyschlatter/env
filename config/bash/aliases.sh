@@ -34,3 +34,5 @@ alias ncat="n cat"
 alias m="n message"
 
 alias gotop="gotop -c default-dark"
+
+alias cat="bat"

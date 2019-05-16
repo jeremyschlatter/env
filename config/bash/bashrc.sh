@@ -122,8 +122,6 @@ export EDITOR=vim
 # Credit to http://stackoverflow.com/a/19436421
 export LESSCHARSET=UTF-8
 
-export BAT_THEME="Monokai Extended Light"
-
 # Workaround for issue with nix's Go package on macOS:
 #   https://github.com/NixOS/nixpkgs/issues/56348#issuecomment-482930309
 if [ `uname` == "Darwin" ]; then

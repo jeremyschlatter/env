@@ -46,7 +46,7 @@ let
 in
 
 with pkgs; [
-  bat
+  (xdg "bat" bat)
   caddy
   click
   (
