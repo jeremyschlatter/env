@@ -53,7 +53,6 @@ in
       customRC = builtins.readFile ./vim-config.vim;
       packages.mine = with pkgs.vimPlugins; {
         start = [
-          ale
           camelcasemotion
           ctrlp-vim
           LanguageClient-neovim

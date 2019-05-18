@@ -8,22 +8,6 @@ let g:ctrlp_custom_ignore = 'node_modules'
 " jeffkreeftmeijer/vim-numbertoggle
 let g:NumberToggleTrigger = '<Leader>l'
 
-let g:ale_python_mypy_options = '--ignore-missing-imports'
-let g:ale_go_golint_options = '--min_confidence=0.9'
-
-let g:ale_fixers = {
-\   'rust': ['rustfmt'],
-\   'python': ['yapf'],
-\}
-
-let g:ale_linters = {
-\   'python': ['flake8', 'mypy'],
-\}
-
-let g:ale_fix_on_save = 1
-" let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
-
 " vim-go configuration
 "let g:go_fmt_command = "goimports"
 let g:go_fmt_command = "gofmt"
@@ -141,7 +125,6 @@ let mapleader = ";"
 nmap <silent> <leader>m :call ToggleMouse()<CR>
 nmap <silent> <leader>h :split<CR>
 nmap <silent> <leader>v :vsplit<CR>
-nmap <silent> <leader>r :ALEReset<CR>
 
 " Sort a block of #include statements (really, any sequence of lines, bordered
 " on top and bottom by empty lines).
@@ -268,11 +251,6 @@ let g:rg_command = '
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 nmap ;f :F<CR>
 
-" https://github.com/w0rp/ale#generating-vim-help-files
-" Put these lines at the very end of your vimrc file.
-" Load all plugins now.
-" Plugins need to be added to runtimepath before helptags can be generated.
-packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
