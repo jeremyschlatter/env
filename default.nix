@@ -152,6 +152,7 @@ with pkgs; [
     magic-wormhole
   ]))
   ripgrep
+  stack
   tldr
   tree
   unzip
