@@ -153,7 +153,7 @@ with pkgs; [
   ]))
   ripgrep
   tldr
-  tokei
+  (stdenv.lib.lists.optional (! stdenv.isDarwin) tokei)
   tree
   unzip
   watch
