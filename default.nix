@@ -30,7 +30,73 @@ let
       };
   });
 
+  my-go = pkgs.go_1_12;
+
   my-exa = import ./exa.nix pkgs;
+
+  my-go-scripts = pkgs.runCommand "my-go-scripts" {
+    buildInputs = [ my-go ];
+  } ''
+    mkdir -p $out/bin
+
+    export GOCACHE=$TMPDIR/go-cache
+    export GOPATH=$TMPDIR/go
+    export CGO_ENABLED=0
+
+    for file in ${./bin/go}/*
+    do
+      dest=$out/bin/$(basename -s .go $file)
+      ${my-go}/bin/go build -o $dest $file
+    done
+  '';
+
+  my-haskell-scripts = pkgs.runCommand "my-haskell-scripts" {
+    buildInputs = [ pkgs.ghc ];
+  } ''
+    mkdir -p $out/bin
+
+    for file in ${./bin/haskell}/*
+    do
+      dest=$out/bin/$(basename -s .hs $file)
+      ${pkgs.ghc}/bin/ghc -o $dest -outputdir $TMPDIR/ghc-out $file
+    done
+  '';
+
+  my-python-scripts = pkgs.runCommand "my-python-scripts" {
+    buildInputs = [ pkgs.python3 ];
+  } ''
+    mkdir -p $out/bin
+    for file in ${./bin/python}/*
+    do
+      dest=$out/bin/$(basename -s .py $file)
+      echo '#!'${pkgs.python3}/bin/python | cat - $file > $dest
+      chmod +x $dest
+    done
+  '';
+
+  my-rust-scripts = pkgs.runCommand "my-rust-scripts" {
+    buildInputs = [ pkgs.rustc ];
+  } ''
+    mkdir -p $out/bin
+
+    for file in ${./bin/rust}/*
+    do
+      dest=$out/bin/$(basename -s .rs $file)
+      ${pkgs.rustc}/bin/rustc -o $dest $file
+    done
+  '';
+
+  my-shell-scripts = pkgs.runCommand "my-shell-scripts" {
+    buildInputs = [ pkgs.bash ];
+  } ''
+    mkdir -p $out/bin
+    for file in ${./bin/sh}/*
+    do
+      dest=$out/bin/$(basename -s .sh $file)
+      echo '#!'${pkgs.bash}/bin/sh | cat - $file > $dest
+      chmod +x $dest
+    done
+  '';
 
   my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
 
@@ -62,7 +128,6 @@ with pkgs; [
   gitAndTools.hub
   git-crypt
   google-cloud-sdk
-  go_1_12
   goimports
   gotop
   htop
@@ -73,6 +138,12 @@ with pkgs; [
   kubectx
   kubetail
   my-exa
+  my-go
+  my-go-scripts
+  my-haskell-scripts
+  my-python-scripts
+  my-rust-scripts
+  my-shell-scripts
   my-vim
   my-xdg-config
   ngrok
