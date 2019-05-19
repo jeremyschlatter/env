@@ -153,10 +153,16 @@ with pkgs; [
   ]))
   ripgrep
   tldr
-  (stdenv.lib.lists.optional (! stdenv.isDarwin) tokei)
   tree
   unzip
   watch
   wget
   xsv
 ] ++ maybe-nix
+
+  # Linux-only packages
+  ++ (stdenv.lib.lists.optionals stdenv.isLinux [
+    gnome3.vte
+    tilix
+    tokei
+  ])
