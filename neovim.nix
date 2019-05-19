@@ -55,6 +55,8 @@ in
         start = [
           camelcasemotion
           ctrlp-vim
+          fzf-vim
+          fzfWrapper
           LanguageClient-neovim
           vim-colors-solarized
           vim-fetch
