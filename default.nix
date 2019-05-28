@@ -2,7 +2,9 @@
 
 let
   pkgs = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/tarball/release-19.03;
+    url = if builtins.currentSystem == "x86_64-darwin"
+          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-19.03-darwin
+          else https://github.com/NixOS/nixpkgs/tarball/release-19.03;
   }) {};
   unstable = import (fetchTarball {
     url = https://github.com/NixOS/nixpkgs-channels/tarball/02bb5e35eae8a9e124411270a6790a08f68e905b;
