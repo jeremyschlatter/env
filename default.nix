@@ -116,7 +116,9 @@ in
 with pkgs; [
   (xdg "bat" bat)
   caddy
+  cachix
   click
+  cloc
   (
     # prioritize the coreutils "link" command over the go "link" command.
     # (The latter is still available as "go tool link").
@@ -132,6 +134,8 @@ with pkgs; [
   google-cloud-sdk
   goimports
   gotop
+  (hiPrio haskellPackages.hasktags) # arbitrarily prioritize this ghc dylib over hoogle's
+  haskellPackages.hoogle
   htop
   httpie
   ivy
@@ -149,6 +153,7 @@ with pkgs; [
   my-vim
   my-xdg-config
   ngrok
+  nodejs
   (python3.withPackages (pkgs: with pkgs; [
     ipython
     magic-wormhole
@@ -161,6 +166,12 @@ with pkgs; [
   watch
   wget
   xsv
+  yarn
+
+  # Experimental shells.
+  fish
+  zsh
+
 ] ++ maybe-nix
 
   # Linux-only packages
