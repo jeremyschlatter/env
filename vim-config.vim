@@ -272,4 +272,4 @@ let g:ycm_filetype_blacklist = {
     \ 'org': 1
     \}
 
-let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+" let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
