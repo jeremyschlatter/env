@@ -83,6 +83,7 @@ in
           hot-reload
           LanguageClient-neovim
           vim-colors-solarized
+          vim-commentary
           vim-fetch
           vim-go
           vim-nix
