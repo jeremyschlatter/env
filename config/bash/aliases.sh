@@ -9,7 +9,7 @@ alias lrt="ls -lrt"
 alias e="exa --classify"
 alias ea="e --all"
 alias ee="e --long --header --git"
-alias ert="e --long --reverse --sort time"
+alias ert="e --long --sort time"
 alias et="e --tree"
 
 alias "cd.."="cd .."
