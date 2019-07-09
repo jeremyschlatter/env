@@ -1,19 +1,15 @@
-if [ `uname` == "Darwin" ]; then
-    alias lss="/bin/ls -G"
-else
-    alias lss="/bin/ls -G --color=auto"
-fi
+alias ls="ls -G --color=auto"
 
-alias ls=exa
-alias la="exa --classify --all"
-alias ea=la
-alias ll="exa --classify --long --header --git"
-alias el=ll
-alias ee=ll
-alias lrt="exa --classify --long --reverse --sort time"
-alias ert=lrt
-alias l="exa --classify"
-alias e=l
+alias la="ls -A"
+alias sl="ls"
+alias l="ls"
+alias ll="ls -l"
+alias lrt="ls -lrt"
+
+alias e="exa --classify"
+alias ea="e --all"
+alias ee="e --long --header --git"
+alias ert="e --long --reverse --sort time"
 alias et="e --tree"
 
 alias "cd.."="cd .."
