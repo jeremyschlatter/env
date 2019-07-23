@@ -59,8 +59,9 @@ let
 
     for file in ${./bin/haskell}/*
     do
-      dest=$out/bin/$(basename -s .hs $file)
-      ${pkgs.ghc}/bin/ghc -o $dest -outputdir $TMPDIR/ghc-out $file
+      base=$(basename -s .hs $file)
+      dest=$out/bin/$base
+      ${pkgs.ghc}/bin/ghc -o $dest -outputdir $TMPDIR/ghc-out-$base $file
     done
   '';
 
