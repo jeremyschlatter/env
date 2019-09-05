@@ -67,8 +67,8 @@ augroup jeremyschlatter
   "   http://vim.wikia.com/wiki/Fix_Syntax_Highlighting#MetaCosm_FixSyntaxHighlighting
   au BufRead,BufNewFile,BufWritePost *.go syntax sync minlines=800
 " Python
-  au BufRead,BufNewFile *.py 2match Underlined /.\%81v/
-  au BufRead,BufNewFile *.py set expandtab
+  au BufRead,BufNewFile *.py,*.bazel,*.bzl 2match Underlined /.\%81v/
+  au BufRead,BufNewFile *.py,*.bazel,*.bzl set et ts=4 sts=4 sw=4
 " Javascript
   au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
