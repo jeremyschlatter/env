@@ -7,7 +7,7 @@ let
           else https://github.com/NixOS/nixpkgs/tarball/release-19.03;
   }) {};
   unstable = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs-channels/tarball/02bb5e35eae8a9e124411270a6790a08f68e905b;
+    url = https://github.com/NixOS/nixpkgs/tarball/release-19.09;
   }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
@@ -33,8 +33,6 @@ let
   });
 
   my-go = pkgs.go_1_12;
-
-  my-exa = import ./exa.nix pkgs;
 
   my-go-scripts = pkgs.runCommand "my-go-scripts" {
     buildInputs = [ my-go ];
@@ -127,6 +125,7 @@ with pkgs; [
   )
   docker
   du-dust
+  unstable.exa
   fd
   fzf
   (xdg "git" git)
@@ -144,7 +143,6 @@ with pkgs; [
   kubectl
   kubectx
   kubetail
-  my-exa
   my-go
   my-go-scripts
   my-haskell-scripts
