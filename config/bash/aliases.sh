@@ -32,3 +32,5 @@ alias m="n message"
 alias gotop="gotop -c default-dark"
 
 alias cat="bat"
+
+alias blaze=bazel
