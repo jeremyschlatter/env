@@ -114,7 +114,6 @@ in
 
 with pkgs; [
   (xdg "bat" bat)
-  unstable.bazel
   caddy
   cachix
   click
