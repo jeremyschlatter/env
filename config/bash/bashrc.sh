@@ -80,11 +80,21 @@ prompt() {
     #status=`RET=$?; if [[ $RET != 0 ]] && [[ $RET != 130 ]]; then  echo -n "$RET "; fi`
     history -a
     history -n
-    #PS1="$status$prompt_base"
-    #PREV_PS1="$PS1"
-    #echo -n "$status$prompt_base"
+    # https://www.jefftk.com/p/you-should-be-logging-shell-history
+    echo "$(date +%Y-%m-%d--%H-%M-%S) $(hostname) $PWD $(history 1)" \
+      >> ~/.full_history
 }
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} prompt"
+
+# https://www.jefftk.com/p/you-should-be-logging-shell-history
+function histgrep {
+  local n_lines=10
+  if [[ "$1" =~ ^[0-9]*$ ]]; then
+    n_lines="$1"
+    shift
+  fi
+  grep "$@" ~/.full_history | tail -n "$n_lines"
+}
 
 
 # history nicities -- don't overwrite history, share history across tabs,
