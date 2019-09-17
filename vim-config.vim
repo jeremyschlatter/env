@@ -75,7 +75,7 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 " Haskell
   au BufRead,BufNewFile *.hs 2match TooLongLine /.\%>101v/
-  au BufRead,BufNewFile *.hs set tabstop=2 softtabstop=2 shiftwidth=2
+  au BufRead,BufNewFile *.hs set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
 " Prettier
