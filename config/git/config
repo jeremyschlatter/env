@@ -1,13 +1,22 @@
 [user]
     name = Jeremy Schlatter
     email = jeremy.schlatter@gmail.com
+
 [alias]
     co = checkout
     st = status
     br = branch
     c = commit
     praise = blame
+
+    # From https://victorzhou.com/blog/git-aliases/
+    s = status
+    d = diff
+    cane = commit --amend --no-edit
+    lo = log --oneline -n 10
+
 [push]
     default = current
+
 [http]
     cookiefile = ~/.gitcookies
