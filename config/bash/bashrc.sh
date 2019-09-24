@@ -68,7 +68,12 @@ git_ps1 ()
     [ -z "`git status -s`" ] || echo "*"
 }
 #prompt_base=$bold$red"\t "$cyan"(\$(pyenv version-name)) \W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
-prompt_base=$cyan"$MY_HOSTNAME"$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
+MY_HOSTNAME="$(hostname)"
+if [[ $MY_HOSTNAME == "Jeremys-MacBook-Pro.local" ]]; then
+    prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
+else
+    prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 🖥  "$reset
+fi
 PS1="$prompt_base"
 
 # TODO: Remove the check for 130 if possible. I want it there for cases where I
