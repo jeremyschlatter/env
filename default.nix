@@ -116,7 +116,6 @@ with pkgs; [
   (xdg "bat" bat)
   caddy
   cachix
-  click
   cloc
   (
     # prioritize the coreutils "link" command over the go "link" command.
@@ -140,9 +139,12 @@ with pkgs; [
   httpie
   ivy
   jq
-  kubectl
-  kubectx
-  kubetail
+
+#   click
+#   kubectl
+#   kubectx
+#   kubetail
+
   my-go
   my-go-scripts
   my-haskell-scripts
