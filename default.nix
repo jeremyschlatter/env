@@ -130,6 +130,7 @@ with pkgs; [
   (xdg "git" git)
   gitAndTools.hub
   git-crypt
+  gnupg
   google-cloud-sdk
   goimports
   gotop
