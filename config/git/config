@@ -1,6 +1,10 @@
 [user]
     name = Jeremy Schlatter
     email = jeremy.schlatter@gmail.com
+    signingkey = 4D081B793DF81368
+
+[commit]
+    gpgsign = true
 
 [alias]
     co = checkout
