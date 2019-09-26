@@ -81,6 +81,7 @@ in
           fzf-vim
           fzfWrapper
           hot-reload
+          idris-vim
           LanguageClient-neovim
           vim-colors-solarized
           vim-commentary

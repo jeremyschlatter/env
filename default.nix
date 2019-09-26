@@ -134,10 +134,11 @@ with pkgs; [
   google-cloud-sdk
   goimports
   gotop
-  (hiPrio haskellPackages.hasktags) # arbitrarily prioritize this ghc dylib over hoogle's
-  haskellPackages.hoogle
+  (hiPrio haskellPackages.hasktags) # arbitrarily prioritize this ghc dylib over idris's
+  # haskellPackages.hoogle
   htop
   httpie
+  idris
   ivy
   jq
 
