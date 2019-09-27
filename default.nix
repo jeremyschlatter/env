@@ -138,7 +138,9 @@ with pkgs; [
   # haskellPackages.hoogle
   htop
   httpie
-  idris
+  (with idrisPackages; with-packages [
+    contrib
+  ])
   ivy
   jq
 
