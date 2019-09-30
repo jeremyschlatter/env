@@ -70,7 +70,8 @@ git_ps1 ()
 #prompt_base=$bold$red"\t "$cyan"(\$(pyenv version-name)) \W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
 MY_HOSTNAME="$(hostname)"
 if [[ $MY_HOSTNAME == "Jeremys-MacBook-Pro.local" ]]; then
-    prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
+    # prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
+    prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
 else
     prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 🖥  "$reset
 fi
