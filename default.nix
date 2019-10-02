@@ -1,4 +1,4 @@
-{ vim-plugins ? [] }:
+{ patches ? [], vim-plugins ? [] }:
 
 let
   pkgs = import (fetchTarball {
@@ -99,7 +99,11 @@ let
     done
   '';
 
-  my-xdg-config = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
+  my-xdg-config =
+    let base = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
+    in if builtins.length patches == 0
+       then base
+       else unstable.applyPatches { src = base; patches = patches; };
 
   xdg = bin: pkg: pkgs.symlinkJoin {
     name = "my-" + bin;
