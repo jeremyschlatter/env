@@ -99,7 +99,7 @@ let
     done
   '';
 
-  my-xdg-config = (pkgs.linkFarm "my-xdg-config" [ { name = "config"; path = "${./config}"; } ]);
+  my-xdg-config = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
 
   xdg = bin: pkg: pkgs.symlinkJoin {
     name = "my-" + bin;
