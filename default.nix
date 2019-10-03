@@ -119,7 +119,6 @@ in
 with pkgs; [
   (xdg "bat" bat)
   caddy
-  cachix
   cloc
   (
     # prioritize the coreutils "link" command over the go "link" command.
@@ -127,7 +126,6 @@ with pkgs; [
     hiPrio coreutils
   )
   docker
-  du-dust
   unstable.exa
   fd
   fzf
