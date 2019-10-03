@@ -112,6 +112,8 @@ let
     postBuild = "wrapProgram $out/bin/${bin} --set XDG_CONFIG_HOME ${my-xdg-config}/config";
   };
 
+  my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
+
   my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
@@ -159,6 +161,7 @@ with pkgs; [
   my-shell-scripts
   my-vim
   my-xdg-config
+  my-shell
   ngrok
   nodejs
   (python3.withPackages (pkgs: with pkgs; [
