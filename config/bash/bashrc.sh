@@ -164,3 +164,5 @@ sf() {
   files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
   [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
+
+export PATH=$HOME/go/bin:$PATH
