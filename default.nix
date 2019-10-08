@@ -107,7 +107,6 @@ with pkgs; [
   goimports
   gotop
   (hiPrio haskellPackages.hasktags) # arbitrarily prioritize this ghc dylib over idris's
-  # haskellPackages.hoogle
   htop
   httpie
   (with idrisPackages; with-packages [
@@ -115,12 +114,6 @@ with pkgs; [
   ])
   ivy
   jq
-
-#   click
-#   kubectl
-#   kubectx
-#   kubetail
-
   my-go
   my-go-scripts
   my-haskell-scripts
