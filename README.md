@@ -10,12 +10,10 @@ Then use nix-env to install the rest:
     
 You can also pull my updates by re-running the above command.
 
-Run `shell` to use the custom shell.
-
-To use `shell` as your login shell, something like the following should work:
+The above command installs my custom shell as `shell`. To use that as your login shell, you can do:
 
     echo `which shell` | sudo tee -a /etc/shells && chsh -s `which shell`
     
-On NixOS, you should instead set this in the system config:
+... unless you are on NixOS, in which case you should instead set this in the system config:
 
     users.users.<user>.shell = "/home/<your username>/.nix-profile/bin/shell";
