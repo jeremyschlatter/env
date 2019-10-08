@@ -36,19 +36,6 @@ purple='\[\033[1;35m\]'
 brown='\[\033[0;33m\]'
 light_gray='\[\033[0;37m\]'
 
-dot_ps1 ()
-{
-    # Disabled during transation away from vcsh.
-    # May eventually be deleted.
-    return
-
-    # Return if not in $HOME.
-    [ "`pwd`" == $HOME ] || return
-
-    # Print notice if dirty dotfiles.
-    [ -z "`dot status -s`" ] || echo " uncommitted dotfiles"
-}
-
 if [ -a ~/.local_bashrc ]; then
     source ~/.local_bashrc
 fi
@@ -67,13 +54,13 @@ git_ps1 ()
     # Print asterisk if dirty.
     [ -z "`git status -s`" ] || echo "*"
 }
-#prompt_base=$bold$red"\t "$cyan"(\$(pyenv version-name)) \W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
+#prompt_base=$bold$red"\t "$cyan"(\$(pyenv version-name)) \W$yellow\$(git_ps1)$cyan $ "$reset
 MY_HOSTNAME="$(hostname)"
 if [[ $MY_HOSTNAME == "Jeremys-MacBook-Pro.local" ]]; then
-    # prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
-    prompt_base=$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan $ "$reset
+    # prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
+    prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
 else
-    prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$purple\$(dot_ps1)$yellow\$(git_ps1)$cyan 🖥  "$reset
+    prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 🖥  "$reset
 fi
 PS1="$prompt_base"
 
