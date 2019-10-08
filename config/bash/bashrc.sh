@@ -54,10 +54,8 @@ git_ps1 ()
     # Print asterisk if dirty.
     [ -z "`git status -s`" ] || echo "*"
 }
-#prompt_base=$bold$red"\t "$cyan"(\$(pyenv version-name)) \W$yellow\$(git_ps1)$cyan $ "$reset
 MY_HOSTNAME="$(hostname)"
 if [[ $MY_HOSTNAME == "Jeremys-MacBook-Pro.local" ]]; then
-    # prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 👨‍💻 "$reset
     prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
 else
     prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 🖥  "$reset
