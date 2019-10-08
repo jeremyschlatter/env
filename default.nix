@@ -34,69 +34,37 @@ let
 
   my-go = pkgs.go_1_12;
 
-  my-go-scripts = pkgs.runCommand "my-go-scripts" {
-    buildInputs = [ my-go ];
-  } ''
+  my-scripts = name: cmd: pkgs.runCommand "my-${name}-scripts" {} ''
     mkdir -p $out/bin
 
-    export GOCACHE=$TMPDIR/go-cache
-    export GOPATH=$TMPDIR/go
-    export CGO_ENABLED=0
-
-    for file in ${./bin/go}/*
+    for file in ${./bin}/${name}/*
     do
-      dest=$out/bin/$(basename -s .go $file)
-      ${my-go}/bin/go build -o $dest $file
-    done
-  '';
-
-  my-haskell-scripts = pkgs.runCommand "my-haskell-scripts" {
-    buildInputs = [ pkgs.ghc ];
-  } ''
-    mkdir -p $out/bin
-
-    for file in ${./bin/haskell}/*
-    do
-      base=$(basename -s .hs $file)
-      dest=$out/bin/$base
-      ${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/ghc-out-$base $file
-    done
-  '';
-
-  my-python-scripts = pkgs.runCommand "my-python-scripts" {
-    buildInputs = [ pkgs.python3 ];
-  } ''
-    mkdir -p $out/bin
-    for file in ${./bin/python}/*
-    do
-      dest=$out/bin/$(basename -s .py $file)
-      echo '#!'${pkgs.python3}/bin/python | cat - $file > $dest
+      # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
+      # for removing the file extension.
+      dest=$out/bin/$(basename ''${file%.*})
+      ${cmd}
       chmod +x $dest
     done
   '';
 
-  my-rust-scripts = pkgs.runCommand "my-rust-scripts" {
-    buildInputs = [ pkgs.rustc ];
-  } ''
-    mkdir -p $out/bin
-
-    for file in ${./bin/rust}/*
-    do
-      dest=$out/bin/$(basename -s .rs $file)
-      ${pkgs.rustc}/bin/rustc -o $dest $file
-    done
+  my-go-scripts = my-scripts "go" ''
+    GOCACHE=$TMPDIR/go-cache GOPATH=$TMPDIR/go CGO_ENABLED=0 \
+    ${my-go}/bin/go build -o $dest $file
   '';
 
-  my-shell-scripts = pkgs.runCommand "my-shell-scripts" {
-    buildInputs = [ pkgs.bash ];
-  } ''
-    mkdir -p $out/bin
-    for file in ${./bin/sh}/*
-    do
-      dest=$out/bin/$(basename -s .sh $file)
-      echo '#!'${pkgs.bash}/bin/sh | cat - $file > $dest
-      chmod +x $dest
-    done
+  my-haskell-scripts = my-scripts "haskell" ''
+    ${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest \
+    -outputdir $TMPDIR/ghc-out-$(basename -s .hs $file) $file
+  '';
+
+  my-python-scripts = my-scripts "python" ''
+    echo '#!'${pkgs.python3}/bin/python | cat - $file > $dest
+  '';
+
+  my-rust-scripts = my-scripts "rust" "${pkgs.rustc}/bin/rustc -o $dest $file";
+
+  my-shell-scripts = my-scripts "sh" ''
+    echo '#!'${pkgs.bash}/bin/sh | cat - $file > $dest
   '';
 
   my-xdg-config =
