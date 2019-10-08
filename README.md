@@ -14,6 +14,6 @@ The above command installs my custom shell as `shell`. To use that as your login
 
     echo `which shell` | sudo tee -a /etc/shells && chsh -s `which shell`
     
-... unless you are on NixOS, in which case you should instead set this in the system config:
+...unless you are on NixOS, in which case you should instead set this in the system config:
 
     users.users.<user>.shell = "/home/<your username>/.nix-profile/bin/shell";
