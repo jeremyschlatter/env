@@ -54,7 +54,7 @@ let
 
   my-haskell-scripts = my-scripts "haskell" ''
     ${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest \
-    -outputdir $TMPDIR/ghc-out-$(basename -s .hs $file) $file
+    -outputdir $TMPDIR/ghc-out-$file $file
   '';
 
   my-python-scripts = my-scripts "python" ''
