@@ -14,7 +14,6 @@ alias et="e --tree"
 
 alias "cd.."="cd .."
 alias python="python -tt"
-alias dot="vcsh dot"
 alias grep="grep --color"
 alias d=docker
 alias g=git
