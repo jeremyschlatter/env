@@ -88,6 +88,7 @@ in
 
 with pkgs; [
   (xdg "bat" bat)
+  bash-completion
   caddy
   cloc
   (
@@ -124,6 +125,7 @@ with pkgs; [
   my-xdg-config
   my-shell
   ngrok
+  nix-bash-completions
   nodejs
   (python3.withPackages (pkgs: with pkgs; [
     ipython
