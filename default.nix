@@ -3,11 +3,8 @@
 let
   pkgs = import (fetchTarball {
     url = if builtins.currentSystem == "x86_64-darwin"
-          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-19.03-darwin
-          else https://github.com/NixOS/nixpkgs/tarball/release-19.03;
-  }) {};
-  unstable = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/tarball/release-19.09;
+          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-19.09-darwin
+          else https://github.com/NixOS/nixpkgs/tarball/release-19.09;
   }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
@@ -32,9 +29,11 @@ let
       };
   });
 
-  my-go = pkgs.go_1_12;
+  my-go = pkgs.go;
 
-  my-scripts = name: cmd: pkgs.runCommand "my-${name}-scripts" {} ''
+  my-scripts = my-scripts-with-inputs [];
+
+  my-scripts-with-inputs = inputs: name: cmd: pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
     mkdir -p $out/bin
 
     for file in ${./bin}/${name}/*
@@ -61,7 +60,7 @@ let
     echo '#!'${pkgs.python3}/bin/python | cat - $file > $dest
   '';
 
-  my-rust-scripts = my-scripts "rust" "${pkgs.rustc}/bin/rustc -o $dest $file";
+  my-rust-scripts = my-scripts-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file";
 
   my-shell-scripts = my-scripts "sh" ''
     echo '#!'${pkgs.bash}/bin/sh | cat - $file > $dest
@@ -71,7 +70,7 @@ let
     let base = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
     in if builtins.length patches == 0
        then base
-       else unstable.applyPatches { src = base; patches = patches; };
+       else pkgs.applyPatches { src = base; patches = patches; };
 
   xdg = bin: pkg: pkgs.symlinkJoin {
     name = "my-" + bin;
@@ -97,7 +96,7 @@ with pkgs; [
     hiPrio coreutils
   )
   docker
-  unstable.exa
+  exa
   fd
   fzf
   (xdg "git" git)
