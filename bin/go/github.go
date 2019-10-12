@@ -20,14 +20,16 @@ func main() {
 	check(err)
 	base := path.Join(home, "src", "github.com", parts[0])
 	full := path.Join(base, parts[1])
+	defer fmt.Println("cd " + full)
+	if fi, err := os.Stat(full); err == nil && fi.IsDir() {
+		return
+	}
 	check(os.MkdirAll(base, 0755))
 	cmd := exec.Command("hub", "clone", os.Args[1], full)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	check(cmd.Run())
-
-	fmt.Println("cd " + full)
 }
 
 func exitUsage() {
