@@ -82,7 +82,7 @@ in
           fzfWrapper
           hot-reload
           idris-vim
-          LanguageClient-neovim
+          # LanguageClient-neovim
           vim-colors-solarized
           vim-commentary
           vim-fetch
