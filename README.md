@@ -1,5 +1,7 @@
 # My development environment
 
+You don't need to clone this repo to use it.
+
 To use, first install [nix](https://nixos.org/nix/):
 
     curl https://nixos.org/nix/install | sh
