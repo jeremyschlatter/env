@@ -124,6 +124,9 @@ function! ToggleMouse()
   endif
 endfunction
 
+" Used by agda-vim
+let maplocalleader = ","
+
 let mapleader = ";"
 nmap <silent> <leader>m :call ToggleMouse()<CR>
 nmap <silent> <leader>h :split<CR>
