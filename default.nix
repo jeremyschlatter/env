@@ -100,6 +100,8 @@ with pkgs; [
   fd
   fzf
   (xdg "git" git)
+  ghc # just for ghcid
+  ghcid
   gitAndTools.hub
   git-crypt
   gnupg
