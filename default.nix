@@ -81,7 +81,7 @@ let
 
   my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
 
-  my-vim = import ./neovim.nix pkgs vim-plugins "${my-xdg-config}/config/nvim/init.vim";
+  my-vim = import ./neovim.nix pkgs vim-plugins;
 
 in
 
@@ -125,7 +125,7 @@ with pkgs; [
   my-python-scripts
   my-rust-scripts
   my-shell-scripts
-  my-vim
+  (xdg "vim" my-vim)
   my-xdg-config
   my-shell
   ngrok
