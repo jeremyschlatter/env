@@ -86,6 +86,7 @@ let
 in
 
 with pkgs; [
+  alacritty
   (xdg "bat" bat)
   bash-completion
   caddy
@@ -116,6 +117,7 @@ with pkgs; [
   ])
   ivy
   jq
+  (xdg "kitty" kitty)
   my-go
   my-go-scripts
   my-haskell-scripts
