@@ -105,6 +105,7 @@ with pkgs; [
   ghc # just for ghcid
   ghcid
   gitAndTools.hub
+  gitAndTools.diff-so-fancy
   git-crypt
   gnupg
   google-cloud-sdk
