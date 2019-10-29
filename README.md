@@ -19,3 +19,14 @@ The above command installs my custom shell as `shell`. To use that as your login
 ...unless you are on NixOS, in which case you should instead set this in the system config:
 
     users.users.<user>.shell = "/home/<your username>/.nix-profile/bin/shell";
+
+**Other Notes**
+
+To pick up the Fira Code font in Gnome I made this symlink:
+
+    ln -s ~/.nix-profile/share/fonts/ ~/.local/share/
+
+To pick up application launchers for kitty and alacritty in Gnome I made this symlink:
+
+    rmdir ~/.local/share/applications
+    ln -s ~/.nix-profile/share/applications/ ~/.local/share/
