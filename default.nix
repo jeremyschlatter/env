@@ -99,6 +99,7 @@ with pkgs; [
   docker
   exa
   fd
+  fira-code
   fzf
   (xdg "git" git)
   ghc # just for ghcid
