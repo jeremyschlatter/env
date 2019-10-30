@@ -151,9 +151,3 @@ with pkgs; [
   zsh
 
 ] ++ maybe-nix
-
-  # Linux-only packages
-  ++ (stdenv.lib.lists.optionals stdenv.isLinux [
-    gnome3.vte
-    tilix
-  ])
