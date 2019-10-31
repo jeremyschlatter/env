@@ -17,18 +17,6 @@ let
               then with pkgs; [nix cacert]
               else [];
 
-  ivy = (pkgs.buildGoPackage {
-    name = "ivy";
-    goPackagePath = "robpike.io/ivy";
-    # TODO: Would be nice to retrieve this from robpike.io instead.
-    src = pkgs.fetchFromGitHub {
-        owner = "robpike";
-        repo = "ivy";
-        rev = "master";
-        sha256 = "05spzinlkdngnwgmp0bhp72h1s2dzbrxhyvjscy3r2hm0vdlkhz2";
-      };
-  });
-
   my-go = pkgs.go;
 
   my-scripts = my-scripts-with-inputs [];
@@ -90,6 +78,7 @@ with pkgs; [
   (xdg "bat" bat)
   bash-completion
   caddy
+  calc
   cloc
   (
     # prioritize the coreutils "link" command over the go "link" command.
@@ -117,7 +106,6 @@ with pkgs; [
   (with idrisPackages; with-packages [
     contrib
   ])
-  ivy
   jq
   (xdg "kitty" kitty)
   my-go
