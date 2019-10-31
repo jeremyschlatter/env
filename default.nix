@@ -17,8 +17,6 @@ let
               then with pkgs; [nix cacert]
               else [];
 
-  my-go = pkgs.go;
-
   my-scripts = my-scripts-with-inputs [];
 
   my-scripts-with-inputs = inputs: name: cmd: pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
@@ -36,7 +34,7 @@ let
 
   my-go-scripts = my-scripts "go" ''
     GOCACHE=$TMPDIR/go-cache GOPATH=$TMPDIR/go CGO_ENABLED=0 \
-    ${my-go}/bin/go build -o $dest $file
+    ${pkgs.go}/bin/go build -o $dest $file
   '';
 
   my-haskell-scripts = my-scripts "haskell" ''
@@ -97,6 +95,7 @@ with pkgs; [
   gitAndTools.diff-so-fancy
   git-crypt
   gnupg
+  go
   google-cloud-sdk
   goimports
   gotop
@@ -108,7 +107,6 @@ with pkgs; [
   ])
   jq
   (xdg "kitty" kitty)
-  my-go
   my-go-scripts
   my-haskell-scripts
   my-python-scripts
