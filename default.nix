@@ -17,40 +17,30 @@ let
               then with pkgs; [nix cacert]
               else [];
 
-  my-scripts = my-scripts-with-inputs [];
-
-  my-scripts-with-inputs = inputs: name: cmd: pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
-    mkdir -p $out/bin
-
-    for file in ${./bin}/${name}/*
-    do
-      # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
-      # for removing the file extension.
-      dest=$out/bin/$(basename ''${file%.*})
-      ${cmd}
-      chmod +x $dest
-    done
-  '';
-
-  my-go-scripts = my-scripts "go" ''
-    GOCACHE=$TMPDIR/go-cache GOPATH=$TMPDIR/go CGO_ENABLED=0 \
-    ${pkgs.go}/bin/go build -o $dest $file
-  '';
-
-  my-haskell-scripts = my-scripts "haskell" ''
-    ${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest \
-    -outputdir $TMPDIR/ghc-out-$file $file
-  '';
-
-  my-python-scripts = my-scripts "python" ''
-    echo '#!'${pkgs.python3}/bin/python | cat - $file > $dest
-  '';
-
-  my-rust-scripts = my-scripts-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file";
-
-  my-shell-scripts = my-scripts "sh" ''
-    echo '#!'${pkgs.bash}/bin/sh | cat - $file > $dest
-  '';
+  # I have some utility scripts in different languages in the bin/ directory of this repo.
+  # This expression compiles and installs them.
+  my-scripts = let
+    build-with-inputs = inputs: name: cmd:
+      pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
+        mkdir -p $out/bin
+        for file in ${./bin}/${name}/*
+        do
+          # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
+          # for removing the file extension.
+          dest=$out/bin/$(basename ''${file%.*})
+          ${cmd}
+          chmod +x $dest
+        done
+      '';
+    build = build-with-inputs [];
+    interp = name: interpreter: build name "echo '#!'${interpreter} | cat - $file > $dest";
+  in [
+    (build "go" "GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $file")
+    (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
+    (interp "python" "${pkgs.python3}/bin/python")
+    (interp "sh" "${pkgs.bash}/bin/sh")
+    (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
+  ];
 
   my-xdg-config =
     let base = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
@@ -107,11 +97,7 @@ with pkgs; [
   ])
   jq
   (xdg "kitty" kitty)
-  my-go-scripts
-  my-haskell-scripts
-  my-python-scripts
-  my-rust-scripts
-  my-shell-scripts
+  my-scripts
   (xdg "vim" my-vim)
   my-xdg-config
   my-shell
