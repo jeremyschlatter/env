@@ -28,3 +28,9 @@
 [diff-so-fancy]
     markEmptyLines = false
     stripLeadingSymbols = false
+
+[color.diff-highlight]
+    oldNormal = red
+    oldHighlight = red reverse
+    newNormal = green
+    newHighlight = green reverse
