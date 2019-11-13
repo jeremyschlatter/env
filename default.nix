@@ -62,7 +62,6 @@ let
 in
 
 with pkgs; [
-  alacritty
   (xdg "bat" bat)
   bash-completion
   caddy
@@ -120,6 +119,5 @@ with pkgs; [
 
   # Experimental shells.
   fish
-  zsh
 
 ] ++ maybe-nix
