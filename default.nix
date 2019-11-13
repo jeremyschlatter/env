@@ -4,7 +4,8 @@ let
   pkgs = import (fetchTarball {
     url = if builtins.currentSystem == "x86_64-darwin"
           then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-19.09-darwin
-          else https://github.com/NixOS/nixpkgs-channels/tarball/nixos-19.09;
+          # else https://github.com/NixOS/nixpkgs-channels/tarball/nixos-19.09;
+          else https://github.com/NixOS/nixpkgs-channels/tarball/688f9ef18413480b0575299bd748f9179ff6844b;
   }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
