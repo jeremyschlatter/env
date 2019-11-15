@@ -12,13 +12,12 @@ Then use nix-env to install the rest:
 
 You can also pull my updates by re-running the above command.
 
-The above command installs my custom shell as `shell`. To use that as your login shell, you can do:
+**About my environment**
 
-    echo `which shell` | sudo tee -a /etc/shells && chsh -s `which shell`
+This config installs [kitty](https://sw.kovidgoyal.net/kitty/), which I use as my terminal emulator.
 
-...unless you are on NixOS, in which case you should instead set this in the system config:
-
-    users.users.<user>.shell = "/home/<your username>/.nix-profile/bin/shell";
+It configures kitty to use a custom shell (bash with a custom bashrc). To use my shell config outside
+kitty, you can run it manually as `shell`.
 
 **Other Notes**
 
