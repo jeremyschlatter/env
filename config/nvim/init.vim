@@ -223,7 +223,7 @@ set termencoding=utf-8
 " https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
 set backupcopy=yes
 
-set background=light
+set background=dark
 colorscheme solarized
 
 if filereadable(expand('~/.local_vimrc'))
