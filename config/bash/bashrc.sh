@@ -55,7 +55,7 @@ git_ps1 ()
     [ -z "`git status -s`" ] || echo "*"
 }
 MY_HOSTNAME="$(hostname)"
-if [[ $MY_HOSTNAME == "Jeremys-MacBook-Pro.local" ]]; then
+if [[ $MY_HOSTNAME == "jeremy-mbp.lan" ]]; then
     prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
 else
     prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 🖥  "$reset
