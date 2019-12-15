@@ -235,14 +235,6 @@ if has('nvim')
     :tnoremap <Esc> <C-\><C-n>
 endif
 
-" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-highlight ExtraWhitespace ctermbg=darkgreen guibg=lightgreen
-"match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
 " use jsx highlighting on .js files
 " https://github.com/mxw/vim-jsx
 let g:jsx_ext_required = 0

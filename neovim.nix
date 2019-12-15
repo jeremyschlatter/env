@@ -83,6 +83,7 @@ in
           hot-reload
           idris-vim
           # LanguageClient-neovim
+          vim-better-whitespace
           vim-colors-solarized
           vim-commentary
           vim-fetch
