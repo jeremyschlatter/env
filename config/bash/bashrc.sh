@@ -135,6 +135,9 @@ fi
 # Some aliases
 . $NIX_PROFILE/config/bash/aliases.sh
 
+# Set color-related env variables according to the current color scheme
+eval "$(configure-colors)"
+
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

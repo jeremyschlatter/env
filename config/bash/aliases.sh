@@ -25,5 +25,13 @@ alias cat="bat"
 
 alias blaze=bazel
 
-alias light="kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/light.conf"
-alias dark="kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/dark.conf"
+light() {
+    kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/light.conf
+    echo light > ~/.config/colors
+    eval "$(configure-colors)"
+}
+dark() {
+    kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/dark.conf
+    echo dark > ~/.config/colors
+    eval "$(configure-colors)"
+}
