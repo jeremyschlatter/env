@@ -57,6 +57,10 @@ git_ps1 ()
 MY_HOSTNAME="$(hostname)"
 if [[ $MY_HOSTNAME == "jeremy-mbp.lan" ]]; then
     prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
+elif [[ $MY_HOSTNAME == "Jeremy-MBP.local" ]]; then
+    prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
+elif [[ $MY_HOSTNAME == "Jeremy-MBP" ]]; then
+    prompt_base=$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan $ "$reset
 else
     prompt_base=$cyan"$MY_HOSTNAME "$bold$red"\t "$cyan"\W$yellow\$(git_ps1)$cyan 🖥  "$reset
 fi
