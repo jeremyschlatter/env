@@ -76,6 +76,8 @@ augroup jeremyschlatter
 " Haskell
   au BufRead,BufNewFile *.hs 2match TooLongLine /.\%>101v/
   au BufRead,BufNewFile *.hs set expandtab tabstop=2 softtabstop=2 shiftwidth=2
+" Bel
+  au BufRead,BufNewFile *.bel set expandtab tabstop=2 softtabstop=2 shiftwidth=2 commentstring=;\ %s
 augroup END
 
 " Prettier
