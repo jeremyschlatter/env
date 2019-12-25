@@ -225,7 +225,12 @@ set termencoding=utf-8
 " https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
 set backupcopy=yes
 
+" Read current color (light vs dark), defaulting to dark
 set background=dark
+let s:color = readfile(expand('~/.config/colors'))
+for s:colorLine in s:color
+  let &background = s:colorLine
+endfor
 colorscheme solarized
 
 if filereadable(expand('~/.local_vimrc'))
