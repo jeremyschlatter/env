@@ -59,7 +59,7 @@ let
 
   my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
 
-  my-vim = import ./neovim.nix pkgs vim-plugins;
+  my-vim = import ./neovim.nix "${config/nvim/init.vim}" pkgs vim-plugins;
 
 in
 
