@@ -49,12 +49,13 @@ let
        then base
        else pkgs.applyPatches { src = base; patches = patches; };
 
-  xdg = bin: pkg: pkgs.symlinkJoin {
+  withConfig = envVar: relPath: bin: pkg: pkgs.symlinkJoin {
     name = "my-" + bin;
     paths = [ pkg ];
     buildInputs = [ pkgs.makeWrapper my-xdg-config ];
-    postBuild = "wrapProgram $out/bin/${bin} --set XDG_CONFIG_HOME ${my-xdg-config}/config";
+    postBuild = "wrapProgram $out/bin/${bin} --set ${envVar} ${my-xdg-config}/${relPath}";
   };
+  xdg = withConfig "XDG_CONFIG_HOME" "config";
 
   my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
 
@@ -99,7 +100,7 @@ with pkgs; [
     contrib
   ])
   jq
-  (xdg "kitty" kitty)
+  (withConfig "KITTY_CONFIG_DIRECTORY" "config/kitty" "kitty" kitty)
   my-scripts
   (xdg "vim" my-vim)
   my-xdg-config
