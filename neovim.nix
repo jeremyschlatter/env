@@ -87,6 +87,7 @@ in
           vim-colors-solarized
           vim-commentary
           vim-fetch
+          vim-fugitive
           vim-go
           vim-nix
           vim-numbertoggle
