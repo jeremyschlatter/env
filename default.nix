@@ -75,6 +75,7 @@ with pkgs; [
     hiPrio coreutils
   )
   docker
+  entr
   exa
   fd
   fira-code
