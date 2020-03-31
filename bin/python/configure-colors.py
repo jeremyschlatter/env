@@ -6,4 +6,4 @@ try:
 except FileNotFoundError:
     colors = 'light'
 
-print(f'export BAT_THEME="Solarized ({colors})"')
+print(colors)
