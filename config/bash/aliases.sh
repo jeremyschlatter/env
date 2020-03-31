@@ -26,18 +26,8 @@ alias cat="bat"
 alias blaze=bazel
 
 light() {
-    if [ -z "$VIMRUNTIME" ]
-    then
-        kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/light.conf
-    fi
-    echo light > ~/.config/colors
-    export BAT_THEME="Solarized (light)"
+    eval "$(pylight)"
 }
 dark() {
-    if [ -z "$VIMRUNTIME" ]
-    then
-        kitty @ set-colors --configured --all ~/.nix-profile/config/kitty/dark.conf
-    fi
-    echo dark > ~/.config/colors
-    export BAT_THEME="Solarized (dark)"
+    eval "$(pydark)"
 }
