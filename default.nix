@@ -3,7 +3,7 @@
 let
   pkgs = import (fetchTarball {
     url = if builtins.currentSystem == "x86_64-darwin"
-          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-19.09-darwin
+          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03-darwin
           # else https://github.com/NixOS/nixpkgs-channels/tarball/nixos-19.09;
           else https://github.com/NixOS/nixpkgs-channels/tarball/688f9ef18413480b0575299bd748f9179ff6844b;
   }) {};
@@ -111,7 +111,7 @@ with pkgs; [
   nodejs
   (python3.withPackages (pkgs: with pkgs; [
     ipython
-    magic-wormhole
+    # magic-wormhole
   ]))
   ripgrep
   stack
