@@ -70,7 +70,8 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.py,*.bazel,*.bzl 2match Underlined /.\%81v/
   au BufRead,BufNewFile *.py,*.bazel,*.bzl set et ts=4 sts=4 sw=4
 " Javascript
-  au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
+  au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.tsx,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
+  au BufRead,BufNewFile *.tsx set filetype=typescript
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
   au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 " Haskell
@@ -82,7 +83,7 @@ augroup END
 
 " Prettier
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.css,*.scss,*.less Prettier
+" autocmd BufWritePre *.js,*.css,*.scss,*.less Prettier
 
 " Editing setup
 set autoindent
