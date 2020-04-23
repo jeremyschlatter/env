@@ -18,6 +18,12 @@ let
               then with pkgs; [nix cacert]
               else [];
 
+  my-python = pkgs.python3.withPackages (pkgs: with pkgs; [
+    ipython
+    requests
+    # magic-wormhole
+  ]);
+
   # I have some utility scripts in different languages in the bin/ directory of this repo.
   # This expression compiles and installs them.
   my-scripts = let
@@ -38,7 +44,7 @@ let
   in [
     (build "go" "GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $file")
     (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-    (interp "python" "${pkgs.python3}/bin/python")
+    (interp "python" "/bin/sh ${my-python}/bin/python")
     (interp "sh" "${pkgs.bash}/bin/sh")
     (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
   ];
@@ -102,6 +108,7 @@ with pkgs; [
   ])
   jq
   (withConfig "KITTY_CONFIG_DIRECTORY" "config/kitty" "kitty" kitty)
+  my-python
   my-scripts
   (xdg "vim" my-vim)
   my-xdg-config
@@ -109,10 +116,6 @@ with pkgs; [
   ngrok
   nix-bash-completions
   nodejs
-  (python3.withPackages (pkgs: with pkgs; [
-    ipython
-    # magic-wormhole
-  ]))
   ripgrep
   stack
   tldr
