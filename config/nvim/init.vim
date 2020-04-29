@@ -111,6 +111,7 @@ set completeopt-=preview  " Don't pop up a preview window for completions.
 set history=50            " keep 50 lines of command line history
 set backspace=indent,eol,start
 set formatoptions+=r      " Auto-continue comments. Credit: http://stackoverflow.com/a/952561
+set splitright " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 
 " Always show current filename. I find this useful when jumping around
 " between definitions in code that sometimes lives in external libraries.
