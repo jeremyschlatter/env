@@ -30,6 +30,13 @@ let
     build-with-inputs = inputs: name: cmd:
       pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
         mkdir -p $out/bin
+
+        # Go-specific initialization. Runs for all languages, but happens
+        # not to cause problems for any of the non-Go ones.
+        mkdir build
+        cd build
+        GOCACHE=$TMPDIR ${pkgs.go}/bin/go mod init apps
+
         for file in ${./bin}/${name}/*
         do
           # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
@@ -42,7 +49,7 @@ let
     build = build-with-inputs [];
     interp = name: interpreter: build name "echo '#!'${interpreter} | cat - $file > $dest";
   in [
-    (build "go" "GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $file")
+    (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
     (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
     (interp "python" "/bin/sh ${my-python}/bin/python")
     (interp "sh" "${pkgs.bash}/bin/sh")
