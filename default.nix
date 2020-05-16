@@ -97,6 +97,7 @@ with pkgs; [
   (xdg "git" git)
   ghc # just for ghcid
   ghcid
+  haskell.compiler.ghcjs86
   gitAndTools.hub
   gitAndTools.diff-so-fancy
   git-crypt
