@@ -79,6 +79,7 @@ in
 with pkgs; [
   (xdg "bat" bat)
   bash-completion
+  bazelisk
   caddy
   calc
   cloc

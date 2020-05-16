@@ -27,7 +27,7 @@ alias gotop="gotop -c default-dark"
 
 alias cat="bat"
 
-alias blaze=bazel
+alias bazel=bazelisk
 
 light() {
     eval "$(pylight)"
