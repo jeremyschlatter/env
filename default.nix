@@ -5,7 +5,7 @@ let
     url = if builtins.currentSystem == "x86_64-darwin"
           then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03-darwin
           # else https://github.com/NixOS/nixpkgs-channels/tarball/nixos-19.09;
-          else https://github.com/NixOS/nixpkgs-channels/tarball/688f9ef18413480b0575299bd748f9179ff6844b;
+          else https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03;
   }) {};
 
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
