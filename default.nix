@@ -8,6 +8,13 @@ let
           else https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03;
   }) {};
 
+  comma = (import (pkgs.fetchFromGitHub {
+    owner = "Shopify";
+    repo = "comma";
+    rev = "4a62ec1";
+    sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
+  }) {pkgs = pkgs;});
+
   # This expression is designed to be installed with 'nix-env -ri', which deletes existing
   # packages. If the nix tools are in the profile now, we want them to stay in the profile
   # after 'nix-env -ri'.
@@ -83,6 +90,7 @@ with pkgs; [
   caddy
   calc
   cloc
+  comma
   (
     # prioritize the coreutils "link" command over the go "link" command.
     # (The latter is still available as "go tool link").
