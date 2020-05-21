@@ -131,6 +131,7 @@ with pkgs; [
   my-xdg-config
   my-shell
   ngrok
+  niv
   nix-bash-completions
   nodejs
   ripgrep
