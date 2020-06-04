@@ -96,6 +96,7 @@ with pkgs; [
     # (The latter is still available as "go tool link").
     hiPrio coreutils
   )
+  direnv
   docker
   entr
   exa

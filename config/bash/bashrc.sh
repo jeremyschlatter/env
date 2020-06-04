@@ -162,3 +162,5 @@ sf() {
 }
 
 export PATH=$HOME/go/bin:$PATH
+
+eval "$(direnv hook bash)"
