@@ -3,8 +3,7 @@
 let
   pkgs = import (fetchTarball {
     url = if builtins.currentSystem == "x86_64-darwin"
-          then https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03-darwin
-          # else https://github.com/NixOS/nixpkgs-channels/tarball/nixos-19.09;
+          then https://github.com/NixOS/nixpkgs-channels/tarball/b119c0939780ac70f4005cb146606f471c0692a8 # pinned from nixpkgs-20.03-darwin branch
           else https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-20.03;
   }) {};
 
