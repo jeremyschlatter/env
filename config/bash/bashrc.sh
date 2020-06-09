@@ -107,6 +107,8 @@ set -o vi  # Use vi-mode editing on the command line.
 
 NIX_PROFILE=~/.nix-profile
 
+export PATH=$NIX_PROFILE/bin:$PATH
+
 export XDG_DATA_DIRS=$NIX_PROFILE/share
 source $NIX_PROFILE/etc/profile.d/bash_completion.sh
 
