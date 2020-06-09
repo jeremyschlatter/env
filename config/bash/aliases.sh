@@ -27,6 +27,8 @@ alias gotop="gotop -c default-dark"
 
 alias cat="bat"
 
+alias i="nix-env -rif ~/src/my/nixpkgs"
+
 light() {
     eval "$(pylight)"
 }
