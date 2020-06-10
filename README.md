@@ -8,7 +8,7 @@ To use, first install [nix](https://nixos.org/nix/):
 
 Then use nix-env to install the rest:
 
-    NIXPKGS_ALLOW_UNFREE=1 nix-env -rif https://github.com/jeremyschlatter/nixpkgs/tarball/master
+    nix-env -rif https://github.com/jeremyschlatter/nixpkgs/tarball/master
 
 You can also pull my updates by re-running the above command.
 
