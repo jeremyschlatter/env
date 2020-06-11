@@ -11,6 +11,10 @@ let
     };
   };
 
+  unstable = import (fetchTarball {
+    url = https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-unstable;
+  }) {};
+
   comma = (import (pkgs.fetchFromGitHub {
     owner = "Shopify";
     repo = "comma";
@@ -152,7 +156,7 @@ with pkgs; [
   nix-bash-completions
   nodejs
   ripgrep
-  stack
+  unstable.stack
   tldr
   tree
   unzip
