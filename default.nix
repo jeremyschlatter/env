@@ -141,9 +141,6 @@ with pkgs; [
   ])
   htop
   httpie
-  (with idrisPackages; with-packages [
-    contrib
-  ])
   jq
   (withConfig "KITTY_CONFIG_DIRECTORY" "config/kitty" "kitty" kitty)
   my-python
