@@ -164,8 +164,4 @@ with pkgs; [
   wget
   xsv
   yarn
-
-  # Experimental shells.
-  fish
-
 ] ++ maybe-nix
