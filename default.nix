@@ -34,7 +34,7 @@ let
 
   my-python = let
     # custom build b/c the iterm2 package is not bundled into nix
-    my-iterm2 = with unstable.python3.pkgs; buildPythonPackage rec {
+    my-iterm2 = with unstable.python38.pkgs; buildPythonPackage rec {
       pname = "iterm2";
       version = "1.14";
       src = fetchPypi {
@@ -44,7 +44,7 @@ let
       doCheck = false;
       propagatedBuildInputs = [ protobuf websockets ];
     };
-  in unstable.python3.withPackages (pkgs: with pkgs; [
+  in unstable.python38.withPackages (pkgs: with pkgs; [
     ipython
     requests
     magic-wormhole
