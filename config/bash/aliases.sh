@@ -28,6 +28,7 @@ alias gotop="gotop -c default-dark"
 alias cat="bat"
 
 alias i="nix-env -rif ~/src/my/nixpkgs"
+alias vit='vi -c ":vsplit term://shell"'
 
 light() {
     eval "$(pylight)"
