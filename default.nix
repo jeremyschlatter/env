@@ -33,22 +33,11 @@ let
               else [];
 
   my-python = let
-    # custom build b/c the iterm2 package is not bundled into nix
-    my-iterm2 = with unstable.python38.pkgs; buildPythonPackage rec {
-      pname = "iterm2";
-      version = "1.14";
-      src = fetchPypi {
-        inherit pname version;
-        sha256 = "089pln3c41n6dyh91hw9gy6mpm9s663lpmdc4gamig3g6pfmbsk4";
-      };
-      doCheck = false;
-      propagatedBuildInputs = [ protobuf websockets ];
-    };
   in unstable.python38.withPackages (pkgs: with pkgs; [
     ipython
+    iterm2
     requests
     magic-wormhole
-    my-iterm2
   ]);
 
   # I have some utility scripts in different languages in the bin/ directory of this repo.
