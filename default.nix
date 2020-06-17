@@ -158,6 +158,5 @@ with pkgs; [
   unzip
   watch
   wget
-  xsv
   yarn
 ] ++ maybe-nix
