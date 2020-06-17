@@ -136,8 +136,8 @@ with pkgs; [
   goimports
   gotop
   (with haskellPackages; [
-    (hiPrio hasktags) # arbitrarily prioritize this ghc dylib over idris's
-    hoogle
+    (haskell.lib.justStaticExecutables hasktags)
+    (haskell.lib.justStaticExecutables hoogle)
   ])
   htop
   httpie
