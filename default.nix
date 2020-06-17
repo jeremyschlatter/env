@@ -158,5 +158,4 @@ with pkgs; [
   unzip
   watch
   wget
-  yarn
 ] ++ maybe-nix
