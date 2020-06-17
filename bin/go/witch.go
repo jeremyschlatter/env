@@ -41,7 +41,11 @@ func clientMode(command string, args []string) {
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	checkExit(cmd.Run())
+	err := cmd.Run()
+	if err != nil {
+		color.Red("failed")
+		checkExit(err)
+	}
 	color.Green("ok")
 }
 
