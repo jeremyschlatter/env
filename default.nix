@@ -129,7 +129,6 @@ with pkgs; [
   haskell.compiler.ghcjs86
   gitAndTools.hub
   gitAndTools.diff-so-fancy
-  git-crypt
   gnupg
   go
   google-cloud-sdk
