@@ -12,7 +12,7 @@ let
   };
 
   unstable = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs-channels/tarball/nixpkgs-unstable;
+    url = https://github.com/NixOS/nixpkgs-channels/tarball/a84cbb60f0296210be03c08d243670dd18a3f6eb; # pinned from nixpkgs-unstable branch
   }) {};
 
   comma = (import (pkgs.fetchFromGitHub {
