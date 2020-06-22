@@ -66,18 +66,14 @@ else
 fi
 PS1="$prompt_base"
 
-# TODO: Remove the check for 130 if possible. I want it there for cases where I
-# change my mind while typing a command, press ^C, and don't want my next prompt
-# to be defiled with a bad return code just because of that. But maybe other
-# programs will exit 130 without knowing the convention, and it might be useful
-# to have the reminder when I ^C a long-running program.
+NIX_PROFILE=$HOME/.nix-profile
+
 prompt() {
-    #status=`RET=$?; if [[ $RET != 0 ]] && [[ $RET != 130 ]]; then  echo -n "$RET "; fi`
-    history -a
-    history -n
     # https://www.jefftk.com/p/you-should-be-logging-shell-history
-    echo "$(date +%Y-%m-%d--%H-%M-%S) $(hostname) $PWD $(history 1)" \
-      >> ~/.full_history
+    # I'm using a refined version from the one shown in the post.
+    # It uses logfmt to disambiguate spaces, and also logs the timezone.
+    # I also hooked ctrl-r up to read from this log.
+    $NIX_PROFILE/bin/add-hist "$(history 1)"
 }
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} prompt"
 
@@ -104,8 +100,6 @@ shopt -s cmdhist
 export HISTCONTROL=
 
 set -o vi  # Use vi-mode editing on the command line.
-
-NIX_PROFILE=~/.nix-profile
 
 export PATH=$NIX_PROFILE/bin:$PATH
 
@@ -148,6 +142,12 @@ eval "$(restore_colors)"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 . $NIX_PROFILE/share/fzf/key-bindings.bash
+__fzf_history__() (
+  # This overrides the __fzf_history__ implementation from key-bindings.bash.
+  # It reads from ~/.full_history.logfmt rather than ~/.bash_history.
+  $NIX_PROFILE/bin/fzf-hist |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac --sync -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m" $(__fzfcmd)
+)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 bind -x '"\C-p": vim $(fzf);'
