@@ -13,6 +13,7 @@ func main() {
 	check(err)
 	defer f.Close()
 	decoder := logfmt.NewDecoder(f)
+	seen := make(map[string]bool)
 	for decoder.ScanRecord() {
 		decoder.ScanKeyval()
 		decoder.ScanKeyval()
@@ -28,15 +29,15 @@ func main() {
 			fmt.Fprintf(os.Stderr, "%s\n", decoder.Value())
 			os.Exit(1)
 		}
-		fmt.Printf(
-			"%s\n",
-			bytes.SplitN(
-				// bytes.TrimSpace(decoder.Value()),
-				bytes.TrimLeft(decoder.Value(), " "),
-				[]byte(" "),
-				5,
-			)[4],
-		)
+		next := string(bytes.SplitN(
+			bytes.TrimLeft(decoder.Value(), " "),
+			[]byte(" "),
+			5,
+		)[4])
+		if !seen[next] {
+			fmt.Println(next)
+			seen[next] = true
+		}
 	}
 	check(decoder.Err())
 }
