@@ -13,7 +13,10 @@ func main() {
 	check(err)
 	defer f.Close()
 	decoder := logfmt.NewDecoder(f)
-	seen := make(map[string]bool)
+	all := []*string{}
+	seen := make(map[string]int)
+	i := 0
+	// Read in history, parsing out just the commands.
 	for decoder.ScanRecord() {
 		decoder.ScanKeyval()
 		decoder.ScanKeyval()
@@ -29,17 +32,24 @@ func main() {
 			fmt.Fprintf(os.Stderr, "%s\n", decoder.Value())
 			os.Exit(1)
 		}
-		next := string(bytes.SplitN(
+		next := string(bytes.TrimSpace(bytes.SplitN(
 			bytes.TrimLeft(decoder.Value(), " "),
 			[]byte(" "),
 			5,
-		)[4])
-		if !seen[next] {
-			fmt.Println(next)
-			seen[next] = true
+		)[4]))
+		if prev, ok := seen[next]; ok {
+			all[prev] = nil
+		}
+		seen[next] = i
+		all = append(all, &next)
+		i++
+	}
+
+	for _, s := range all {
+		if s != nil {
+			fmt.Println(*s)
 		}
 	}
-	check(decoder.Err())
 }
 
 func check(err error) {
