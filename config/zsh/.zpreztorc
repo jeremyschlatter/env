@@ -1,2 +1,0 @@
-zstyle ':prezto:load' pmodule 'prompt'
-zstyle ':prezto:module:prompt' theme 'agnoster'
