@@ -146,4 +146,6 @@ with pkgs; [
   unzip
   watch
   wget
+  (withConfig "ZDOTDIR" "config/zsh" "zsh" zsh)
+  zsh-prezto
 ] ++ maybe-nix
