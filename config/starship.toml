@@ -37,7 +37,7 @@ prompt_order = [
     "cmd_duration",
     "custom",
     # "line_break",
-    "jobs",
+    # "jobs",        # Seems to be buggy. It was showing 1 job when there weren't any.
     "battery",
     "time",
     "character",
