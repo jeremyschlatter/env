@@ -12,7 +12,7 @@ let
   };
 
   unstable = import (fetchTarball {
-    url = https://github.com/NixOS/nixpkgs-channels/tarball/a84cbb60f0296210be03c08d243670dd18a3f6eb; # pinned from nixpkgs-unstable branch
+    url = https://github.com/NixOS/nixpkgs-channels/tarball/970b2b853d41ec80a3c2aba3e585f52818fbbfa3; # pinned from nixpkgs-unstable branch
   }) {};
 
   comma = (import (pkgs.fetchFromGitHub {
@@ -141,6 +141,7 @@ with pkgs; [
   nodejs
   ripgrep
   unstable.stack
+  unstable.starship  # Cross-shell prompt.
   tldr
   tree
   unzip
