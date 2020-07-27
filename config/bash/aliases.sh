@@ -1,10 +1,3 @@
-alias ls="ls -G --color=auto"
-
-alias la="ls -A"
-alias sl="ls"
-alias ll="ls -l"
-alias lrt="ls -lrt"
-
 alias e="exa --classify"
 alias ea="e --all"
 alias ee="e --long --header --git"
