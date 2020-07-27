@@ -82,9 +82,9 @@ let
     name = "my-" + bin;
     paths = [ pkg ];
     buildInputs = [ pkgs.makeWrapper my-xdg-config ];
-    postBuild = "wrapProgram $out/bin/${bin} --set ${envVar} ${my-xdg-config}/${relPath}";
+    postBuild = "wrapProgram $out/bin/${bin} --set ${envVar} ${my-xdg-config}/config/${relPath}";
   };
-  xdg = withConfig "XDG_CONFIG_HOME" "config";
+  xdg = withConfig "XDG_CONFIG_HOME" "";
 
   my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
 
@@ -130,7 +130,7 @@ with pkgs; [
   htop
   httpie
   jq
-  (withConfig "KITTY_CONFIG_DIRECTORY" "config/kitty" "kitty" kitty)
+  (withConfig "KITTY_CONFIG_DIRECTORY" "kitty" "kitty" kitty)
   my-python
   my-scripts
   (xdg "vim" my-vim)
