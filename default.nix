@@ -93,58 +93,64 @@ let
 in
 
 with pkgs; [
-  (xdg "bat" bat)
-  bash-completion
-  bazelisk
-  caddy
-  calc
-  cloc
-  comma
+  my-xdg-config  # Config files for some of the programs in this list.
+  my-scripts     # Little utility programs. Source in the bin/ directory.
+
+  # My terminal and shell. On macOS I use iTerm2 instead of kitty.
+  (withConfig "KITTY_CONFIG_DIRECTORY" "kitty" "kitty" kitty)
+  my-shell
+
+  # Life on the command line.
+  (xdg "bat" bat)  # Display files, with syntax highlighting.
+  bash-completion  # Tab-completion for a bunch of commands.
+  bazelisk         # Build bazel projects.
+  caddy            # Run a webserver.
+  calc             # A simple calculator.
+  cloc             # Count lines of code.
+  comma            # Run programs without installing them.
   (
     # prioritize the coreutils "link" command over the go "link" command.
     # (The latter is still available as "go tool link").
-    hiPrio coreutils
+    hiPrio
+      coreutils  # Basic file, shell and text manipulation utilities.
   )
-  direnv
-  docker
-  entr
-  exa
-  fd
-  fira-code
-  fzf
-  (xdg "git" git)
-  ghc # just for ghcid
-  ghcid
-  haskell.compiler.ghcjs86
-  gitAndTools.hub
-  gitAndTools.diff-so-fancy
-  gnupg
-  go
-  google-cloud-sdk
-  goimports
-  gotop
+  direnv     # Set environment variables per-project.
+  docker     # Bundle programs with their dependencies.
+  entr       # Re-run builds when source files change. (I wrap this in "witch".)
+  exa        # List files in the current directory.
+  fd         # Find file by name.
+  fira-code  # Font that renders symbols in code nicely.
+  fzf        # Fuzzy text search.
+  (xdg "git"
+    git)     # Track version history for text files.
+  ghc        # Compile Haskell code. (Usually I use stack instead).
+  ghcid      # Evaluate Haskell code interactively.
+  haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
+  gitAndTools.hub            # GitHub CLI.
+  gitAndTools.diff-so-fancy  # Better text diffs for git.
+  gnupg             # Cryptography tools.
+  go                # Run Go code.
+  google-cloud-sdk  # Google Cloud CLI.
+  goimports         # Auto insert + remove import statements in Go files.
+  gotop             # Show CPU + memory usage.
   (with haskellPackages; [
-    (haskell.lib.justStaticExecutables hasktags)
-    (haskell.lib.justStaticExecutables hoogle)
+    (haskell.lib.justStaticExecutables hasktags)  # Jump-to-definition for Haskell.
+    (haskell.lib.justStaticExecutables hoogle)    # Code search for Haskell.
   ])
-  htop
-  httpie
-  jq
-  (withConfig "KITTY_CONFIG_DIRECTORY" "kitty" "kitty" kitty)
-  my-python
-  my-scripts
-  (xdg "vim" my-vim)
-  my-xdg-config
-  my-shell
-  ngrok
-  nix-bash-completions
-  nodejs
-  ripgrep
-  unstable.stack
-  unstable.starship  # Cross-shell prompt.
-  tldr
-  tree
-  unzip
-  watch
-  wget
+  htop                  # Show CPU + memory usage.
+  httpie                # Create and execute HTTP queries.
+  jq                    # Zoom in on large JSON objects.
+  my-python             # Run python.
+  (xdg "vim" my-vim)    # Edit text.
+  ngrok                 # Make public URLs for stuff on your laptop.
+  nix-bash-completions  # Tab-complete for nix-env and friends.
+  nodejs                # Run javascript.
+  ripgrep               # Text search. (Phenomenal grep replacement.)
+  unstable.stack        # Build haskell projects.
+  unstable.starship     # Nice command prompt.
+  tldr                  # Show usage examples for common CLI programs.
+  tree                  # Show the files and folders in a directory tree.
+  unzip                 # Open .zip files.
+  watch                 # Run a command repeatedly.
+  wget                  # Download files.
 ] ++ maybe-nix
