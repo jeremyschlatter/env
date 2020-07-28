@@ -14,7 +14,6 @@ export EDITOR=vim
 # Credit to http://stackoverflow.com/a/19436421
 export LESSCHARSET=UTF-8
 
-export STARSHIP_CONFIG=$NIX_PROFILE/config/starship.toml
 export XDG_DATA_DIRS=$NIX_PROFILE/share
 
 export PATH=$NIX_PROFILE/bin:$PATH

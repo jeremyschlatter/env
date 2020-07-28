@@ -71,19 +71,11 @@ let
     (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
   ];
 
-  my-xdg-config =
-    let base = pkgs.runCommand "my-xdg-config" {} "mkdir $out && cp -R ${./config} $out/config";
+  my-configs =
+    let base = pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
     in if builtins.length patches == 0
        then base
        else pkgs.applyPatches { src = base; patches = patches; };
-
-  withConfig = envVar: relPath: bin: pkg: pkgs.symlinkJoin {
-    name = "my-" + bin;
-    paths = [ pkg ];
-    buildInputs = [ pkgs.makeWrapper my-xdg-config ];
-    postBuild = "wrapProgram $out/bin/${bin} --set ${envVar} ${my-xdg-config}/config/${relPath}";
-  };
-  xdg = withConfig "XDG_CONFIG_HOME" "";
 
   my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
 
@@ -92,15 +84,15 @@ let
 in
 
 with pkgs; [
-  my-xdg-config  # Config files for some of the programs in this list.
-  my-scripts     # Little utility programs. Source in the bin/ directory.
+  my-configs  # Config files for some of the programs in this list.
+  my-scripts  # Little utility programs. Source in the bin/ directory.
 
   # My terminal and shell. On macOS I use iTerm2 instead of kitty.
-  (withConfig "KITTY_CONFIG_DIRECTORY" "kitty" "kitty" kitty)
+  kitty
   my-shell
 
   # Life on the command line.
-  (xdg "bat" bat)  # Display files, with syntax highlighting.
+  bat              # Display files, with syntax highlighting.
   bash-completion  # Tab-completion for a bunch of commands.
   bazelisk         # Build bazel projects.
   caddy            # Run a webserver.
@@ -120,8 +112,7 @@ with pkgs; [
   fd         # Find file by name.
   fira-code  # Font that renders symbols in code nicely.
   fzf        # Fuzzy text search.
-  (xdg "git"
-    git)     # Track version history for text files.
+  git        # Track version history for text files.
   ghc        # Compile Haskell code. (Usually I use stack instead).
   ghcid      # Evaluate Haskell code interactively.
   haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
@@ -140,7 +131,7 @@ with pkgs; [
   httpie                # Create and execute HTTP queries.
   jq                    # Zoom in on large JSON objects.
   my-python             # Run python.
-  (xdg "vim" my-vim)    # Edit text.
+  my-vim                # Edit text.
   ngrok                 # Make public URLs for stuff on your laptop.
   nix-bash-completions  # Tab-complete for nix-env and friends.
   nodejs                # Run javascript.
