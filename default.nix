@@ -32,8 +32,7 @@ let
               then with pkgs; [nix cacert]
               else [];
 
-  my-python = let
-  in unstable.python38.withPackages (pkgs: with pkgs; [
+  my-python = unstable.python38.withPackages (pkgs: with pkgs; [
     ipython
     iterm2
     requests
