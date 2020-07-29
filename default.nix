@@ -22,23 +22,6 @@ let
     sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
   }) {pkgs = pkgs;});
 
-  # This expression is designed to be installed with 'nix-env -ri', which deletes existing
-  # packages. If the nix tools are in the profile now, we want them to stay in the profile
-  # after 'nix-env -ri'.
-  #
-  # On NixOS, these tools are installed elsewhere. On other OS's, the default nix installation
-  # puts them in the profile.
-  maybe-nix = if builtins.pathExists ((builtins.getEnv "HOME") + "/.nix-profile/bin/nix-env")
-              then with pkgs; [nix cacert]
-              else [];
-
-  my-python = unstable.python38.withPackages (pkgs: with pkgs; [
-    ipython
-    iterm2
-    requests
-    magic-wormhole
-  ]);
-
   # I have some utility scripts in different languages in the bin/ directory of this repo.
   # This expression compiles and installs them.
   my-scripts = let
@@ -66,7 +49,7 @@ let
   in [
     (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
     (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-    (interp "python" "/bin/sh ${my-python}/bin/python")
+    (interp "python" "/bin/sh ${unstable.python38.withPackages (pkgs: with pkgs; [iterm2 requests])}/bin/python")
     (interp "sh" "${pkgs.bash}/bin/sh")
     (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
   ];
@@ -130,7 +113,10 @@ with pkgs; [
   htop                  # Show CPU + memory usage.
   httpie                # Create and execute HTTP queries.
   jq                    # Zoom in on large JSON objects.
-  my-python             # Run python.
+  (unstable.python38.withPackages (pkgs: with pkgs; [
+    ipython             # Better Python repl than the default.
+    magic-wormhole      # Copy files between computers.
+  ]))                   # Run Python.
   my-vim                # Edit text.
   ngrok                 # Make public URLs for stuff on your laptop.
   nix-bash-completions  # Tab-complete for nix-env and friends.
@@ -143,4 +129,14 @@ with pkgs; [
   unzip                 # Open .zip files.
   watch                 # Run a command repeatedly.
   wget                  # Download files.
-] ++ maybe-nix
+] ++ (
+    # This expression is designed to be installed with 'nix-env -ri', which deletes existing
+    # packages. If the nix tools are in the profile now, we want them to stay in the profile
+    # after 'nix-env -ri'.
+    #
+    # On NixOS, these tools are installed elsewhere. On other OS's, the default nix installation
+    # puts them in the profile.
+    if builtins.pathExists ((builtins.getEnv "HOME") + "/.nix-profile/bin/nix-env")
+    then with pkgs; [nix cacert]
+    else []
+)
