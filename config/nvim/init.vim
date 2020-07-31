@@ -79,6 +79,8 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.hs set expandtab tabstop=2 softtabstop=2 shiftwidth=2 cc=101
 " Bel
   au BufRead,BufNewFile *.bel set expandtab tabstop=2 softtabstop=2 shiftwidth=2 commentstring=;\ %s
+" Dhall
+  au BufRead,BufNewFile *.dhall set commentstring=--\ %s
 augroup END
 
 " Prettier
