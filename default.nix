@@ -22,8 +22,7 @@ let
       pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
         mkdir -p $out/bin
 
-        # Go-specific initialization. Runs for all languages, but happens
-        # not to cause problems for any of the non-Go ones.
+        # Go-specific initialization.
         mkdir build
         cd build
         GOCACHE=$TMPDIR ${pkgs.go}/bin/go mod init apps
