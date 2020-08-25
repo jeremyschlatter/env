@@ -15,13 +15,6 @@ let
     url = https://github.com/NixOS/nixpkgs-channels/tarball/970b2b853d41ec80a3c2aba3e585f52818fbbfa3; # pinned from nixpkgs-unstable branch
   }) {};
 
-  comma = (import (pkgs.fetchFromGitHub {
-    owner = "Shopify";
-    repo = "comma";
-    rev = "4a62ec1";
-    sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
-  }) {pkgs = pkgs;});
-
   # I have some utility scripts in different languages in the bin/ directory of this repo.
   # This expression compiles and installs them.
   my-scripts = let
@@ -81,7 +74,6 @@ with pkgs; [
   caddy            # Run a webserver.
   calc             # A simple calculator.
   cloc             # Count lines of code.
-  comma            # Run programs without installing them.
   (
     # prioritize the coreutils "link" command over the go "link" command.
     # (The latter is still available as "go tool link").
