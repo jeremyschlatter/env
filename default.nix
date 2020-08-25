@@ -137,6 +137,6 @@ with pkgs; [
     # On NixOS, these tools are installed elsewhere. On other OS's, the default nix installation
     # puts them in the profile.
     if builtins.pathExists ((builtins.getEnv "HOME") + "/.nix-profile/bin/nix-env")
-    then with pkgs; [nix cacert]
+    then with unstable.pkgs; [nixFlakes cacert]
     else []
 )
