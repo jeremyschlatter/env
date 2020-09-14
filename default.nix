@@ -41,7 +41,7 @@ let
   in [
     (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
     (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-    (interp "python" "/bin/sh ${unstable.python38.withPackages (pkgs: with pkgs; [iterm2 requests])}/bin/python")
+    (interp "python" "/bin/sh ${unstable.python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
     (interp "sh" "${pkgs.bash}/bin/sh")
     (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
   ];
