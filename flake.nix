@@ -5,8 +5,37 @@
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
-    defaultPackage.x86_64-darwin =
+    my-scripts = pkgs: binPath:
+      let
+        build-with-inputs = inputs: name: cmd:
+          pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
+            mkdir -p $out/bin
 
+            # Go-specific initialization.
+            mkdir build
+            cd build
+            GOCACHE=$TMPDIR ${pkgs.go}/bin/go mod init apps
+
+            for file in ${binPath}/${name}/*
+            do
+              # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
+              # for removing the file extension.
+              dest=$out/bin/$(basename ''${file%.*})
+              ${cmd}
+              chmod +x $dest
+            done
+          '';
+        build = build-with-inputs [];
+        interp = name: interpreter: build name "echo '#!'${interpreter} | cat - $file > $dest";
+      in [
+        (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
+        (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
+        (interp "python" "/bin/sh ${pkgs.python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
+        (interp "sh" "${pkgs.bash}/bin/sh")
+        (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
+      ];
+
+    defaultPackage.x86_64-darwin =
       let
         pkgs = import nixpkgs {
           system = "x86_64-darwin";
@@ -14,53 +43,17 @@
             allowUnfree = true; # required for ngrok
           };
         };
-
         unstable = import nixpkgs-unstable { system = "x86_64-darwin"; };
-
-        # I have some utility scripts in different languages in the bin/ directory of this repo.
-        # This expression compiles and installs them.
-        my-scripts = let
-          build-with-inputs = inputs: name: cmd:
-            pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
-              mkdir -p $out/bin
-
-              # Go-specific initialization.
-              mkdir build
-              cd build
-              GOCACHE=$TMPDIR ${pkgs.go}/bin/go mod init apps
-
-              for file in ${./bin}/${name}/*
-              do
-                # Credit to https://stackoverflow.com/a/12152997 for the "%.*" syntax
-                # for removing the file extension.
-                dest=$out/bin/$(basename ''${file%.*})
-                ${cmd}
-                chmod +x $dest
-              done
-            '';
-          build = build-with-inputs [];
-          interp = name: interpreter: build name "echo '#!'${interpreter} | cat - $file > $dest";
-        in [
-          (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
-          (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-          (interp "python" "/bin/sh ${unstable.python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
-          (interp "sh" "${pkgs.bash}/bin/sh")
-          (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
-        ];
-
         my-configs = pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
-
         my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
-
         my-vim = import ./neovim.nix pkgs;
-
       in
 
       with pkgs; symlinkJoin {
         name = "jeremys-env";
         paths = [
           my-configs  # Config files for some of the programs in this list.
-          my-scripts  # Little utility programs. Source in the bin/ directory.
+          (self.my-scripts pkgs "${./bin}") # Little utility programs. Source in the bin/ directory.
 
           # My terminal and shell. On macOS I use iTerm2 instead of kitty.
           kitty
