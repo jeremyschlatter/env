@@ -1,4 +1,4 @@
-vimrc: pkgs: vim-plugins:
+pkgs:
 
 let
   camelcasemotion = (pkgs.vimUtils.buildVimPluginFrom2Nix {
@@ -72,7 +72,7 @@ in
     viAlias = true;
     vimAlias = true;
     configure = {
-      customRC = builtins.readFile vimrc;
+      customRC = ":source ${./config/nvim/init.vim}";
       packages.mine = with pkgs.vimPlugins; {
         start = [
           camelcasemotion
@@ -93,7 +93,7 @@ in
           vim-numbertoggle
           vim-toml
           vim-unicoder
-        ] ++ vim-plugins;
+        ];
       };
      };
   })

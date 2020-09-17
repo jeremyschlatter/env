@@ -1,17 +1,8 @@
 # My development environment
 
-You don't need to clone this repo to use it.
+**Usage**
 
-To use, first install [nix](https://nixos.org/nix/):
-
-    curl https://nixos.org/nix/install | sh
-
-Then use nix-env to install the rest:
-
-    $ nix-env -rif https://github.com/jeremyschlatter/nixpkgs/tarball/main
-    $ jeremy-post-install
-
-You can also pull my updates by re-running the above commands.
+_I am in the middle of converting this repo to use Nix flakes and so do not have reliable usage instructions right now_.
 
 **About my environment**
 
