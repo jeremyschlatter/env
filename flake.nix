@@ -66,6 +66,10 @@
           kitty
           my-shell
 
+          # Reinstall nix itself.
+          unstable.nixFlakes
+          unstable.cacert
+
           # Life on the command line.
           bat              # Display files, with syntax highlighting.
           bash-completion  # Tab-completion for a bunch of commands.
@@ -120,18 +124,7 @@
           unzip                 # Open .zip files.
           watch                 # Run a command repeatedly.
           wget                  # Download files.
-        ] ++ (
-            # This expression is designed to be installed with 'nix-env -ri', which deletes existing
-            # packages. If the nix tools are in the profile now, we want them to stay in the profile
-            # after 'nix-env -ri'.
-            #
-            # On NixOS, these tools are installed elsewhere. On other OS's, the default nix installation
-            # puts them in the profile.
-            if builtins.pathExists ((builtins.getEnv "HOME") + "/.nix-profile/bin/nix-env")
-            then with unstable.pkgs; [nixFlakes cacert]
-            else []
-        );
+        ];
       };
-
   };
 }
