@@ -20,7 +20,6 @@ alias gotop="gotop -c default-dark"
 
 alias cat="bat"
 
-alias i="nix-env -rif ~/src/my/nixpkgs; jeremy-post-install"
 alias vit='vi -c ":vsplit term://shell"'
 
 light() {
