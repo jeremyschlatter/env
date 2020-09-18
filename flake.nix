@@ -6,15 +6,15 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
     my-scripts = pkgs: binPath:
-      let
+      with pkgs; let
         build-with-inputs = inputs: name: cmd:
-          pkgs.runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
+          runCommand "my-${name}-scripts" {buildInputs = inputs;} ''
             mkdir -p $out/bin
 
             # Go-specific initialization.
             mkdir build
             cd build
-            GOCACHE=$TMPDIR ${pkgs.go}/bin/go mod init apps
+            GOCACHE=$TMPDIR ${go}/bin/go mod init apps
 
             for file in ${binPath}/${name}/*
             do
@@ -28,11 +28,11 @@
         build = build-with-inputs [];
         interp = name: interpreter: build name "echo '#!'${interpreter} | cat - $file > $dest";
       in [
-        (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${pkgs.go}/bin/go build -o $dest $(basename $file)")
-        (build "haskell" "${pkgs.ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-        (interp "python" "/bin/sh ${pkgs.python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
-        (interp "sh" "${pkgs.bash}/bin/sh")
-        (build-with-inputs [pkgs.gcc] "rust" "${pkgs.rustc}/bin/rustc -o $dest $file")
+        (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${go}/bin/go build -o $dest $(basename $file)")
+        (build "haskell" "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
+        (interp "python" "/bin/sh ${python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
+        (interp "sh" "${bash}/bin/sh")
+        (build-with-inputs [gcc] "rust" "${rustc}/bin/rustc -o $dest $file")
       ];
 
     defaultPackage.x86_64-darwin =
