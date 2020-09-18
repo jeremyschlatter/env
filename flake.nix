@@ -44,8 +44,8 @@
           };
         };
         unstable = import nixpkgs-unstable { system = "x86_64-darwin"; };
-        my-configs = pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
-        my-shell = pkgs.runCommand "my-shell" {} "mkdir -p $out/bin && ln -s ${pkgs.bashInteractive_5}/bin/bash $out/bin/shell";
+        my-configs = pkgs.linkFarm "my-configs" [{name="config"; path="${./config}";}];
+        my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
       in
 
