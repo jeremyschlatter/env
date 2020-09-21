@@ -36,6 +36,7 @@
       ];
 
     defaultPackage.x86_64-darwin = self.packages "x86_64-darwin";
+    defaultPackage.x86_64-linux = self.packages "x86_64-linux";
 
     packages = system:
       let
