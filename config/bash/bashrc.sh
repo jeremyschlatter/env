@@ -18,7 +18,7 @@ if [ -a ~/.local_bashrc ]; then
     source ~/.local_bashrc
 fi
 
-NIX_PROFILE=$HOME/.nix-profile
+NIX_PROFILE=$HOME/.flake/profile
 
 # Some aliases
 . $NIX_PROFILE/config/bash/aliases.sh

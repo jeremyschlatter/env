@@ -25,12 +25,12 @@ func main() {
 		}
 	}()
 
-	nixConfDir := os.ExpandEnv("$HOME/.nix-profile/config/")
+	nixConfDir := os.ExpandEnv("$HOME/.flake/profile/config/")
 	homeConfDir := os.ExpandEnv("$HOME/.config/")
 
 	wantSymlink := make(map[string]bool)
 
-	// Symlink ~/.nix-profile/config/* into ~/.config
+	// Symlink ~/.flake/profile/config/* into ~/.config
 	{
 		fis, err := ioutil.ReadDir(nixConfDir)
 		check(err)

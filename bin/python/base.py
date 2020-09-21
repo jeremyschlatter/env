@@ -34,7 +34,7 @@ def set_colors(which, restore=False):
         # Which terminal emulator are we in?
         if 'kitty' in os.getenv('TERM'):
             # kitty
-            run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.nix-profile/config/kitty/{which}.conf', ], check=True)
+            run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.flake/profile/config/kitty/{which}.conf', ], check=True)
         else:
             pass
             # Assume iterm2.

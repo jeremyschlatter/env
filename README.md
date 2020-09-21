@@ -15,12 +15,12 @@ kitty, you can run it manually as `shell`.
 
 To pick up the Fira Code font in Gnome I made this symlink:
 
-    ln -s ~/.nix-profile/share/fonts/ ~/.local/share/
+    ln -s ~/.flake/profile/share/fonts/ ~/.local/share/
 
 To pick up application launchers for kitty and alacritty in Gnome I made this symlink:
 
     rmdir ~/.local/share/applications
-    ln -s ~/.nix-profile/share/applications/ ~/.local/share/
+    ln -s ~/.flake/profile/share/applications/ ~/.local/share/
 
 To pick up the Solarized theme for bat, I ran:
 
