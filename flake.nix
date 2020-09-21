@@ -35,15 +35,17 @@
         (build-with-inputs [gcc] "rust" "${rustc}/bin/rustc -o $dest $file")
       ];
 
-    defaultPackage.x86_64-darwin =
+    defaultPackage.x86_64-darwin = self.packages "x86_64-darwin";
+
+    packages = system:
       let
         pkgs = import nixpkgs {
-          system = "x86_64-darwin";
+          inherit system;
           config = {
             allowUnfree = true; # required for ngrok
           };
         };
-        unstable = import nixpkgs-unstable { system = "x86_64-darwin"; };
+        unstable = import nixpkgs-unstable { inherit system; };
         my-configs = pkgs.linkFarm "my-configs" [{name="config"; path="${./config}";}];
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
