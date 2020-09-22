@@ -90,7 +90,7 @@
         entr       # Re-run builds when source files change. (I wrap this in "witch".)
         exa        # List files in the current directory.
         fd         # Find file by name.
-        fira-code  # Font that renders symbols in code nicely.
+        unstable.fira-code  # Font that renders symbols in code nicely.
         fzf        # Fuzzy text search.
         git        # Track version history for text files.
         ghc        # Compile Haskell code. (Usually I use stack instead).
