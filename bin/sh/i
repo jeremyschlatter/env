@@ -1,0 +1,5 @@
+set -ueo pipefail
+drvpath=`cat ~/.flake/drvpath | xargs`
+updates=`nix flake list-inputs --json $drvpath | jq '.nodes.root.inputs | keys | join(" --update-input ")' | xargs`
+nix build --update-input $updates --commit-lock-file --no-link --profile ~/.flake/profile $drvpath
+jeremy-post-install
