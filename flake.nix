@@ -34,6 +34,7 @@
         (interp "sh" "${bash}/bin/sh")
         (build-with-inputs [gcc] "rust" "${rustc}/bin/rustc -o $dest $file")
       ];
+    my-configs = pkgs: pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
 
     defaultPackage.x86_64-darwin = self.packages "x86_64-darwin";
     defaultPackage.x86_64-linux = self.packages "x86_64-linux";
@@ -47,7 +48,6 @@
           };
         };
         unstable = import nixpkgs-unstable { inherit system; };
-        my-configs = pkgs.linkFarm "my-configs" [{name="config"; path=./config;}];
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
       in
@@ -55,7 +55,7 @@
       with pkgs; symlinkJoin {
         name = "jeremys-env";
         paths = [
-          my-configs  # Config files for some of the programs in this list.
+          (self.my-configs pkgs) # Config files for some of the programs in this list.
           (self.my-scripts pkgs ./bin) # Little utility programs. Source in the bin/ directory.
 
           # My terminal and shell. On macOS I use iTerm2 instead of kitty.
