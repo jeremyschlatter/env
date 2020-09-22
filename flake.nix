@@ -36,6 +36,7 @@
       ];
     my-configs = pkgs: pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
     pkgs = system: {
+      inherit system;
       pkgs = import nixpkgs {
         inherit system;
         config = {
@@ -53,7 +54,7 @@
     defaultPackage.x86_64-darwin = self.bundle "jeremys-env" self.packages "x86_64-darwin";
     defaultPackage.x86_64-linux  = self.bundle "jeremys-env" self.packages "x86_64-linux";
 
-    packages = { pkgs, unstable }:
+    packages = { pkgs, unstable, system }:
       let
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
@@ -125,6 +126,8 @@
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
-      ];
+      ] ++ (if system != "x86_64-linux" then [] else [
+        file
+      ]);
   };
 }
