@@ -46,10 +46,13 @@
       unstable = import nixpkgs-unstable { inherit system; };
     };
     bundle = name: cb: system:
-      (self.pkgs system).pkgs.symlinkJoin {
-        inherit name;
-        paths = cb (self.pkgs system);
-      };
+      let
+        x = (self.pkgs system);
+      in with x.pkgs;
+        x.pkgs.buildEnv {
+          inherit name;
+          paths = x.pkgs.lib.lists.flatten (cb x);
+        };
 
     defaultPackage.x86_64-darwin = self.bundle "jeremys-env" self.packages "x86_64-darwin";
     defaultPackage.x86_64-linux  = self.bundle "jeremys-env" self.packages "x86_64-linux";
