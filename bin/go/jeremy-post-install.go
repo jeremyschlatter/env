@@ -15,6 +15,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -67,9 +69,24 @@ func main() {
 			if err == nil && strings.HasPrefix(link, nixConfDir) && !wantSymlink[fi.Name()] {
 				fmt.Printf("removing %v config...\n", fi.Name())
 				check(os.Remove(homeConfDir + fi.Name()))
+				run(exec.Command("bat", "cache", "--build"))
 			}
 		}
 	}
+
+	// Build bat theme
+	{
+		if _, err := os.Stat(filepath.Join(os.Getenv("HOME"), ".cache", "bat", "themes.bin")); os.IsNotExist(err) {
+			fmt.Println("installing solarized theme for bat...")
+		}
+	}
+}
+
+func run(cmd *exec.Cmd) {
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	check(cmd.Run())
 }
 
 func check(err error) {

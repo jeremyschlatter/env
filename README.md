@@ -21,7 +21,3 @@ To pick up application launchers for kitty and alacritty in Gnome I made this sy
 
     rmdir ~/.local/share/applications
     ln -s ~/.flake/profile/share/applications/ ~/.local/share/
-
-To pick up the Solarized theme for bat, I ran:
-
-    bat cache --build
