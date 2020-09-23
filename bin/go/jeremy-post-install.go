@@ -69,7 +69,6 @@ func main() {
 			if err == nil && strings.HasPrefix(link, nixConfDir) && !wantSymlink[fi.Name()] {
 				fmt.Printf("removing %v config...\n", fi.Name())
 				check(os.Remove(homeConfDir + fi.Name()))
-				run(exec.Command("bat", "cache", "--build"))
 			}
 		}
 	}
@@ -78,6 +77,7 @@ func main() {
 	{
 		if _, err := os.Stat(filepath.Join(os.Getenv("HOME"), ".cache", "bat", "themes.bin")); os.IsNotExist(err) {
 			fmt.Println("installing solarized theme for bat...")
+			run(exec.Command("bat", "cache", "--build"))
 		}
 	}
 }
