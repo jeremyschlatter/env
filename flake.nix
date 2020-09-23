@@ -98,6 +98,7 @@
         haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
+        gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
