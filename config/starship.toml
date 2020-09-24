@@ -1,20 +1,20 @@
-[time]
-disabled = false
+[hostname]
+style = "bold italic underline purple"
+prefix = "☁️ "
 
+[time]
+disabled = false # enabled!
+
+# Disable a bunch of modules I don't like.
 [golang]
 disabled = true
-
 [rust]
 disabled = true
-
 [aws]
 disabled = true  # Seems buggy. Showed me on AWS instances when I was on localhost.
-
 [line_break]
 disabled = true
-
 [jobs]
 disabled = true  # Seems buggy. It was showing 1 job when there weren't any.
-
 [battery]
 disabled = true
