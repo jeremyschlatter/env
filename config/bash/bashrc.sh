@@ -79,7 +79,7 @@ __fzf_history__() {
   # It reads from ~/.full_history.logfmt rather than ~/.bash_history.
   local output
   output=$($NIX_PROFILE/bin/fzf-hist |
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac --sync -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m" $(__fzfcmd)
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac --sync --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m" $(__fzfcmd)
   ) || return
   READLINE_LINE=${output#*$'\t'}
   if [ -z "$READLINE_POINT" ]; then
