@@ -88,7 +88,6 @@
           hiPrio
             coreutils  # Basic file, shell and text manipulation utilities.
         )
-        direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
         entr       # Re-run builds when source files change. (I wrap this in "witch".)
         exa        # List files in the current directory.
