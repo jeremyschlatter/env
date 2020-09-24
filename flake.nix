@@ -101,8 +101,6 @@
         haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
-          # Needed by diff-so-fancy, but not bundled with it :/
-          less
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
@@ -115,6 +113,7 @@
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
+        less                  # Scroll through long files.
         (unstable.python38.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
