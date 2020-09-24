@@ -101,7 +101,9 @@
         haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
-        gnumake           # Near-omnipresent generic build tool.
+          # Needed by diff-so-fancy, but not bundled with it :/
+          (symlinkJoin{name="perl";paths=[perl];buildInputs=[makeWrapper];postBuild="wrapProgram $out/bin/perl --set LC_ALL C";})
+          less
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
@@ -124,6 +126,8 @@
         nodejs                # Run javascript.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         stack                 # Build haskell projects.
+          # Needed by stack, but not bundled with it :/
+          gnumake
         unstable.starship     # Nice command prompt.
         tldr                  # Show usage examples for common CLI programs.
         tree                  # Show the files and folders in a directory tree.
