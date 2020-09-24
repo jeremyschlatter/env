@@ -122,6 +122,7 @@
         my-vim                # Edit text.
         ngrok                 # Make public URLs for stuff on your laptop.
         nix-bash-completions  # Tab-complete for nix-env and friends.
+        nix-index             # Find which nix package has the program you need.
         nodejs                # Run javascript.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         stack                 # Build haskell projects.
