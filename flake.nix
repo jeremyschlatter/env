@@ -1,8 +1,8 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-20.03-darwin;
-  inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs-channels/nixos-20.09;
+  inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs-channels/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
     my-scripts = pkgs: binPath:
@@ -72,8 +72,8 @@
         my-shell
 
         # Reinstall nix itself.
-        unstable.nixFlakes
-        unstable.cacert
+        nixFlakes
+        cacert
 
         # Life on the command line.
         bat              # Display files, with syntax highlighting.
@@ -93,7 +93,7 @@
         entr       # Re-run builds when source files change. (I wrap this in "witch".)
         exa        # List files in the current directory.
         fd         # Find file by name.
-        unstable.fira-code  # Font that renders symbols in code nicely.
+        fira-code  # Font that renders symbols in code nicely.
         fzf        # Fuzzy text search.
         git        # Track version history for text files.
         ghc        # Compile Haskell code. (Usually I use stack instead).
@@ -114,7 +114,7 @@
         httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
-        (unstable.python38.withPackages (pkgs: with pkgs; [
+        (python38.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
         ]))                   # Run Python.
@@ -125,7 +125,7 @@
         nodejs                # Run javascript.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         stack                 # Build haskell projects.
-        unstable.starship     # Nice command prompt.
+        starship              # Nice command prompt.
         tldr                  # Show usage examples for common CLI programs.
         tree                  # Show the files and folders in a directory tree.
         unzip                 # Open .zip files.
