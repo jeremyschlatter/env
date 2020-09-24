@@ -74,12 +74,20 @@ eval "$(restore_colors)"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 . $NIX_PROFILE/share/fzf/key-bindings.bash
-__fzf_history__() (
+__fzf_history__() {
   # This overrides the __fzf_history__ implementation from key-bindings.bash.
   # It reads from ~/.full_history.logfmt rather than ~/.bash_history.
-  $NIX_PROFILE/bin/fzf-hist |
+  local output
+  output=$($NIX_PROFILE/bin/fzf-hist |
     FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac --sync -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS +m" $(__fzfcmd)
-)
+  ) || return
+  READLINE_LINE=${output#*$'\t'}
+  if [ -z "$READLINE_POINT" ]; then
+    echo "$READLINE_LINE"
+  else
+    READLINE_POINT=0x7fffffff
+  fi
+}
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 bind -x '"\C-p": vim $(fzf);'
