@@ -1,6 +1,6 @@
 [hostname]
-style = "bold italic underline purple"
-prefix = "☁️ "
+style = "bold italic purple"
+prefix = "☁️  "
 
 [time]
 disabled = false # enabled!
