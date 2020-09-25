@@ -117,6 +117,7 @@
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
         ]))                   # Run Python.
+        man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         my-vim                # Edit text.
         ngrok                 # Make public URLs for stuff on your laptop.
         nix-bash-completions  # Tab-complete for nix-env and friends.
