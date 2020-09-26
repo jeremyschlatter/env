@@ -75,6 +75,9 @@
         nixFlakes
         cacert
 
+        # Mount some defense against the ravages of entropy.
+        perkeep
+
         # Life on the command line.
         bat              # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
