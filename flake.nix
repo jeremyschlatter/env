@@ -5,6 +5,17 @@
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs-channels/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
+    # custom build b/c the iterm2 package is not bundled into nix
+    my-iterm2 = pypkgs: with pypkgs; buildPythonPackage rec {
+      pname = "iterm2";
+      version = "1.14";
+      src = fetchPypi {
+        inherit pname version;
+        sha256 = "089pln3c41n6dyh91hw9gy6mpm9s663lpmdc4gamig3g6pfmbsk4";
+      };
+      doCheck = false;
+      propagatedBuildInputs = [ protobuf websockets ];
+    };
     my-scripts = pkgs: binPath:
       with pkgs; let
         build-with-inputs = inputs: name: cmd:
@@ -30,7 +41,7 @@
       in [
         (build "go" "cp $file . && GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${go}/bin/go build -o $dest $(basename $file)")
         (build "haskell" "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file")
-        (interp "python" "/bin/sh ${python38.withPackages (pkgs: with pkgs; [requests])}/bin/python")
+        (interp "python" "/bin/sh ${python38.withPackages (pkgs: with pkgs; [requests (self.my-iterm2 pkgs)])}/bin/python")
         (interp "sh" "${bash}/bin/sh")
         (build-with-inputs [gcc] "rust" "${rustc}/bin/rustc -o $dest $file")
       ];
