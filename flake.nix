@@ -93,6 +93,7 @@
         bat              # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
         bazelisk         # Build bazel projects.
+        cachix           # User-managed binary caches for nix.
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
