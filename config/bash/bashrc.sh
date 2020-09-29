@@ -103,4 +103,6 @@ sf() {
   [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
 
+eval "$(direnv hook bash)"
+
 eval "$(starship init bash)"
