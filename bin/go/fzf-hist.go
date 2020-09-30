@@ -28,8 +28,7 @@ func main() {
 			5,
 		)
 		if len(blah) != 5 {
-			fmt.Println("bad line:")
-			fmt.Fprintf(os.Stderr, "%s\n", decoder.Value())
+			fmt.Println("bad line:", i)
 			os.Exit(1)
 		}
 		next := string(bytes.TrimSpace(bytes.SplitN(
