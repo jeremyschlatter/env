@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/go-logfmt/logfmt"
@@ -36,8 +38,15 @@ func main() {
 	encoder := logfmt.NewEncoder(f)
 
 	// Ensure that only one process writes to the history file at a time.
-	histLock, err := lock.Lock(os.ExpandEnv("$HOME/.full_history.lock"))
-	check(err)
+	var histLock io.Closer
+	for i := 0; i < 3; i++ {
+		histLock, err = lock.Lock(os.ExpandEnv("$HOME/.full_history.lock"))
+		if sysErr, ok := err.(syscall.Errno); err == nil || (ok && !sysErr.Temporary()) {
+			break
+		}
+		fmt.Fprintf(os.Stderr, "add-hist: temporary error: %v\n", err)
+		time.Sleep(10 * time.Millisecond)
+	}
 	defer histLock.Close()
 
 	check(encoder.EncodeKeyvals(
