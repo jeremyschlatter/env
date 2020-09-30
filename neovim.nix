@@ -72,7 +72,7 @@ in
     viAlias = true;
     vimAlias = true;
     configure = {
-      customRC = ":source ${./config/nvim/init.vim}";
+      customRC = ":source ${./config/nvim.vim}";
       packages.mine = with pkgs.vimPlugins; {
         start = [
           camelcasemotion
