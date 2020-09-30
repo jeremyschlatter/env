@@ -37,6 +37,9 @@ func main() {
 		fis, err := ioutil.ReadDir(nixConfDir)
 		check(err)
 		for _, fi := range fis {
+			if fi.Name() == "README.md" {
+				continue
+			}
 			wantSymlink[fi.Name()] = true
 			linkFrom := homeConfDir + fi.Name()
 			haveLink, err := os.Readlink(linkFrom)
