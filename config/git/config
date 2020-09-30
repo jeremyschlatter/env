@@ -13,6 +13,15 @@
     c = commit
     praise = blame
 
+    # Make a time-wasting thing that happens repeatedly in normal git workflows
+    # waste slightly less time.
+    #
+    # I'm annoyed that this is apparently the best I can do short of monkey-patching
+    # git-pull. Credit to both of these locations for this snippet:
+    #     https://zarino.co.uk/post/git-set-upstream/
+    #     https://stackoverflow.com/a/35487209
+    set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
+
     # From https://victorzhou.com/blog/git-aliases/
     s = status
     d = diff
