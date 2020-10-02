@@ -36,7 +36,6 @@ def set_colors(which, restore=False):
             # kitty
             run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.flake/profile/config/kitty/{which}.conf', ], check=True)
         else:
-            pass
             # Assume iterm2.
             #
             # We don't need to restore on iterm2, because the color is stored in the profile.
