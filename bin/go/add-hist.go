@@ -47,6 +47,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "add-hist: temporary error: %v\n", err)
 		time.Sleep(10 * time.Millisecond)
 	}
+	check(err)
 	defer histLock.Close()
 
 	check(encoder.EncodeKeyvals(
