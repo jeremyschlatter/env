@@ -65,6 +65,14 @@ def set_colors(which, restore=False):
         #
         # Do nothing to the terminal, but continue with other changes.
         pass
+    else:
+        print(
+            "I don't recognize this terminal, so not trying to change its color.",
+            # important to print to stderr, because stdout gets consumed as
+            # a shell script
+            file=sys.stderr,
+        )
+
 
     # Set bat config var.
     print(f'export BAT_THEME="Solarized ({which})"')
