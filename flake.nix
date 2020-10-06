@@ -5,7 +5,7 @@
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
-    # custom build b/c the iterm2 package is not bundled into nix
+    # custom build b/c the iterm2 package in nix is currently broken
     my-iterm2 = pypkgs: with pypkgs; buildPythonPackage rec {
       pname = "iterm2";
       version = "1.14";
