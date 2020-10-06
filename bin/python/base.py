@@ -40,7 +40,7 @@ def set_colors(which, restore=False):
         pass
     elif 'kitty' in os.getenv('TERM'):
         # kitty
-        run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.flake/profile/config/kitty/{which}.conf', ], check=True)
+        run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.nix-profile/config/kitty/{which}.conf', ], check=True)
     elif os.getenv('TERM_PROGRAM') == 'iTerm.app':
         # iterm2
         #
