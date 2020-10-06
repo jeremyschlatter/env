@@ -110,7 +110,7 @@
         fira-code  # Font that renders symbols in code nicely.
         fzf        # Fuzzy text search.
         git        # Track version history for text files.
-        ghcid      # Evaluate Haskell code interactively.
+        ghcid      # Fast typechecking feedback loop for Haskell development.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
         gnupg             # Cryptography tools.
