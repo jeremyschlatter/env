@@ -118,7 +118,6 @@
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         goimports         # Auto insert + remove import statements in Go files.
-        gotop             # Show CPU + memory usage.
         (with haskellPackages; [
           (haskell.lib.justStaticExecutables hasktags)  # Jump-to-definition for Haskell.
           (haskell.lib.justStaticExecutables hoogle)    # Code search for Haskell.
