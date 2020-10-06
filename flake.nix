@@ -116,7 +116,6 @@
         goimports         # Auto insert + remove import statements in Go files.
         (with haskellPackages; [
           (haskell.lib.justStaticExecutables hasktags)  # Jump-to-definition for Haskell.
-          (haskell.lib.justStaticExecutables hoogle)    # Code search for Haskell.
         ])
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
