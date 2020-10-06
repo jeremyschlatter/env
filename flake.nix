@@ -113,7 +113,6 @@
         git        # Track version history for text files.
         ghc        # Compile Haskell code. (Usually I use stack instead).
         ghcid      # Evaluate Haskell code interactively.
-        haskell.compiler.ghcjs86   # Compile Haskell code to javascript.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
         gnupg             # Cryptography tools.
