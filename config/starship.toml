@@ -5,6 +5,9 @@ prefix = "☁️  "
 [time]
 disabled = false # enabled!
 
+[nix_shell]
+impure_msg = "" # Don't tell me when it's impure. That's the typical case for me.
+
 # Disable a bunch of modules I don't like.
 [golang]
 disabled = true
