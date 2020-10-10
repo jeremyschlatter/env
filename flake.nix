@@ -134,9 +134,19 @@
           paths = x.pkgs.lib.lists.flatten (cb x);
         };
 
+    # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage.x86_64-darwin = self.bundle "jeremys-env" self.packages "x86_64-darwin";
     defaultPackage.x86_64-linux  = self.bundle "jeremys-env" self.packages "x86_64-linux";
 
+    # My package collection.
+    #
+    # These are the software packages that I have installed on all of my machines.
+    # They get installed _by being on this list_.
+    #
+    # Whenever I update this list, or any other part of this repo or any of my private nix repos,
+    # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
+    # Note that I am not limited to adding packages. I can delete or change anything here and
+    # it will effectively delete or change the software on all of my machines.
     packages = { pkgs, unstable, system }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
@@ -209,8 +219,7 @@
         watch                 # Run a command repeatedly.
         wget                  # Download files.
       ] ++ (if system != "x86_64-linux" then [] else [
-        file
+        file  # Get high-level semantic info about a file.
       ]);
-
   };
 }
