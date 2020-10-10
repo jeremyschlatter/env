@@ -104,10 +104,8 @@
                 else warn "not a recognized type of script: ${f}" []
         );
 
-    # This copies all of the config files in this repo to the nix store.
-    # They'll end up in $NIX_PROFILE/config, and then my "jeremy-post-install"
-    # script places symlinks to them from ~/.config.
-    my-configs = pkgs: pkgs.runCommand "my-configs" {} "mkdir $out && cp -R ${./config} $out/config";
+    # Simple builder: copy an entire directory into the nix store.
+    copyDir = pkgs: name: from: to: pkgs.runCommand name {} "mkdir -p ${dirOf to} && cp -R ${from} ${to}";
 
     # This combines a nested list of packages into a single package suitable
     # for installation into a profile. I use this function here in this
@@ -141,12 +139,13 @@
 
     packages = { pkgs, unstable, system }:
       let
+        my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
       in
 
       with pkgs; [
-        (self.my-configs pkgs) # Config files for some of the programs in this list.
+        my-configs # Config files for some of the programs in this list.
         (self.scripts pkgs ./scripts) # Little utility programs. Source in the scripts/ directory.
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
