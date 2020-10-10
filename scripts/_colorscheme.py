@@ -1,3 +1,4 @@
+# {"requirements": ["iterm2"]} #nix
 import os.path
 from subprocess import run
 import sys
@@ -21,8 +22,8 @@ def restore_colors():
 
     set_colors(colors, restore=True)
 
-def base():
-    print('hello from base.py')
+def _colorscheme():
+    print('hello from _colorscheme.py')
 
 #################  helpers  #################
 

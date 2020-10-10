@@ -1,3 +1,4 @@
+// {"deps": ["gitAndTools.hub"]} #nix
 package main
 
 import (
