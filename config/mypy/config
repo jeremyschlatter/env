@@ -1,0 +1,9 @@
+# vi: ft=toml
+
+[mypy]
+# Meta: warn if I make a mistake in this config file.
+warn_unused_configs = True
+
+# By default mypy does not typecheck functions that have no annotations.
+# With this setting, it checks those functions too.
+check_untyped_defs = True
