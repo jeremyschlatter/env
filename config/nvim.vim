@@ -140,8 +140,8 @@ nmap <silent> <leader>h :split<CR>
 nmap <silent> <leader>v :vsplit<CR>
 
 " Sort a block of #include statements (really, any sequence of lines, bordered
-" on top and bottom by empty lines).
-nmap <silent> <leader>s "syy}kv?^$<CR>j!sort<CR>?<c-r>s<BS><CR>:noh<CR>:redraw<CR>:echo "Sorted"<CR>
+" on top by an empty line or beginning of file, and on bottom by an empty line).
+nmap <silent> <leader>s "syy}kv{<RIGHT>0!sort<CR>?<c-r>s<BS><CR>:noh<CR>:redraw<CR>:echo "Sorted"<CR>
 
 " unmap commands that I only ever use unintentionally
 map Q <ESC>
