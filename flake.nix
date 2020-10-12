@@ -88,6 +88,7 @@
         let fullPath = scriptsPath + "/${f}";
         in if sources.pathIsDirectory fullPath
            then
+             if f == ".mypy_cache" then [] else
              let build = { deps = []; } // import (fullPath + "/build.nix") pkgs;
              in builders.goDir fullPath f build.deps build.sha256
            else
