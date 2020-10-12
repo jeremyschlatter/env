@@ -162,10 +162,6 @@
         kitty
         my-shell
 
-        # Reinstall nix itself.
-        nixFlakes
-        cacert
-
         # Life on the command line.
         bat              # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
@@ -209,7 +205,6 @@
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
-        nix-bash-completions  # Tab-complete for nix-env and friends.
         nix-index             # Find which nix package has the program you need.
         nodejs                # Run javascript.
         ripgrep               # Text search. (Phenomenal grep replacement.)
