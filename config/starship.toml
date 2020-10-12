@@ -8,10 +8,15 @@ disabled = false # enabled!
 [nix_shell]
 impure_msg = "" # Don't tell me when it's impure. That's the typical case for me.
 
+
 # Disable a bunch of modules I don't like.
 [golang]
 disabled = true
 [rust]
+disabled = true
+[python]
+disabled = true
+[nodejs]
 disabled = true
 [aws]
 disabled = true  # Seems buggy. Showed me on AWS instances when I was on localhost.
