@@ -189,6 +189,7 @@
         ghcid      # Fast typechecking feedback loop for Haskell development.
         gitAndTools.hub            # GitHub CLI.
         gitAndTools.diff-so-fancy  # Better text diffs for git.
+        git-crypt         # Encrypt select files in a git repo.
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
