@@ -108,6 +108,8 @@
     # Simple builder: copy an entire directory into the nix store.
     copyDir = pkgs: name: from: to: pkgs.runCommand name {} "mkdir -p ${dirOf to} && cp -R ${from} ${to}";
 
+    my-configs = pkgs: self.copyDir pkgs "my-configs" ./config "$out/config";
+
     # This combines a nested list of packages into a single package suitable
     # for installation into a profile. I use this function here in this
     # flake.nix file, but its most important purpose is to stitch multiple
@@ -150,13 +152,12 @@
     # it will effectively delete or change the software on all of my machines.
     packages = { pkgs, unstable, system }:
       let
-        my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
       in
 
       with pkgs; [
-        my-configs # Config files for some of the programs in this list.
+        (self.my-configs pkgs) # Config files for some of the programs in this list.
         (self.scripts pkgs ./scripts) # Little utility programs. Source in the scripts/ directory.
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
