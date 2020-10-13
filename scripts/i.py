@@ -11,15 +11,19 @@ with open(f'{profile}/drvpath') as f:
 def flatten(l):
     return [item for sublist in l for item in sublist]
 
+nix_cmd = ['nix', '--experimental-features', 'nix-command flakes']
+
 inputs = flatten(zip(
     itertools.repeat('--update-input'),
     json.loads(
-        subprocess.check_output(['nix', 'flake', 'list-inputs', '--json', drvpath])
-    )['nodes']['root']['inputs'].keys(),
+        subprocess.check_output(nix_cmd + [
+            'flake', 'list-inputs', '--json', drvpath,
+    ]))['nodes']['root']['inputs'].keys(),
 ))
 
 subprocess.check_call(
-    ['nix', 'build']
+    nix_cmd
+      + ['build']
       + inputs
       # Don't try to write the lockfile if this is a remote derivation.
       + (['--no-write-lock-file'] if ':' in drvpath else [])
