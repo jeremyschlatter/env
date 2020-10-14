@@ -10,7 +10,6 @@ alias gdiff="g diff"
 alias gadd="g add"
 
 alias "cd.."="cd .."
-alias python="python -tt"
 alias d=docker
 alias c="gcloud compute"
 alias cs="gcloud compute instances"
