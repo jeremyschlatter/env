@@ -126,9 +126,6 @@
             inherit system;
             pkgs = import nixpkgs {
               inherit system;
-              config = {
-                allowUnfree = true; # required for ngrok
-              };
             };
             unstable = import nixpkgs-unstable { inherit system; };
           };
