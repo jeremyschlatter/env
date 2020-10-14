@@ -12,17 +12,6 @@ let
     };
   });
 
-  vim-fetch = (pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "vim-fetch";
-    version = "2019-04-03";
-    src = pkgs.fetchFromGitHub {
-      owner = "wsdjeg";
-      repo = "vim-fetch";
-      rev = "76c08586e15e42055c9c21321d9fca0677442ecc";
-      sha256 = "0avcqjcqvxgj00r477ps54rjrwvmk5ygqm3qrzghbj9m1gpyp2kz";
-    };
-  });
-
   vim-numbertoggle = (pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "numbertoggle";
     version = "2017-10-26";
