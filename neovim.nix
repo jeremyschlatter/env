@@ -12,17 +12,6 @@ let
     };
   });
 
-  vim-numbertoggle = (pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "numbertoggle";
-    version = "2017-10-26";
-    src = pkgs.fetchFromGitHub {
-      owner = "jeffkreeftmeijer";
-      repo = "vim-numbertoggle";
-      rev = "cfaecb9e22b45373bb4940010ce63a89073f6d8b";
-      sha256 = "1rrmvv7ali50rpbih1s0fj00a3hjspwinx2y6nhwac7bjsnqqdwi";
-    };
-  });
-
   vim-unicoder = (pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "unicoder.vim";
     version = "2019-04-01";
