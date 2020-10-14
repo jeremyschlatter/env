@@ -1,19 +1,16 @@
-# {"deps": ["gitAndTools.hub"], "requirements": ["click"]} #nix
+# {"deps": ["gitAndTools.hub"]} #nix
 from pathlib import Path
 from subprocess import run
 import sys
 
-import click
+if len(sys.argv) != 2:
+    print('usage: github <user/repo>', file=sys.stderr)
+    sys.exit(1)
 
-@click.command()
-@click.argument('repo')
-def main(repo: str):
-    dest = Path.home() / 'src' / 'github.com' / Path(repo)
-    if not dest.is_dir():
-        dest.parent.mkdir(exist_ok=True)
-        if run(['hub', 'clone', repo, dest]).returncode:
-            sys.exit(1)
-    print('cd', dest)
-
-if __name__ == '__main__':
-    main()
+repo = sys.argv[1]
+dest = Path.home() / 'src' / 'github.com' / Path(repo)
+if not dest.is_dir():
+    dest.parent.mkdir(exist_ok=True)
+    if run(['hub', 'clone', repo, dest]).returncode:
+        sys.exit(1)
+print('cd', dest)
