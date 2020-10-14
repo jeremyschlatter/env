@@ -23,8 +23,8 @@ alias cat="bat"
 alias vit='vi -c ":vsplit term://shell"'
 
 light() {
-    eval "$(pylight)"
+    eval "$(colorscheme light)"
 }
 dark() {
-    eval "$(pydark)"
+    eval "$(colorscheme dark)"
 }

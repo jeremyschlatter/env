@@ -1,18 +1,26 @@
-# {"requirements": ["iterm2"]} #nix
+# {"requirements": ["click", "iterm2"]} #nix
 import os.path
 from subprocess import run
 import sys
 
+import click
 import iterm2
 
 #################  entrypoints  #################
 
-def pylight():
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+def light():
     set_colors('light')
 
-def pydark():
+@cli.command()
+def dark():
     set_colors('dark')
 
+@cli.command()
 def restore_colors():
     try:
         with open(color_config_path) as f:
@@ -21,9 +29,6 @@ def restore_colors():
         colors = 'light'
 
     set_colors(colors, restore=True)
-
-def _colorscheme():
-    print('hello from _colorscheme.py')
 
 #################  helpers  #################
 
@@ -86,4 +91,4 @@ def set_colors(which, restore=False):
 #################  main  #################
 
 if __name__ == '__main__':
-    locals()[os.path.basename(__file__)]()
+    cli()

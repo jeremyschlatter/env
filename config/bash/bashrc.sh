@@ -69,7 +69,7 @@ if [ `uname` == "Darwin" ]; then
 fi
 
 # Set color-related env variables according to the current color scheme
-eval "$(restore_colors)"
+eval "$(colorscheme restore-colors)"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
