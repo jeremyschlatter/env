@@ -6,16 +6,14 @@ import sys
 import click
 
 @click.command()
-@click.argument('github_repo')
-def main(github_repo: str):
-    org, repo = github_repo.split('/')
-    base = Path.home() / 'src' / 'github.com' / org
-    full = base / repo
-    if not full.is_dir():
-        base.mkdir()
-        if run(['hub', 'clone', github_repo, full]).returncode:
+@click.argument('repo')
+def main(repo: str):
+    dest = Path.home() / 'src' / 'github.com' / Path(repo)
+    if not dest.is_dir():
+        dest.parent.mkdir(exist_ok=True)
+        if run(['hub', 'clone', repo, dest]).returncode:
             sys.exit(1)
-    print('cd', full)
+    print('cd', dest)
 
 if __name__ == '__main__':
     main()
