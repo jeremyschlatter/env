@@ -14,7 +14,6 @@ alias python="python -tt"
 alias d=docker
 alias c="gcloud compute"
 alias cs="gcloud compute instances"
-alias ha="hass-cli"
 
 alias gotop="gotop -c default-dark"
 
