@@ -121,19 +121,15 @@
     #  flakes, so... 🤷)
     bundle = cb:
       let env = system:
-        let
-          x = {
-            inherit system;
-            pkgs = import nixpkgs {
-              inherit system;
-            };
-            unstable = import nixpkgs-unstable { inherit system; };
-          };
-        in with x.pkgs;
-          x.pkgs.buildEnv {
-            name = "bundled-environment";
-            paths = x.pkgs.lib.lists.flatten (cb x);
-          };
+        let x = {
+          inherit system;
+          pkgs = import nixpkgs { inherit system; };
+          unstable = import nixpkgs-unstable { inherit system; };
+        };
+        in x.pkgs.buildEnv {
+          name = "bundled-environment";
+          paths = x.pkgs.lib.lists.flatten (cb x);
+        };
       in {
         x86_64-darwin = env "x86_64-darwin";
         x86_64-linux = env "x86_64-linux";
