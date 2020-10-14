@@ -119,27 +119,31 @@
     #
     # (In fact, the only reason I have this mechanism is so I can have private
     #  flakes, so... 🤷)
-    bundle = name: cb: system:
-      let
-        x = {
-          inherit system;
-          pkgs = import nixpkgs {
+    bundle = cb:
+      let env = system:
+        let
+          x = {
             inherit system;
-            config = {
-              allowUnfree = true; # required for ngrok
+            pkgs = import nixpkgs {
+              inherit system;
+              config = {
+                allowUnfree = true; # required for ngrok
+              };
             };
+            unstable = import nixpkgs-unstable { inherit system; };
           };
-          unstable = import nixpkgs-unstable { inherit system; };
-        };
-      in with x.pkgs;
-        x.pkgs.buildEnv {
-          inherit name;
-          paths = x.pkgs.lib.lists.flatten (cb x);
-        };
+        in with x.pkgs;
+          x.pkgs.buildEnv {
+            name = "bundled-environment";
+            paths = x.pkgs.lib.lists.flatten (cb x);
+          };
+      in {
+        x86_64-darwin = env "x86_64-darwin";
+        x86_64-linux = env "x86_64-linux";
+      };
 
     # This is what gets built if you build this flake directly, with no target specified.
-    defaultPackage.x86_64-darwin = self.bundle "jeremys-env" self.packages "x86_64-darwin";
-    defaultPackage.x86_64-linux  = self.bundle "jeremys-env" self.packages "x86_64-linux";
+    defaultPackage = self.bundle self.packages;
 
     # My package collection.
     #
