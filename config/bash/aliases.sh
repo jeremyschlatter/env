@@ -5,9 +5,9 @@ alias ert="e --long --sort time"
 alias et="e --tree"
 
 alias g=git
-alias gst="git status"
-alias gdiff="git diff"
-alias gadd="git add"
+alias gst="g status"
+alias gdiff="g diff"
+alias gadd="g add"
 
 alias "cd.."="cd .."
 alias python="python -tt"
