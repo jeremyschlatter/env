@@ -12,17 +12,6 @@ let
     };
   });
 
-  hot-reload = (pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "hot-reload";
-    version = "2019-02-24";
-    src = pkgs.fetchFromGitHub {
-      owner = "reisub0";
-      repo = "hot-reload.vim";
-      rev = "3c4f9358aadd0e400c781bdbff8ef25542d7f729";
-      sha256 = "0b0lv2in3b68lq4028cr0qn8wk5cjg98iak2a7h2invfh1q139dr";
-    };
-  });
-
   vim-fetch = (pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "vim-fetch";
     version = "2019-04-03";
@@ -68,7 +57,6 @@ in
           ctrlp-vim
           fzf-vim
           fzfWrapper
-          hot-reload
           idris-vim
           # LanguageClient-neovim
           vim-better-whitespace
