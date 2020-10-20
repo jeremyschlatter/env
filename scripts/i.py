@@ -4,34 +4,29 @@ import json
 import os
 import subprocess
 
-profile = os.path.expanduser('~/.flake')
-
-with open(f'{profile}/drvpath') as f:
-    drvpath = f.read().strip()
+with open(os.path.expanduser('~/nix/target')) as f:
+    target = json.load(f)
 
 def flatten(l):
     return [item for sublist in l for item in sublist]
 
-nix_cmd = ['nix', '--experimental-features', 'nix-command flakes']
-
 inputs = flatten(zip(
     itertools.repeat('--update-input'),
     json.loads(
-        subprocess.check_output(nix_cmd + [
-            'flake', 'list-inputs', '--json', drvpath,
+        subprocess.check_output([
+            'nix', 'flake', 'list-inputs', '--json', target['flake'],
     ]))['nodes']['root']['inputs'].keys(),
 ))
 
 subprocess.check_call(
-    nix_cmd
-      + ['build']
+    ['nix', 'build']
       + inputs
       # Don't try to write the lockfile if this is a remote derivation.
-      + (['--no-write-lock-file'] if ':' in drvpath else [])
+      + (['--no-write-lock-file'] if ':' in target['flake'] else [])
       + [
           '--no-link',
-          '--profile', f'{profile}/profile',
-          drvpath
+          '--profile', target['profile'],
+          target['flake'],
         ],
 )
 subprocess.check_call(['jeremy-post-install'])
