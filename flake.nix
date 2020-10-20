@@ -197,7 +197,7 @@
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         lorri                 # Optimized direnv+nix integration.
-        (python38.withPackages (pkgs: with pkgs; [
+        (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
         ]))                   # Run Python.
