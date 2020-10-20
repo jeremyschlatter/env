@@ -205,7 +205,6 @@
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
         nix-index             # Find which nix package has the program you need.
-        nodejs                # Run javascript.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         stack                 # Build haskell projects.
         starship              # Nice command prompt.
