@@ -206,6 +206,7 @@
         my-vim                # Edit text.
         nix-index             # Find which nix package has the program you need.
         ripgrep               # Text search. (Phenomenal grep replacement.)
+        sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
         starship              # Nice command prompt.
         tldr                  # Show usage examples for common CLI programs.
