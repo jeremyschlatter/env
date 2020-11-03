@@ -124,13 +124,12 @@
         let pkgs = import nixpkgs { inherit system; };
         in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
-          paths = lists.flatten
-            (trivial.pipe []
-              (lists.forEach flakes
-                (flake: super: flake.packages {
-                  inherit system pkgs super;
-                  unstable = import nixpkgs-unstable { inherit system; };
-                })));
+          paths = trivial.pipe []
+            (lists.forEach flakes
+              (flake: super: lists.flatten (flake.packages {
+                inherit system pkgs super;
+                unstable = import nixpkgs-unstable { inherit system; };
+              })));
         };
       in {
         x86_64-darwin = env "x86_64-darwin";
