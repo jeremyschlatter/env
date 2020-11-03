@@ -110,25 +110,27 @@
 
     my-configs = pkgs: self.copyDir pkgs "my-configs" ./config "$out/config";
 
-    # This combines a nested list of packages into a single package suitable
-    # for installation into a profile. I use this function here in this
-    # flake.nix file, but its most important purpose is to stitch multiple
-    # flakes together.
+    # This combines a list of flakes into a single package suitable for
+    # installation into a profile. I use this function here in this flake.nix
+    # file, but its most important purpose is to stitch multiple flakes
+    # together.
     #
     # You can't see that in action, because those other flakes are private :(
     #
     # (In fact, the only reason I have this mechanism is so I can have private
-    #  flakes, so... 🤷)
-    bundle = cb:
+    # flakes, so... 🤷)
+    merge = flakes:
       let env = system:
-        let x = {
-          inherit system;
-          pkgs = import nixpkgs { inherit system; };
-          unstable = import nixpkgs-unstable { inherit system; };
-        };
-        in x.pkgs.buildEnv {
+        let pkgs = import nixpkgs { inherit system; };
+        in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
-          paths = x.pkgs.lib.lists.flatten (cb x);
+          paths = lists.flatten
+            (trivial.pipe []
+              (lists.forEach flakes
+                (flake: super: flake.packages {
+                  inherit system pkgs super;
+                  unstable = import nixpkgs-unstable { inherit system; };
+                })));
         };
       in {
         x86_64-darwin = env "x86_64-darwin";
@@ -136,7 +138,7 @@
       };
 
     # This is what gets built if you build this flake directly, with no target specified.
-    defaultPackage = self.bundle self.packages;
+    defaultPackage = self.merge [self];
 
     # My package collection.
     #
@@ -147,13 +149,13 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    packages = { pkgs, unstable, system }:
+    packages = { pkgs, unstable, system, super }:
       let
         my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
         my-vim = import ./neovim.nix pkgs;
       in
 
-      with pkgs; [
+      with pkgs; super ++ [
         (self.my-configs pkgs) # Config files for some of the programs in this list.
         (self.scripts pkgs ./scripts) # Little utility programs. Source in the scripts/ directory.
 
