@@ -206,6 +206,7 @@
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
         nix-index             # Find which nix package has the program you need.
+        unstable.pm2          # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
