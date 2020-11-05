@@ -20,6 +20,8 @@ alias cat="bat"
 
 alias vit='vi -c ":vsplit term://shell"'
 
+alias regit="ungit --regit"
+
 light() {
     eval "$(colorscheme light)"
 }
