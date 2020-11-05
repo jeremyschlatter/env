@@ -211,7 +211,6 @@
         stack                 # Build haskell projects.
         starship              # Nice command prompt.
         tldr                  # Show usage examples for common CLI programs.
-        tree                  # Show the files and folders in a directory tree.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
