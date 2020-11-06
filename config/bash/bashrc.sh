@@ -48,12 +48,6 @@ __git_complete g __git_main
 # Add timestamps to bash history.
 export HISTTIMEFORMAT="%F %T "
 
-# Workaround for issue with nix's Go package on macOS:
-#   https://github.com/NixOS/nixpkgs/issues/56348#issuecomment-482930309
-if [ `uname` == "Darwin" ]; then
-  export CC=clang
-fi
-
 # Set color-related env variables according to the current color scheme
 eval "$(colorscheme restore-colors)"
 
