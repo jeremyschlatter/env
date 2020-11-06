@@ -15,13 +15,13 @@ if [ -a ~/.local_bashrc ]; then
     source ~/.local_bashrc
 fi
 
-NIX_PROFILE=$HOME/.nix-profile
+export NIX_PROFILE=$HOME/.nix-profile
 
 # Some aliases
 . $NIX_PROFILE/config/bash/aliases.sh
 
 # Set env vars
-NIX_PROFILE=$NIX_PROFILE . $NIX_PROFILE/config/bash/env.sh
+. $NIX_PROFILE/config/bash/env.sh
 
 prompt() {
     # https://www.jefftk.com/p/you-should-be-logging-shell-history
