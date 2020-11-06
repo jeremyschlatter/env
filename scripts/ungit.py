@@ -25,12 +25,10 @@ def main(regit):
         if root.parent == root:
             fail('no .git or dot-git folder found')
         root = root.parent
-    enabled = root / '.git'
-    disabled = root / 'dot-git'
+    src = root / '.git'
+    dst = root / 'dot-git'
     if regit:
-        src, dst = disabled, enabled
-    else:
-        src, dst = enabled, disabled
+        src, dst = dst, src
     if dst.exists():
         fail(f'{dst} already exists')
     src.rename(dst)
