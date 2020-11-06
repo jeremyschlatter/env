@@ -214,8 +214,8 @@
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
-      ] ++ (if system != "x86_64-linux" then [] else [
+      ] ++ lib.optionals (system == "x86_64-linux") [
         file  # Get high-level semantic info about a file.
-      ]);
+      ];
   };
 }
