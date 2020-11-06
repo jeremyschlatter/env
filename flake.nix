@@ -155,7 +155,7 @@
 
       with pkgs; super ++ [
         my-configs # Config files for some of the programs in this list.
-        (self.scripts pkgs ./scripts) # Little utility programs. Source in the scripts/ directory.
+        (self.scripts pkgs ./scripts) # Little utility programs.
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
         kitty
