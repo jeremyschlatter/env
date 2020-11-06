@@ -22,6 +22,10 @@ alias vit='vi -c ":vsplit term://shell"'
 
 alias regit="ungit --regit"
 
+clone() {
+    eval "$(github $1)"
+}
+
 light() {
     eval "$(colorscheme light)"
 }
