@@ -57,8 +57,6 @@ fi
 # Set color-related env variables according to the current color scheme
 eval "$(colorscheme restore-colors)"
 
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
 . $NIX_PROFILE/share/fzf/key-bindings.bash
 __fzf_history__() {
   # This overrides the __fzf_history__ implementation from key-bindings.bash.
