@@ -16,5 +16,10 @@ export LESSCHARSET=UTF-8
 
 export XDG_DATA_DIRS=$NIX_PROFILE/share
 
+# kitty sets $TERM to "xterm-kitty". Need this terminfo file for programs to
+# make sense of that value. Otherwise programs like `less` and `man` print
+# "WARNING: terminal is not fully functional" and fall back to less-useful behavior.
+export TERMINFO=$HOME/.nix-profile/share/terminfo
+
 export PATH=$NIX_PROFILE/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
