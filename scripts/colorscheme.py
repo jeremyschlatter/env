@@ -44,6 +44,14 @@ def set_colors(which, restore=False):
         #
         # Do nothing to the terminal, but continue with other changes.
         pass
+    elif os.getenv('SSH_TTY'):
+        # Connected over ssh.
+        #
+        # The terminal is therefore not running on this machine, and we
+        # will not try to manipulate its colors.
+        #
+        # Do nothing to the terminal, but continue with other changes.
+        pass
     elif 'kitty' in os.getenv('TERM'):
         # kitty
         run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.nix-profile/config/kitty/{which}.conf', ], check=True)
@@ -63,14 +71,6 @@ def set_colors(which, restore=False):
                     if partial.name in ["Default"]:
                         await partial.async_set_color_preset(preset)
             iterm2.run_until_complete(iterm2_set_colors)
-    elif os.getenv('SSH_TTY'):
-        # Connected over ssh.
-        #
-        # The terminal is therefore not running on this machine, and we
-        # will not try to manipulate its colors.
-        #
-        # Do nothing to the terminal, but continue with other changes.
-        pass
     else:
         print(
             "I don't recognize this terminal, so not trying to change its color.",
