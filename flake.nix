@@ -168,6 +168,7 @@
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
+        unstable.coconut # Python, but extended with some functional programming syntax.
         (
           # prioritize the coreutils "link" command over the go "link" command.
           # (The latter is still available as "go tool link").
@@ -200,6 +201,7 @@
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
+          pynvim
         ]))                   # Run Python.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
