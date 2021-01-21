@@ -44,7 +44,6 @@ func main() {
 		if sysErr, ok := err.(syscall.Errno); err == nil || (ok && !sysErr.Temporary()) {
 			break
 		}
-		fmt.Fprintf(os.Stderr, "add-hist: temporary error: %v\n", err)
 		time.Sleep(10 * time.Millisecond)
 	}
 	check(err)
