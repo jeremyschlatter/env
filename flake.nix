@@ -1,7 +1,8 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-20.09;
+  # inputs.nixpkgs.url = github:NixOS/nixpkgs/release-20.09;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
