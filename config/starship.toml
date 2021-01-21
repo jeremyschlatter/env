@@ -1,6 +1,6 @@
 [hostname]
 style = "bold italic purple"
-prefix = "☁️  "
+format = "☁️  "
 
 [time]
 disabled = false # enabled!
@@ -20,6 +20,8 @@ disabled = true
 disabled = true
 [aws]
 disabled = true  # Seems buggy. Showed me on AWS instances when I was on localhost.
+[gcloud]
+disabled = true  # Seems buggy. Showed me on gloud instances when I was on localhost.
 [line_break]
 disabled = true
 [jobs]
