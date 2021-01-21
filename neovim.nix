@@ -28,7 +28,10 @@ in
     viAlias = true;
     vimAlias = true;
     configure = {
-      customRC = ":source $HOME/.config/nvim.vim";
+      customRC = ''
+        set runtimepath^=~/.config/nvim/
+        source ~/.config/nvim/init.vim
+      '';
       packages.mine = with pkgs.vimPlugins; {
         start = [
           camelcasemotion
