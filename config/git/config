@@ -46,3 +46,6 @@
     oldHighlight = red reverse
     newNormal = green
     newHighlight = green reverse
+
+[init]
+    defaultBranch = master
