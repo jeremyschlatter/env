@@ -37,9 +37,11 @@ set -o vi  # Use vi-mode editing on the command line.
 source $NIX_PROFILE/etc/profile.d/bash_completion.sh
 
 # source bash completions
-for completion in $NIX_PROFILE/etc/bash_completion.d/*; do
-    . $completion
-done
+if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then
+    for completion in $NIX_PROFILE/etc/bash_completion.d/*; do
+        . $completion
+    done
+fi
 
 # git tab completion with 'g' alias
 source $NIX_PROFILE/share/bash-completion/completions/git
