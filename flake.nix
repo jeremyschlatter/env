@@ -150,7 +150,7 @@
     packages = { pkgs, unstable, system, super }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
-        my-shell = pkgs.linkFarm "my-shell" [{name="bin/shell"; path="${pkgs.bashInteractive_5}/bin/bash";}];
+        my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         my-vim = import ./neovim.nix pkgs;
       in
 
