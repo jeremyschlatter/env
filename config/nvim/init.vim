@@ -1,8 +1,3 @@
-set nocompatible " Don't force VI compatibility when using vi
-
-" Enable file type detection. Do this after Vundle calls.
-filetype plugin indent on
-
 let g:ctrlp_custom_ignore = 'node_modules'
 
 " jeffkreeftmeijer/vim-numbertoggle
@@ -88,38 +83,25 @@ let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.css,*.scss,*.less Prettier
 
 " Editing setup
-set autoindent
 set nomodeline            " Disable modeline which I don't use and is a potential security hole
-set incsearch             " Search as you type
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
 call mkdir($HOME . "/.vim_runtime/bak", "p")
 set backupdir=$HOME/.vim_runtime/bak  " Write backup files to ~/.vim_runtime/bak/*
 set showmatch             " Show matches wile searching
-set ruler                 " Show cursor position in the last line
 set lazyredraw            " Don't redraw while executing macros
 set number
-set hls
 set autowrite
-set display+=lastline     " Display as much of the buffer as possible, even if the last line doesn't all fit
 if has('persistent_undo')
   set undodir=$HOME/.vim_runtime/undodir
   set undofile
 endif
-set autoread              " Automatically read a file when it's changed externally
-set showcmd               " Among other things, show incomplete commands andthe number of lines you have highlighted in visual mode
 set ignorecase            " ignorecase + smartcase = disregard case when all
 set smartcase             " the characters in the search string are lower case
 set completeopt-=preview  " Don't pop up a preview window for completions.
 set history=50            " keep 50 lines of command line history
-set backspace=indent,eol,start
 set formatoptions+=r      " Auto-continue comments. Credit: http://stackoverflow.com/a/952561
 set splitright " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 set modeline              " Allow modeline comments in files.
-
-" Always show current filename. I find this useful when jumping around
-" between definitions in code that sometimes lives in external libraries.
-" h/t http://unix.stackexchange.com/a/111560
-set laststatus=2
 
 function! ToggleMouse()
   if &mouse == 'a'
@@ -223,15 +205,11 @@ aug QFClose
   au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 
-set encoding=utf-8
-set termencoding=utf-8
-
 " For webpack.
 " https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
 set backupcopy=yes
 
 " Read current color (light vs dark), defaulting to dark
-set background=dark
 let s:color = readfile(expand('~/.config/colors'))
 for s:colorLine in s:color
   let &background = s:colorLine
