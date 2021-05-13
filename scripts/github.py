@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
 repo = sys.argv[1]
 dest = Path.home() / 'src' / 'github.com' / Path(repo)
 if not dest.is_dir():
-    dest.parent.mkdir(exist_ok=True)
+    dest.parent.mkdir(parents=True, exist_ok=True)
     if run(['hub', 'clone', repo, dest]).returncode:
         sys.exit(1)
 print('cd', dest)
