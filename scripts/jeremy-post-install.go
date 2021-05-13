@@ -30,6 +30,9 @@ func main() {
 	nixConfDir := os.ExpandEnv("$HOME/.nix-profile/config/")
 	homeConfDir := os.ExpandEnv("$HOME/.config/")
 
+	// Make ~/.config if it does not yet exist.
+	os.MkdirAll(homeConfDir, 0755)
+
 	wantSymlink := make(map[string]bool)
 
 	// Symlink ~/.nix-profile/config/* into ~/.config
