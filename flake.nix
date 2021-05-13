@@ -169,7 +169,6 @@
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
-        unstable.coconut # Python, but extended with some functional programming syntax.
         (
           # prioritize the coreutils "link" command over the go "link" command.
           # (The latter is still available as "go tool link").
