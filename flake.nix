@@ -1,8 +1,7 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  # inputs.nixpkgs.url = github:NixOS/nixpkgs/release-20.09;
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.05;
   inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
   outputs = { self, nixpkgs, nixpkgs-unstable }: {
@@ -207,11 +206,11 @@
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
         nix-index             # Find which nix package has the program you need.
-        unstable.pm2          # Nice interface for running long-lived background programs.
+        pm2                   # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
-        unstable.starship     # Nice command prompt.
+        starship              # Nice command prompt.
         tldr                  # Show usage examples for common CLI programs.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
