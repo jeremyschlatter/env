@@ -14,8 +14,8 @@ inputs = flatten(zip(
     itertools.repeat('--update-input'),
     json.loads(
         subprocess.check_output([
-            'nix', 'flake', 'list-inputs', '--json', target['flake'],
-    ]))['nodes']['root']['inputs'].keys(),
+            'nix', 'flake', 'metadata', '--json', target['flake'],
+    ]))['locks']['nodes']['root']['inputs'].keys(),
 ))
 
 subprocess.check_call(
