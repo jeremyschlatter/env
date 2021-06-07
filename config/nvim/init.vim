@@ -162,11 +162,6 @@ nmap ;l zo
 nmap ;h zc
 nmap ;i :GoImports<CR>
 
-augroup autosourcevimrc
-  au!
-  au BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
-
 " Tell vim to remember certain things when we exit
 "  '10  :  marks will be remembered for up to 10 previously edited files
 "  "100 :  will save up to 100 lines for each register
