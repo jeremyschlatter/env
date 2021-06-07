@@ -120,6 +120,8 @@ nmap <silent> <leader>m :call ToggleMouse()<CR>
 nmap <silent> <leader>h :split<CR>
 nmap <silent> <leader>v :vsplit<CR>
 
+let g:camelcasemotion_key = ","
+
 " Sort a block of #include statements (really, any sequence of lines, bordered
 " on top by an empty line or beginning of file, and on bottom by an empty line).
 nmap <silent> <leader>s "syy}kv{<RIGHT>0!sort<CR>?<c-r>s<BS><CR>:noh<CR>:redraw<CR>:echo "Sorted"<CR>

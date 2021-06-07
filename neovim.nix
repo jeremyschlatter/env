@@ -1,17 +1,6 @@
 pkgs:
 
 let
-  camelcasemotion = (pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "camelcasemotion";
-    version = "2011-11-11";
-    src = pkgs.fetchFromGitHub {
-      owner = "vim-scripts";
-      repo = "camelcasemotion";
-      rev = "8db17bdee3f42bd71839ead2a84b2ee1916e45c2";
-      sha256 = "0qqykxqj393ig7ard7pvvc0h0k3x61gdyypcvnsm66g5fvr2cqxr";
-    };
-  });
-
   vim-unicoder = (pkgs.vimUtils.buildVimPluginFrom2Nix {
     pname = "unicoder.vim";
     version = "2019-04-01";
