@@ -154,10 +154,6 @@ imap <Nul> <Space>
 " goodbye escape key
 imap <c-@> <ESC>
 
-" toggle comments
-vmap <leader>c :s/^/\/\//<CR>:noh<CR>
-vmap <leader>rc :s/^\/\//<CR>:noh<CR>
-
 " put following arguments to a function on a new line
 nmap K f,lxi<CR><ESC>
 
