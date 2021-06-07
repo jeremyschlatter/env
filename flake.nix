@@ -119,14 +119,14 @@
     # flakes, so... 🤷)
     merge = flakes:
       let env = system:
-        let pkgs = import nixpkgs { inherit system; };
+        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
         in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
           paths = trivial.pipe []
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.packages {
                 inherit system pkgs super;
-                unstable = import nixpkgs-unstable { inherit system; };
+                unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
               })));
         };
       in {
