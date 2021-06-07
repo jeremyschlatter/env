@@ -176,6 +176,7 @@
         )
         direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
+        etcher     # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         exa        # List files in the current directory.
         fd         # Find file by name.
         fira-code  # Font that renders symbols in code nicely.
