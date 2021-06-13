@@ -176,7 +176,6 @@
         )
         direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
-        etcher     # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         exa        # List files in the current directory.
         fd         # Find file by name.
         fira-code  # Font that renders symbols in code nicely.
@@ -217,7 +216,8 @@
         watch                 # Run a command repeatedly.
         wget                  # Download files.
       ] ++ lib.optionals (system == "x86_64-linux") [
-        file  # Get high-level semantic info about a file.
+        etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
+        file   # Get high-level semantic info about a file.
       ];
   };
 }
