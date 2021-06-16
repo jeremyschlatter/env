@@ -11,7 +11,7 @@ There are many ways that this setup provides me value, but one of the most legib
 1. [Install nix](https://nixos.org/download.html)
 2. Upgrade nix to a pre-release version with experimental support for flakes:*
 
-    `nix-env -iAf https://github.com/NixOS/nixpkgs/tarball/release-20.03 nixFlakes`
+    `nix-env -iAf https://github.com/NixOS/nixpkgs/tarball/release-21.05 nixUnstable`
 
 3. Enable experimental features:*
 
