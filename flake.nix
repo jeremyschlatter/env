@@ -1,10 +1,10 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.05;
-  inputs.nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  inputs.stable.url = github:NixOS/nixpkgs/release-21.05;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
-  outputs = { self, nixpkgs, nixpkgs-unstable }: {
+  outputs = { self, stable, nixpkgs }: {
 
     # Scripting!
     #
@@ -126,7 +126,7 @@
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.packages {
                 inherit system pkgs super;
-                unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+                stable = import stable { inherit system; config.allowUnfree = true; };
               })));
         };
       in {
@@ -146,7 +146,7 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    packages = { pkgs, unstable, system, super }:
+    packages = { pkgs, stable, system, super }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
