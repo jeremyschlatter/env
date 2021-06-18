@@ -13,7 +13,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -37,19 +36,19 @@ func main() {
 
 	// Symlink ~/.nix-profile/config/* into ~/.config
 	{
-		fis, err := ioutil.ReadDir(nixConfDir)
+		des, err := os.ReadDir(nixConfDir)
 		check(err)
-		for _, fi := range fis {
-			if fi.Name() == "README.md" {
+		for _, de := range des {
+			if de.Name() == "README.md" {
 				continue
 			}
-			wantSymlink[fi.Name()] = true
-			linkFrom := homeConfDir + fi.Name()
+			wantSymlink[de.Name()] = true
+			linkFrom := homeConfDir + de.Name()
 			haveLink, err := os.Readlink(linkFrom)
-			wantLink := nixConfDir + fi.Name()
+			wantLink := nixConfDir + de.Name()
 			switch {
 			case os.IsNotExist(err):
-				fmt.Printf("symlinking %v config...\n", fi.Name())
+				fmt.Printf("symlinking %v config...\n", de.Name())
 				check(os.Symlink(wantLink, linkFrom))
 			case err == nil && haveLink == wantLink:
 				// Nothing more to do.
@@ -68,13 +67,13 @@ func main() {
 
 	// Remove old symlinks from ~/.config
 	{
-		fis, err := ioutil.ReadDir(homeConfDir)
+		des, err := os.ReadDir(homeConfDir)
 		check(err)
-		for _, fi := range fis {
-			link, err := os.Readlink(homeConfDir + fi.Name())
-			if err == nil && strings.HasPrefix(link, nixConfDir) && !wantSymlink[fi.Name()] {
-				fmt.Printf("removing %v config...\n", fi.Name())
-				check(os.Remove(homeConfDir + fi.Name()))
+		for _, de := range des {
+			link, err := os.Readlink(homeConfDir + de.Name())
+			if err == nil && strings.HasPrefix(link, nixConfDir) && !wantSymlink[de.Name()] {
+				fmt.Printf("removing %v config...\n", de.Name())
+				check(os.Remove(homeConfDir + de.Name()))
 			}
 		}
 	}
