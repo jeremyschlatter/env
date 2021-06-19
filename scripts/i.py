@@ -18,14 +18,5 @@ inputs = flatten(zip(
     ]))['locks']['nodes']['root']['inputs'].keys(),
 ))
 
-subprocess.check_call(
-    ['nix', 'build']
-      + inputs
-      + [
-          '--no-write-lock-file',
-          '--no-link',
-          '--profile', target['profile'],
-          target['flake'],
-        ],
-)
+subprocess.check_call(['nix', 'profile', 'upgrade'] + inputs + ['1'])
 subprocess.check_call(['jeremy-post-install'])
