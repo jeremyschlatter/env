@@ -4,6 +4,8 @@ format = "☁️  "
 
 [time]
 disabled = false # enabled!
+[shell]
+disabled = false # enabled!
 
 [nix_shell]
 impure_msg = "" # Don't tell me when it's impure. That's the typical case for me.
