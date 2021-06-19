@@ -21,9 +21,8 @@ inputs = flatten(zip(
 subprocess.check_call(
     ['nix', 'build']
       + inputs
-      # Don't try to write the lockfile if this is a remote derivation.
-      + (['--no-write-lock-file'] if ':' in target['flake'] else [])
       + [
+          '--no-write-lock-file',
           '--no-link',
           '--profile', target['profile'],
           target['flake'],
