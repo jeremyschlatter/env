@@ -82,7 +82,12 @@ def set_colors(which, restore=False):
 
 
     # Set bat config var.
-    print(f'export BAT_THEME="Solarized ({which})"')
+    if os.getenv('XONSHRC'):
+        # xonsh
+        print(f'$BAT_THEME = "Solarized ({which})"')
+    else:
+        # bash
+        print(f'export BAT_THEME="Solarized ({which})"')
 
     # Persist for next time.
     # My vim config also reads this file to determine colors on startup.
