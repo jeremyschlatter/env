@@ -85,6 +85,7 @@ def set_colors(which, restore=False):
     if os.getenv('XONSHRC'):
         # xonsh
         print(f'$BAT_THEME = "Solarized ({which})"')
+        print(f'$XONSH_COLOR_STYLE = "solarized-{which}"')
     else:
         # bash
         print(f'export BAT_THEME="Solarized ({which})"')
