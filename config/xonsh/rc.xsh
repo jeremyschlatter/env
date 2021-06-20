@@ -23,6 +23,8 @@ aliases['cat'] = 'bat'
 
 aliases['vit'] = 'vi -c ":vsplit term://shell"'
 
+aliases['x'] = 'xonsh'
+
 aliases['clone'] = lambda args: execx($(github @(args[0])))
 aliases['dark'] = lambda: execx($(colorscheme dark))
 aliases['light'] = lambda: execx($(colorscheme light))

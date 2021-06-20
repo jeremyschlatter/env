@@ -20,6 +20,8 @@ alias cat="bat"
 
 alias vit='vi -c ":vsplit term://shell"'
 
+alias x=xonsh
+
 clone() {
     eval "$(github $1)"
 }
