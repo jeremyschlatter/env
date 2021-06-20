@@ -27,4 +27,6 @@ aliases['clone'] = lambda args: execx($(github @(args[0])))
 aliases['dark'] = lambda: execx($(colorscheme dark))
 aliases['light'] = lambda: execx($(colorscheme light))
 
+execx($(colorscheme restore-colors))
+
 execx($(/Users/jeremy/src/github.com/starship/starship/target/debug/starship init xonsh))
