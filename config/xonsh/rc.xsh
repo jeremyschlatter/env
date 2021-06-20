@@ -7,7 +7,7 @@ aliases['ee'] = 'e --long --header --git'
 aliases['ert'] = 'e --long --sort time'
 aliases['et'] = 'e --tree'
 
-aliases['g'] = 'git'
+aliases['g'] = lambda args: $[git @(args)]
 aliases['gst'] = 'g status'
 aliases['gdiff'] = 'g diff'
 aliases['gadd'] = 'g add'
