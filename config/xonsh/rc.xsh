@@ -27,6 +27,11 @@ aliases['clone'] = lambda args: execx($(github @(args[0])))
 aliases['dark'] = lambda: execx($(colorscheme dark))
 aliases['light'] = lambda: execx($(colorscheme light))
 
+# Work around undesired xonsh capture until
+# https://github.com/xonsh/xonsh/pull/4283 is merged.
+aliases['f'] = lambda: $['$HOME/.nix-profile/bin/f']
+aliases['ff'] = lambda: $['$HOME/.nix-profile/bin/ff']
+
 execx($(colorscheme restore-colors))
 
 execx($(/Users/jeremy/src/github.com/starship/starship/target/debug/starship init xonsh))
