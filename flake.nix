@@ -215,7 +215,10 @@
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
-        xonsh                 # Bash+Python hybrid shell.
+        (xonsh.overrideAttrs  # Bash+Python hybrid shell.
+          (oldAttrs: {
+            propagatedBuildInputs = with python3Packages; [ ply pygments ];
+          }))
       ] ++ lib.optionals (system == "x86_64-linux") [
         etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file   # Get high-level semantic info about a file.
