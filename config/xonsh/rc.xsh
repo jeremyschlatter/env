@@ -7,7 +7,7 @@ aliases['ee'] = 'e --long --header --git'
 aliases['ert'] = 'e --long --sort time'
 aliases['et'] = 'e --tree'
 
-aliases['g'] = lambda args: $[git @(args)]
+aliases['g'] = 'git'
 aliases['gst'] = 'g status'
 aliases['gdiff'] = 'g diff'
 aliases['gadd'] = 'g add'
@@ -28,11 +28,6 @@ aliases['x'] = 'xonsh'
 aliases['clone'] = lambda args: execx($(github @(args[0])))
 aliases['dark'] = lambda: execx($(colorscheme dark))
 aliases['light'] = lambda: execx($(colorscheme light))
-
-# Work around undesired xonsh capture until
-# https://github.com/xonsh/xonsh/pull/4283 is merged.
-aliases['f'] = lambda: $['$HOME/.nix-profile/bin/f']
-aliases['ff'] = lambda: $['$HOME/.nix-profile/bin/ff']
 
 execx($(colorscheme restore-colors))
 

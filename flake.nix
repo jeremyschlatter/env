@@ -227,6 +227,12 @@
           (oldAttrs: {
             propagatedBuildInputs = with python3Packages; [ ply pygments ]; # drop prompt-toolkit
             doInstallCheck = false; # skip the tests, which fail if prompt-toolkit is disabled
+            src = fetchFromGitHub { # bump src to pick up #4283 which is merged but not released
+              owner  = "xonsh";
+              repo   = "xonsh";
+              rev    = "86f02c034182e2c7211036f1bba0a460df909e77";
+              sha256 = "sha256-DggCvnWph7GNMBtvsIZYuoKyEi/j5TvfgTWHsPvYlwU=";
+            };
           }))
       ] ++ lib.optionals (system == "x86_64-linux") [
         etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
