@@ -123,7 +123,6 @@
               sha256 = "sha256-CuOpIb9vGHIUY19IH3cHi7gnXK8v+GQtIMTmjJ0UjBo=";
             };
           }))
-        tldr                  # Show usage examples for common CLI programs.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
