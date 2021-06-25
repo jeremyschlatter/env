@@ -217,7 +217,8 @@
         wget                  # Download files.
         (xonsh.overrideAttrs  # Bash+Python hybrid shell.
           (oldAttrs: {
-            propagatedBuildInputs = with python3Packages; [ ply pygments ];
+            propagatedBuildInputs = with python3Packages; [ ply pygments ]; # drop prompt-toolkit
+            doInstallCheck = false; # skip the tests, which fail if prompt-toolkit is disabled
           }))
       ] ++ lib.optionals (system == "x86_64-linux") [
         etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
