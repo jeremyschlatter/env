@@ -210,7 +210,15 @@
         ripgrep               # Text search. (Phenomenal grep replacement.)
         sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
-        starship              # Nice command prompt.
+        (starship.overrideAttrs # Nice command prompt.
+          (oldAttrs: {
+            src = fetchFromGitHub {
+              owner = "jeremyschlatter";
+              repo = "starship";
+              rev = "xonsh";
+              sha256 = "sha256-CuOpIb9vGHIUY19IH3cHi7gnXK8v+GQtIMTmjJ0UjBo=";
+            };
+          }))
         tldr                  # Show usage examples for common CLI programs.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.

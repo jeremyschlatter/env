@@ -36,4 +36,4 @@ aliases['ff'] = lambda: $['$HOME/.nix-profile/bin/ff']
 
 execx($(colorscheme restore-colors))
 
-execx($(/Users/jeremy/src/github.com/starship/starship/target/release/starship init xonsh))
+execx($(starship init xonsh))
