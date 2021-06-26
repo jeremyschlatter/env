@@ -1,2 +1,2 @@
-vi $HOME/nix/public-base/flake.nix
-i
+# edit my flake.nix file and re-install
+ff && i
