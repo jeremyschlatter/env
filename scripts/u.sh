@@ -1,3 +1,1 @@
-set -e
-nix profile upgrade --recreate-lock-file 1
-jeremy-post-install
+I_DOT_PY_DO_FULL_UPDATE=1 i
