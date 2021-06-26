@@ -4,48 +4,12 @@ let g:ctrlp_custom_ignore = 'node_modules'
 let g:NumberToggleTrigger = '<Leader>l'
 
 " vim-go configuration
-"let g:go_fmt_command = "goimports"
-let g:go_fmt_command = "gofmt"
-let g:go_fmt_fail_silently = 1
 let g:go_template_autocreate = 0
-"let g:go_metalinter_command = "--tests --min-confidence=.9"
-"let g:go_metalinter_disabled="golint"
 au FileType go nmap <Leader>t <Plug>(go-info)
 au FileType go nmap <Leader>b :GoBuild<CR>
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-endif
-
-" Make vim work with crontab, anything else that edits temp files
-set backupskip=/tmp/*,/private/tmp/*
-
-" Python tabs
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-
-" More python configuration
-let python_highlight_all = 1
-
-" Wrapping for plaintext
-set wrap
-set linebreak
-set nolist
-set textwidth=0
-set wrapmargin=0
-
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-" don't connect to the X display
-set cb="exclude:.*"
+" Switch syntax highlighting on.
+syntax on
 
 """ Filetype rules
 highlight def link TooLongLine Error
@@ -80,9 +44,9 @@ augroup END
 
 " Prettier
 let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.css,*.scss,*.less Prettier
 
 " Editing setup
+set mouse=a               " Enable the mouse.
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
 call mkdir($HOME . "/.vim_runtime/bak", "p")
 set backupdir=$HOME/.vim_runtime/bak  " Write backup files to ~/.vim_runtime/bak/*
@@ -90,17 +54,13 @@ set showmatch             " Show matches wile searching
 set lazyredraw            " Don't redraw while executing macros
 set number
 set autowrite
-if has('persistent_undo')
-  set undodir=$HOME/.vim_runtime/undodir
-  set undofile
-endif
+set undofile
 set ignorecase            " ignorecase + smartcase = disregard case when all
 set smartcase             " the characters in the search string are lower case
+set linebreak             " Wrapping for plaintext
 set completeopt-=preview  " Don't pop up a preview window for completions.
-set history=50            " keep 50 lines of command line history
 set formatoptions+=r      " Auto-continue comments. Credit: http://stackoverflow.com/a/952561
 set splitright " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
-set modeline              " Allow modeline comments in files.
 
 function! ToggleMouse()
   if &mouse == 'a'
@@ -131,28 +91,11 @@ map Q <ESC>
 map U <ESC>
 
 " shorten the commands to move between windows
-if has('nvim')
-  :tnoremap <c-h> <c-\><c-N><c-w>h
-  :tnoremap <c-l> <c-\><c-N><c-w>l
-  :tnoremap <c-j> <c-\><c-N><c-w>j
-  :tnoremap <c-k> <c-\><c-N><c-w>k
-  :inoremap <c-h> <c-\><c-N><c-w>h
-  :inoremap <c-l> <c-\><c-N><c-w>l
-  :inoremap <c-j> <c-\><c-N><c-w>j
-  :inoremap <c-k> <c-\><c-N><c-w>k
-endif
-:nnoremap <c-h> <c-w>h
-:nnoremap <c-l> <c-w>l
-:nnoremap <c-j> <c-w>j
-:nnoremap <c-k> <c-w>k
-
-" toggle between .cc and .h
-nmap <silent> <c-t> :A<CR>
-
-imap <Nul> <Space>
-
-" goodbye escape key
-imap <c-@> <ESC>
+for c in ['h', 'l', 'j', 'k']
+  for m in ['n', 't', 'i']
+    execute m . "noremap \<c-" . c . "> \<c-\>\<c-N>\<c-w>" . c
+  endfor
+endfor
 
 " put following arguments to a function on a new line
 nmap K f,lxi<CR><ESC>
@@ -197,10 +140,6 @@ aug QFClose
   au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 
-" For webpack.
-" https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
-set backupcopy=yes
-
 " Read current color (light vs dark), defaulting to dark
 let s:color = readfile(expand('~/.config/colors'))
 for s:colorLine in s:color
@@ -208,18 +147,8 @@ for s:colorLine in s:color
 endfor
 colorscheme solarized
 
-if filereadable(expand('~/.local_vimrc'))
-    source ~/.local_vimrc
-endif
-
 " Map escape to terminal escape sequence, as suggested in `:help terminal`
-if has('nvim')
-    :tnoremap <Esc> <C-\><C-n>
-endif
-
-" use jsx highlighting on .js files
-" https://github.com/mxw/vim-jsx
-let g:jsx_ext_required = 0
+tnoremap <Esc> <C-\><C-n>
 
 " fzf + rg
 " http://owen.cymru/fzf-ripgrep-navigate-with-bash-faster-than-ever-before/
@@ -234,22 +163,3 @@ nmap ;f :F<CR>
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
-
-let g:org_heading_shade_leading_stars = 1
-let g:org_indent = 1
-
-let g:ycm_filetype_blacklist = {
-    \ 'tagbar' : 1,
-    \ 'qf' : 1,
-    \ 'notes' : 1,
-    \ 'markdown' : 1,
-    \ 'unite' : 1,
-    \ 'text' : 1,
-    \ 'vimwiki' : 1,
-    \ 'pandoc' : 1,
-    \ 'infolog' : 1,
-    \ 'mail' : 1,
-    \ 'org': 1
-    \}
-
-" let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
