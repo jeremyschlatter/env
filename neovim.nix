@@ -14,7 +14,6 @@ pkgs:
           fzf-vim
           fzfWrapper
           idris-vim
-          # LanguageClient-neovim
           vim-better-whitespace
           vim-colors-solarized
           vim-commentary

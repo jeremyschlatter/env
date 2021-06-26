@@ -21,7 +21,6 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.java 2match TooLongLine /.\%>80v/
 " Go
   au BufRead,BufNewFile *.go 2match Underlined /.\%101v\|.\%81v/
-  au BufRead,BufNewFile *.go set noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
   " Syntax highlighting sometimes breaks in long files. This setting help that. See
   "   http://vim.wikia.com/wiki/Fix_Syntax_Highlighting#MetaCosm_FixSyntaxHighlighting
   au BufRead,BufNewFile,BufWritePost *.go syntax sync minlines=800
@@ -104,16 +103,6 @@ nmap <silent> ;n :noh<CR>
 nmap ;l zo
 nmap ;h zc
 nmap ;i :GoImports<CR>
-
-" Tell vim to remember certain things when we exit
-"  '10  :  marks will be remembered for up to 10 previously edited files
-"  "100 :  will save up to 100 lines for each register
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-if !has('nvim')
-    set viminfo='10,\"100,:20,%,n~/.viminfo
-endif
 
 " Main function that restores the cursor position and its autocmd so
 " that it gets triggered:
