@@ -72,12 +72,7 @@
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
-        (
-          # prioritize the coreutils "link" command over the go "link" command.
-          # (The latter is still available as "go tool link").
-          hiPrio
-            coreutils  # Basic file, shell and text manipulation utilities.
-        )
+        coreutils  # Basic file, shell and text manipulation utilities.
         delta      # Better git diffs.
         direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
