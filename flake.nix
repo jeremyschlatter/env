@@ -99,7 +99,6 @@
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
           magic-wormhole      # Copy files between computers.
-          pynvim
         ]))                   # Run Python.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
