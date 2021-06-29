@@ -28,7 +28,7 @@
           name = "bundled-environment";
           paths = trivial.pipe []
             (lists.forEach flakes
-              (flake: super: lists.flatten (flake.packages {
+              (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
                 stable = import stable { inherit system; config.allowUnfree = true; };
               })));
@@ -37,6 +37,20 @@
         x86_64-darwin = env "x86_64-darwin";
         x86_64-linux = env "x86_64-linux";
       };
+
+    # Experimental lite profile, for servers.
+    packages.x86_64-darwin.lite = (self.merge [self.litePackages]).x86_64-darwin;
+    packages.x86_64-linux.lite = (self.merge [self.litePackages]).x86_64-linux;
+    litePackages.profile = { pkgs, ... }:
+      with pkgs; [
+        (self.copyDir pkgs "my-configs" ./config "$out/config")
+        (import ./neovim.nix pkgs)
+        exa
+        git
+        go
+        ripgrep
+        starship
+      ];
 
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
@@ -50,7 +64,7 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    packages = { pkgs, stable, system, super }:
+    profile = { pkgs, stable, system, super }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
