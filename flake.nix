@@ -128,7 +128,7 @@
               owner = "jeremyschlatter";
               repo = "starship";
               rev = "xonsh";
-              sha256 = "sha256-CuOpIb9vGHIUY19IH3cHi7gnXK8v+GQtIMTmjJ0UjBo=";
+              sha256 = "sha256-Ae5uUfs9hTbc9vY1FjggdLUm4zO5wuG60hn7mnwJtfo";
             };
           }))
         unzip                 # Open .zip files.
