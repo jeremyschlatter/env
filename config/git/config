@@ -39,3 +39,6 @@
 
 [init]
     defaultBranch = master
+
+[rerere]
+	enabled = true
