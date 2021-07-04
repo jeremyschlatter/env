@@ -123,13 +123,17 @@
         sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
         (starship.overrideAttrs # Nice command prompt.
-          (oldAttrs: {
+          (oldAttrs: rec {
             src = fetchFromGitHub {
               owner = "jeremyschlatter";
               repo = "starship";
               rev = "xonsh";
-              sha256 = "sha256-Ae5uUfs9hTbc9vY1FjggdLUm4zO5wuG60hn7mnwJtfo";
+              sha256 = "sha256-AMqx3TSSC/maAsSjVsrmBdwOQuTx+LMKZJUmbFtmwu4";
             };
+            cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
+              inherit src;
+              outputHash = "sha256-AF2yROE/BKDb0VrRWZb7rYVT1n4mZnN+akI0+aS58ao";
+            });
           }))
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
