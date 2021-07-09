@@ -28,7 +28,5 @@ disabled = true  # Seems buggy. Showed me on AWS instances when I was on localho
 disabled = true  # Seems buggy. Showed me on gloud instances when I was on localhost.
 [line_break]
 disabled = true
-[jobs]
-disabled = true  # Seems buggy. It was showing 1 job when there weren't any.
 [battery]
 disabled = true
