@@ -16,12 +16,8 @@ func main() {
 
 	screen, err := tcell.NewScreen()
 	check(err)
-
 	check(screen.Init())
-
 	defer screen.Fini()
-
-	screen.Clear()
 
 	search := ""
 
