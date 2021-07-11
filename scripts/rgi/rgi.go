@@ -21,9 +21,8 @@ func main() {
 
 	search := ""
 
-	render(search, screen)
-
 	for {
+		render(search, screen)
 		ev := screen.PollEvent()
 		if ev, ok := ev.(*tcell.EventKey); ok {
 			switch ev.Key() {
@@ -35,10 +34,8 @@ func main() {
 					j = i
 				}
 				search = search[:j]
-				render(search, screen)
 			case tcell.KeyRune:
 				search += string(ev.Rune())
-				render(search, screen)
 			}
 		}
 	}
