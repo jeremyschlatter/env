@@ -19,56 +19,86 @@ func main() {
 	check(screen.Init())
 	defer screen.Fini()
 
-	search := ""
+	var (
+		search []rune
+		cursor int
+	)
 
 	for {
-		render(search, screen)
+		{
+			screen.Clear()
+
+			show(0, 0, screen, string(search))
+			screen.ShowCursor(cursor, 0)
+
+			result, err := ripgrep(string(search), screen)
+			check(err)
+
+			lines := strings.Split(result, "\n")
+			_, height := screen.Size()
+			for i := 0; i+2 < height && i < len(lines); i++ {
+				showColor(0, i+2, screen, lines[i])
+			}
+
+			screen.Show()
+		}
 		ev := screen.PollEvent()
 		if ev, ok := ev.(*tcell.EventKey); ok {
 			switch ev.Key() {
 			case tcell.KeyCtrlC, tcell.KeyEscape:
 				return
 			case tcell.KeyBackspace, tcell.KeyDEL:
-				j := 0
-				for i := range search {
-					j = i
+				if len(search) == 0 {
+					continue
 				}
-				search = search[:j]
+				cursor--
+				if len(search) <= cursor {
+					search = search[:cursor]
+				} else {
+					search = append(search[:cursor], search[cursor+1:]...)
+				}
+			case tcell.KeyLeft:
+				if cursor > 0 {
+					cursor--
+				}
+			case tcell.KeyRight:
+				if cursor < len(search) {
+					cursor++
+				}
 			case tcell.KeyRune:
-				search += string(ev.Rune())
+				search = append(search[:cursor], append([]rune{' '}, search[cursor:]...)...)
+				search[cursor] = ev.Rune()
+				cursor++
 			}
 		}
 	}
 }
 
-func render(search string, screen tcell.Screen) {
-	screen.Clear()
-	show(0, 0, screen, search)
-	screen.ShowCursor(utf8.RuneCountInString(search), 0)
-	check(ripgrep(search, screen))
-	screen.Show()
-}
+var (
+	rg         string
+	prevSearch = "this initializer should be non-empty"
+	prevResult string
+)
 
-var rg string
-
-func ripgrep(search string, screen tcell.Screen) error {
+func ripgrep(search string, screen tcell.Screen) (result string, err error) {
+	if search == prevSearch {
+		return prevResult, nil
+	}
+	defer func() {
+		prevSearch = search
+		prevResult = result
+	}()
 	b, err := exec.Command(rg, "--heading", "--line-number", "--color", "always", search).CombinedOutput()
-	if err != nil {
-		if err, ok := err.(*exec.ExitError); ok {
-			if err.ExitCode() == 1 {
-				show(0, 2, screen, "<no match found>")
-				return nil
-			}
-		} else {
-			return err
+	if exitErr, ok := err.(*exec.ExitError); ok {
+		err = nil
+		if exitErr.ExitCode() == 1 {
+			b = []byte("<no match>")
 		}
 	}
-	lines := strings.Split(string(b), "\n")
-	_, height := screen.Size()
-	for i := 0; i+2 < height && i < len(lines); i++ {
-		showColor(0, i+2, screen, lines[i])
+	if err != nil {
+		return "", err
 	}
-	return nil
+	return string(b), nil
 }
 
 func showColor(x, y int, screen tcell.Screen, s string) {
@@ -120,9 +150,8 @@ func show(x, y int, screen tcell.Screen, s string) {
 }
 
 func showStyled(x, y int, screen tcell.Screen, s string, style tcell.Style) {
-	for _, c := range s {
-		screen.SetContent(x, y, c, nil, style)
-		x++
+	for i, c := range s {
+		screen.SetContent(x+i, y, c, nil, style)
 	}
 }
 
