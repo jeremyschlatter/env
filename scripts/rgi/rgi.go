@@ -26,7 +26,7 @@ func main() {
 		ev := screen.PollEvent()
 		if ev, ok := ev.(*tcell.EventKey); ok {
 			switch ev.Key() {
-			case tcell.KeyCtrlC:
+			case tcell.KeyCtrlC, tcell.KeyEscape:
 				return
 			case tcell.KeyBackspace, tcell.KeyDEL:
 				j := 0
