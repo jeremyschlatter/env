@@ -128,11 +128,11 @@
               owner = "jeremyschlatter";
               repo = "starship";
               rev = "xonsh";
-              sha256 = "sha256-AMqx3TSSC/maAsSjVsrmBdwOQuTx+LMKZJUmbFtmwu4";
+              sha256 = "sha256-s4f6CjlFcfGH6hd7yNv6/VtY6zhGSPRStj1Cse5dOss";
             };
             cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
               inherit src;
-              outputHash = "sha256-AF2yROE/BKDb0VrRWZb7rYVT1n4mZnN+akI0+aS58ao";
+              outputHash = "sha256-wHcxItsgeReTEFoPOdMScG03e6NgfYUwL/pm8ABXGtc";
             });
           }))
         unzip                 # Open .zip files.
