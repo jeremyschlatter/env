@@ -85,7 +85,6 @@
         cachix           # User-managed binary caches for nix.
         caddy            # Run a webserver.
         calc             # A simple calculator.
-        cargo            # Build Rust code.
         cloc             # Count lines of code.
         coreutils  # Basic file, shell and text manipulation utilities.
         delta      # Better git diffs.
