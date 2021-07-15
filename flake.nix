@@ -132,7 +132,7 @@
             };
             cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
               inherit src;
-              outputHash = "sha256-wHcxItsgeReTEFoPOdMScG03e6NgfYUwL/pm8ABXGtc";
+              outputHash = "sha256-5CeIVJA3/0LFGvA4GgSpMEjjVwH4L74dvtyJYkMtYI0";
             });
           }))
         unzip                 # Open .zip files.
