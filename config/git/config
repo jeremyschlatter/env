@@ -13,6 +13,18 @@
     c = commit
     praise = blame
 
+    # Recover from an error after editing the commit message but before completing the commit.
+    #
+    # Sometimes I write a long commit message in my editor, save and quit, and then discover that
+    # the commit failed for some reason. (Typically because it tried to sign the commit with my
+    # private key, but it could not read my private key.)
+    #
+    # I don't want to lose the long commit message when that happens. Fortunately, it's still there
+    # in .git/COMMIT_EDITMSG, and I can pull it back up in my editor with this alias.
+    #
+    # Credit to https://stackoverflow.com/a/52976498/3072514 and https://stackoverflow.com/a/57950650/3072514
+    fix-commit = !git commit --edit --file "$(git rev-parse --git-dir)/COMMIT_EDITMSG"
+
     # Make a time-wasting thing that happens repeatedly in normal git workflows
     # waste slightly less time.
     #
