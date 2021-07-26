@@ -25,8 +25,6 @@
     # From https://victorzhou.com/blog/git-aliases/
     s = status
     d = diff
-    cane = commit --amend --no-edit
-    lo = log --oneline -n 10
 
 [push]
     default = current
