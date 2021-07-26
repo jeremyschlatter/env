@@ -125,14 +125,14 @@
         (starship.overrideAttrs # Nice command prompt.
           (oldAttrs: rec {
             src = fetchFromGitHub {
-              owner = "jeremyschlatter";
+              owner = "starship";
               repo = "starship";
-              rev = "xonsh";
-              sha256 = "sha256-s4f6CjlFcfGH6hd7yNv6/VtY6zhGSPRStj1Cse5dOss";
+              rev = "b1dcd5aecd676950bf550581b744c6e1bbe32317";
+              sha256 = "sha256-0jsMYEn2eYjfnjCynrn3g2IkXVSjGm7JdRzgb6NK2fg";
             };
             cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
               inherit src;
-              outputHash = "sha256-5CeIVJA3/0LFGvA4GgSpMEjjVwH4L74dvtyJYkMtYI0";
+              outputHash = "sha256-lF5YGr5LTvk20xjYUsgQb891IWKV71DSmVXcKbOhI0I";
             });
           }))
         unzip                 # Open .zip files.
