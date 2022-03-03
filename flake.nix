@@ -1,8 +1,8 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.stable.url = github:NixOS/nixpkgs/release-21.05;
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  inputs.stable.url = github:NixOS/nixpkgs/release-21.11;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
 
   outputs = { self, stable, nixpkgs }: {
 
@@ -101,7 +101,7 @@
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
-        goimports         # Auto insert + remove import statements in Go files.
+        gotools           # Tools to facilitate coding in Go.
         (with haskellPackages; [
           (haskell.lib.justStaticExecutables hasktags)  # Jump-to-definition for Haskell.
         ])
@@ -122,33 +122,11 @@
         ripgrep               # Text search. (Phenomenal grep replacement.)
         sd                    # Text find-and-replace. (Decent sed replacement.)
         stack                 # Build haskell projects.
-        (starship.overrideAttrs # Nice command prompt.
-          (oldAttrs: rec {
-            src = fetchFromGitHub {
-              owner = "starship";
-              repo = "starship";
-              rev = "b1dcd5aecd676950bf550581b744c6e1bbe32317";
-              sha256 = "sha256-0jsMYEn2eYjfnjCynrn3g2IkXVSjGm7JdRzgb6NK2fg";
-            };
-            cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-              inherit src;
-              outputHash = "sha256-lF5YGr5LTvk20xjYUsgQb891IWKV71DSmVXcKbOhI0I";
-            });
-          }))
+        starship              # Nice command prompt.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
-        (xonsh.overrideAttrs  # Bash+Python hybrid shell.
-          (oldAttrs: {
-            propagatedBuildInputs = with python3Packages; [ ply pygments ]; # drop prompt-toolkit
-            doInstallCheck = false; # skip the tests, which fail if prompt-toolkit is disabled
-            src = fetchFromGitHub { # bump src to pick up #4283 which is merged but not released
-              owner  = "xonsh";
-              repo   = "xonsh";
-              rev    = "86f02c034182e2c7211036f1bba0a460df909e77";
-              sha256 = "sha256-DggCvnWph7GNMBtvsIZYuoKyEi/j5TvfgTWHsPvYlwU=";
-            };
-          }))
+        xonsh                 # Bash+Python hybrid shell.
       ] ++ lib.optionals (system == "x86_64-linux") [
         etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file   # Get high-level semantic info about a file.
