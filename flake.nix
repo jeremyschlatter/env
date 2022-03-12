@@ -1,10 +1,10 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.stable.url = github:NixOS/nixpkgs/release-21.11;
+  inputs.unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
 
-  outputs = { self, stable, nixpkgs }: {
+  outputs = { self, unstable, nixpkgs }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = import ./scripts.nix;
@@ -30,7 +30,7 @@
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
-                stable = import stable { inherit system; config.allowUnfree = true; };
+                unstable = import unstable { inherit system; config.allowUnfree = true; };
               })));
         };
       in {
@@ -64,7 +64,7 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    profile = { pkgs, stable, system, super }:
+    profile = { pkgs, unstable, system, super }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
@@ -86,6 +86,7 @@
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
+        unstable.comma   # Use programs from the nix repo without installing them.
         coreutils  # Basic file, shell and text manipulation utilities.
         delta      # Better git diffs.
         direnv     # Set environment variables per-project.
