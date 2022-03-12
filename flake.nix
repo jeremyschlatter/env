@@ -79,6 +79,9 @@
         kitty
         my-shell
 
+        # Undollar: ignore leading $'s from copy-pasted commands.
+        (writeShellScriptBin "$" "\"$@\"")
+
         # Life on the command line.
         bat              # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
