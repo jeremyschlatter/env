@@ -23,3 +23,7 @@ export TERMINFO=$HOME/.nix-profile/share/terminfo
 
 export PATH=$NIX_PROFILE/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
+
+# Don't log starship warnings.
+# (Most common warning: git command timed out in large git directory).
+export STARSHIP_LOG=error
