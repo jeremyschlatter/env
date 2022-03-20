@@ -1,4 +1,4 @@
-# {"deps": ["nixFlakes"]} #nix
+# {"deps": ["nix_2_4"]} #nix
 import itertools
 import json
 import os
