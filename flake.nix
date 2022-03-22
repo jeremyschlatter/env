@@ -30,7 +30,7 @@
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
-                unstable = import unstable { inherit system; config.allowUnfree = true; };
+                unstable = import unstable { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = ["electron-12.2.3"]; };
               })));
         };
       in {
@@ -133,6 +133,7 @@
         xonsh                 # Bash+Python hybrid shell.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file   # Get high-level semantic info about a file.
+        unstable.etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
       ];
   };
 }
