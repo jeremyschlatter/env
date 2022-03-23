@@ -102,6 +102,7 @@
         ghcid      # Fast typechecking feedback loop for Haskell development.
         gitAndTools.hub            # GitHub CLI.
         git-crypt         # Encrypt select files in a git repo.
+        gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
