@@ -9,19 +9,16 @@ There are many ways that this setup provides me value, but one of the most legib
 **Usage**
 
 1. [Install nix](https://nixos.org/download.html)
-2. Upgrade nix to a pre-release version with experimental support for flakes:*
 
-    `nix-env -iAf https://github.com/NixOS/nixpkgs/tarball/release-21.05 nixUnstable`
+2. Enable experimental features:*
 
-3. Enable experimental features:*
+    `sudo mkdir -p /etc/nix && echo 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf`
 
-    `sudo mkdir -p /etc/nix && echo 'experimental-features = nix-command flakes ca-references' | sudo tee -a /etc/nix/nix.conf`
-
-4. Install my environment:
+3. Install my environment:
 
     `nix profile install github:jeremyschlatter/nixpkgs`
     
-5. Run my post-install script:
+4. Run my post-install script:
 
     `jeremy-post-install`
     
