@@ -107,9 +107,6 @@
         go                # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
-        (with haskellPackages; [
-          (haskell.lib.justStaticExecutables hasktags)  # Jump-to-definition for Haskell.
-        ])
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
