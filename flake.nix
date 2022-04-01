@@ -104,7 +104,7 @@
         git-crypt         # Encrypt select files in a git repo.
         gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
-        go                # Run Go code.
+        unstable.go_1_18  # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
