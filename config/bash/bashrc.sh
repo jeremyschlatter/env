@@ -11,10 +11,6 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-if [ -a ~/.local_bashrc ]; then
-    source ~/.local_bashrc
-fi
-
 export NIX_PROFILE=$HOME/.nix-profile
 
 # Some aliases
@@ -86,3 +82,7 @@ sf() {
 eval "$(direnv hook bash)"
 
 eval "$(starship init bash)"
+
+if [ -a ~/.local_bashrc ]; then
+    source ~/.local_bashrc
+fi
