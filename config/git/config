@@ -11,7 +11,6 @@
     st = status
     br = branch
     c = commit
-    praise = blame
 
     # Recover from an error after editing the commit message but before completing the commit.
     #
@@ -35,7 +34,6 @@
     set-upstream = !git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`
 
     # From https://victorzhou.com/blog/git-aliases/
-    s = status
     d = diff
 
 [push]
