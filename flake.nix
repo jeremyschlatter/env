@@ -111,7 +111,6 @@
         httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
-        lorri                 # Optimized direnv+nix integration.
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
         ]))                   # Run Python.
@@ -119,6 +118,7 @@
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
+        unstable.nix-direnv   # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
         pm2                   # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
