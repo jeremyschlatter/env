@@ -1,6 +1,6 @@
-# {"requirements": ["click"]} #nix
+# {"requirements": ["click"], "deps": ["neovim-remote"]} #nix
 import os.path
-from subprocess import run
+from subprocess import check_output, run
 import sys
 
 import click
@@ -79,6 +79,11 @@ def set_colors(which, restore=False):
             # a shell script
             file=sys.stderr,
         )
+
+    # Set colors in nvim windows.
+    for server in check_output(['nvr', '--serverlist'], text=True).strip().splitlines():
+        if server.startswith('/'):
+            run(['nvr', '--servername', server, '--remote-send', f'<esc>:set bg={which}<cr>'], check=True)
 
 
     # Set bat config var.
