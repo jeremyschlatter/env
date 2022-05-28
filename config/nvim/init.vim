@@ -39,6 +39,8 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.bel set expandtab tabstop=2 softtabstop=2 shiftwidth=2 commentstring=;\ %s
 " Dhall
   au BufRead,BufNewFile *.dhall set commentstring=--\ %s
+" Idris
+  au BufRead,BufNewFile *.idr set commentstring=--\ %s
 " Dart
   au BufRead,BufNewFile *.dart set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
