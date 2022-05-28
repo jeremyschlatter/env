@@ -13,6 +13,7 @@ pkgs:
           ctrlp-vim
           fzf-vim
           fzfWrapper
+          idris2-vim
           vim-better-whitespace
           vim-colors-solarized
           vim-commentary
