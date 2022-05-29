@@ -41,6 +41,8 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.dhall set commentstring=--\ %s
 " Dart
   au BufRead,BufNewFile *.dart set expandtab tabstop=2 softtabstop=2 shiftwidth=2
+" Coq
+  au BufRead,BufNewFile *.v set commentstring=(*\ %s\ *)
 augroup END
 
 " Prettier
