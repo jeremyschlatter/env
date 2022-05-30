@@ -1,0 +1,11 @@
+[package]
+name = "jeremy-rust-scripts"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.57"
+dirs = "4.0.0"
+
+[[bin]]
+name = "jeremy-post-install"

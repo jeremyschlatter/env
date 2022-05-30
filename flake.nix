@@ -3,11 +3,12 @@
 
   inputs.unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
   inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
+  inputs.naersk.url = github:nix-community/naersk;
 
-  outputs = { self, unstable, nixpkgs }: {
+  outputs = { self, unstable, nixpkgs, naersk }: {
 
     # Function that automatically packages each of my one-off scripts.
-    scripts = import ./scripts.nix;
+    scripts = system: (import ./scripts.nix) naersk.lib."${system}";
 
     # Simple builder: copy an entire directory into the nix store.
     copyDir = pkgs: name: from: to: pkgs.runCommand name {} "mkdir -p ${dirOf to} && cp -R ${from} ${to}";
@@ -73,7 +74,7 @@
 
       with pkgs; super ++ [
         my-configs # Config files for some of the programs in this list.
-        (self.scripts pkgs ./scripts) # Little utility programs.
+        (self.scripts system pkgs ./scripts) # Little utility programs.
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
         kitty

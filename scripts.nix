@@ -17,9 +17,10 @@
 # All of this packaging works in sandbox mode, as well. This is important
 # to me because my work machine is in sandbox mode and I don't want to turn
 # that off.
-pkgs: scriptsPath:
+naersk: pkgs: scriptsPath:
   with builtins;
   let
+    cargoNix = import scripts/Cargo.nix { inherit pkgs; };
     # custom build b/c the iterm2 package in nix is currently broken
     my-iterm2 = pypkgs: with pypkgs; buildPythonPackage rec {
       pname = "iterm2";
@@ -74,13 +75,14 @@ pkgs: scriptsPath:
             python3.withPackages (
               pkgs: map (x: getAttr x (pkgs // {iterm2 = my-iterm2 pkgs;})) requirements)
           }/bin/python'' { inherit deps; };
+        rs = { deps }: file: name: naersk.buildPackage { root = scriptsPath; };
       };
     inherit (pkgs.lib) strings attrsets sources lists warn;
   in lists.forEach (attrNames (readDir scriptsPath)) (f:
     let fullPath = scriptsPath + "/${f}";
     in if sources.pathIsDirectory fullPath
        then
-         if f == ".mypy_cache" then [] else
+         if f == ".mypy_cache" || f == "src" then [] else
          let build = { deps = []; } // import (fullPath + "/build.nix") pkgs;
          in builders.goDir fullPath f build.deps build.sha256
        else
@@ -94,5 +96,6 @@ pkgs: scriptsPath:
                (buildInfo.deps or []);
          in if hasAttr ext builders
             then getAttr ext builders (buildInfo // { inherit deps; }) fullPath name
-            else warn "not a recognized type of script: ${f}" []
+            else null
+            # else info "not a recognized type of script: ${f}" []
     )
