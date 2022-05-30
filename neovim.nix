@@ -14,6 +14,7 @@ pkgs:
           fzf-vim
           fzfWrapper
           idris2-vim
+          rust-vim
           vim-better-whitespace
           vim-colors-solarized
           vim-commentary
