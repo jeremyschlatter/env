@@ -85,15 +85,10 @@ def set_colors(which, restore=False):
         if server.startswith('/'):
             run(['nvr', '--servername', server, '--remote-send', f'<esc>:set bg={which}<cr>'], check=True)
 
-
-    # Set bat config var.
+    # Set xonsh config var.
     if os.getenv('XONSHRC'):
         # xonsh
-        print(f'$BAT_THEME = "Solarized ({which})"')
         print(f'$XONSH_COLOR_STYLE = "solarized-{which}"')
-    else:
-        # bash
-        print(f'export BAT_THEME="Solarized ({which})"')
 
     # Persist for next time.
     # My vim config also reads this file to determine colors on startup.

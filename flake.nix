@@ -70,6 +70,9 @@
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         my-vim = import ./neovim.nix pkgs;
+        themed = pkg: pkgs.writeShellScriptBin pkg.pname ''
+          BAT_THEME="Solarized (`${pkgs.coreutils}/bin/cat ~/.config/colors`)" ${pkg}/bin/${pkg.pname} $@
+        '';
       in
 
       with pkgs; super ++ [
@@ -84,15 +87,15 @@
         (writeShellScriptBin "$" "\"$@\"")
 
         # Life on the command line.
-        bat              # Display files, with syntax highlighting.
+        (themed bat)     # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
         cachix           # User-managed binary caches for nix.
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
         unstable.comma   # Use programs from the nix repo without installing them.
-        coreutils  # Basic file, shell and text manipulation utilities.
-        delta      # Better git diffs.
+        coreutils        # Basic file, shell and text manipulation utilities.
+        (themed delta)   # Better git diffs.
         direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
         exa        # List files in the current directory.
