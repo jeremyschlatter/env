@@ -90,6 +90,11 @@ def set_colors(which, restore=False):
         # xonsh
         print(f'$XONSH_COLOR_STYLE = "solarized-{which}"')
 
+    # Change system theme on Ubuntu.
+    if not restore and sys.platform == 'linux':
+         run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', f'prefer-{which}'], check=True)
+         run(['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', f'Yaru{"-dark" if which == "dark" else ""}'], check=True)
+
     # Persist for next time.
     # My vim config also reads this file to determine colors on startup.
     with open(color_config_path, 'w') as f:
