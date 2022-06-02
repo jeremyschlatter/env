@@ -1,11 +1,15 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
-  inputs.unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
-  inputs.naersk.url = github:nix-community/naersk;
+  inputs = {
+    unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
+    naersk.url = github:nix-community/naersk;
+    nixGL.url = github:guibou/nixGL;
+    nixGL.inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-  outputs = { self, unstable, nixpkgs, naersk }: {
+  outputs = { self, unstable, nixpkgs, naersk, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = system: (import ./scripts.nix) naersk.lib."${system}";
@@ -73,6 +77,9 @@
         themed = pkg: pkgs.writeShellScriptBin pkg.pname ''
           BAT_THEME="Solarized (`${pkgs.coreutils}/bin/cat ~/.config/colors`)" ${pkg}/bin/${pkg.pname} $@
         '';
+        fixGL = pkg: [pkg (pkgs.hiPrio (pkgs.writeShellScriptBin pkg.pname ''
+          ${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel ${pkg}/bin/${pkg.pname} $@
+        ''))];
       in
 
       with pkgs; super ++ [
@@ -80,7 +87,7 @@
         (self.scripts system pkgs ./scripts) # Little utility programs.
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
-        kitty
+        (fixGL kitty)
         my-shell
 
         # Undollar: ignore leading $'s from copy-pasted commands.
