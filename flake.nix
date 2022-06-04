@@ -3,7 +3,7 @@
 
   inputs = {
     unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-    nixpkgs.url = github:NixOS/nixpkgs/release-21.11;
+    nixpkgs.url = github:NixOS/nixpkgs/release-22.05;
     naersk.url = github:nix-community/naersk;
     nixGL.url = github:guibou/nixGL;
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
@@ -85,6 +85,7 @@
       with pkgs; super ++ [
         my-configs # Config files for some of the programs in this list.
         (self.scripts system pkgs ./scripts) # Little utility programs.
+        nix
 
         # My terminal and shell. On macOS I use iTerm2 instead of kitty.
         (fixGL kitty)
@@ -100,7 +101,7 @@
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
-        unstable.comma   # Use programs from the nix repo without installing them.
+        comma            # Use programs from the nix repo without installing them.
         coreutils        # Basic file, shell and text manipulation utilities.
         (themed delta)   # Better git diffs.
         direnv     # Set environment variables per-project.
@@ -115,7 +116,7 @@
         git-crypt         # Encrypt select files in a git repo.
         gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
-        unstable.go_1_18  # Run Go code.
+        go_1_18           # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
@@ -129,7 +130,7 @@
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
-        unstable.nix-direnv   # Optimized direnv+nix integration.
+        nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
         pm2                   # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
@@ -142,7 +143,7 @@
         xonsh                 # Bash+Python hybrid shell.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file   # Get high-level semantic info about a file.
-        unstable.etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
+        # etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
       ];
   };
 }

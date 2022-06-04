@@ -71,7 +71,7 @@ naersk: pkgs: scriptsPath:
           };
         hs = build "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file";
         py = { deps, requirements ? [] }:
-          interp ''/bin/sh ${
+          interp ''${
             python3.withPackages (
               pkgs: map (x: getAttr x (pkgs // {iterm2 = my-iterm2 pkgs;})) requirements)
           }/bin/python'' { inherit deps; };
