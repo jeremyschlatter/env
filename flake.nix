@@ -97,7 +97,6 @@
         # Life on the command line.
         (themed bat)     # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
-        cachix           # User-managed binary caches for nix.
         caddy            # Run a webserver.
         calc             # A simple calculator.
         cloc             # Count lines of code.
@@ -111,8 +110,7 @@
         fira-code  # Font that renders symbols in code nicely.
         fzf        # Fuzzy text search.
         git        # Track version history for text files.
-        ghcid      # Fast typechecking feedback loop for Haskell development.
-        gitAndTools.hub            # GitHub CLI.
+        gitAndTools.hub   # GitHub CLI.
         git-crypt         # Encrypt select files in a git repo.
         gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
@@ -135,12 +133,10 @@
         pm2                   # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         sd                    # Text find-and-replace. (Decent sed replacement.)
-        stack                 # Build haskell projects.
         starship              # Nice command prompt.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
-        xonsh                 # Bash+Python hybrid shell.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file   # Get high-level semantic info about a file.
         # etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
