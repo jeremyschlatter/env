@@ -137,6 +137,7 @@
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
+        zoxide
       ] ++ lib.optionals (system == "x86_64-linux") [
         # My terminal. On macOS I use iTerm2 instead of kitty.
         (fixGL kitty)
