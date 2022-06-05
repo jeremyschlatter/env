@@ -44,20 +44,6 @@
         x86_64-linux = env "x86_64-linux";
       };
 
-    # Experimental lite profile, for servers.
-    packages.x86_64-darwin.lite = (self.merge [self.litePackages]).x86_64-darwin;
-    packages.x86_64-linux.lite = (self.merge [self.litePackages]).x86_64-linux;
-    litePackages.profile = { pkgs, ... }:
-      with pkgs; [
-        (self.copyDir pkgs "my-configs" ./config "$out/config")
-        (import ./neovim.nix pkgs)
-        exa
-        git
-        go
-        ripgrep
-        starship
-      ];
-
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
 
