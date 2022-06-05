@@ -39,6 +39,7 @@
               })));
         };
       in {
+        aarch64-darwin = env "aarch64-darwin";
         x86_64-darwin = env "x86_64-darwin";
         x86_64-linux = env "x86_64-linux";
       };
@@ -73,7 +74,7 @@
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
-        my-vim = import ./neovim.nix pkgs;
+        my-vim = import ./neovim.nix pkgs unstable;
         themed = pkg: pkgs.writeShellScriptBin pkg.pname ''
           BAT_THEME="Solarized (`${pkgs.coreutils}/bin/cat ~/.config/colors`)" ${pkg}/bin/${pkg.pname} $@
         '';
@@ -85,10 +86,9 @@
       with pkgs; super ++ [
         my-configs # Config files for some of the programs in this list.
         (self.scripts system pkgs ./scripts) # Little utility programs.
-        nix
+        # nix
 
-        # My terminal and shell. On macOS I use iTerm2 instead of kitty.
-        (fixGL kitty)
+        # My shell.
         my-shell
 
         # Undollar: ignore leading $'s from copy-pasted commands.
@@ -118,13 +118,13 @@
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
-        httpie                # Create and execute HTTP queries.
+        unstable.httpie       # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
         ]))                   # Run Python.
-        magic-wormhole        # Copy files between computers.
+        unstable.magic-wormhole        # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mypy                  # Static type checking for python.
         my-vim                # Edit text.
@@ -138,6 +138,8 @@
         watch                 # Run a command repeatedly.
         wget                  # Download files.
       ] ++ lib.optionals (system == "x86_64-linux") [
+        # My terminal. On macOS I use iTerm2 instead of kitty.
+        (fixGL kitty)
         file   # Get high-level semantic info about a file.
         # etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
       ];

@@ -1,4 +1,4 @@
-pkgs:
+pkgs: unstable:
   (pkgs.neovim.override {
     viAlias = true;
     vimAlias = true;
@@ -19,7 +19,7 @@ pkgs:
           vim-colors-solarized
           vim-commentary
           vim-fetch
-          vim-go
+          unstable.vimPlugins.vim-go
           vim-nix
           vim-numbertoggle
           vim-toml
