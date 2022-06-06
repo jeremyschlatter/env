@@ -94,6 +94,10 @@ def set_colors(which, restore=False):
          run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', f'prefer-{which}'], check=True)
          run(['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', f'Yaru{"-dark" if which == "dark" else ""}'], check=True)
 
+    # Change system theme on macOS.
+    if not restore and sys.platform == 'darwin':
+        run(['osascript', '-e', f'tell app "System Events" to tell appearance preferences to set dark mode to {"true" if which == "dark" else "false"}'], check=True)
+
     # Persist for next time.
     # My vim config also reads this file to determine colors on startup.
     with open(color_config_path, 'w') as f:
