@@ -21,17 +21,6 @@ naersk: pkgs: scriptsPath:
   with builtins;
   let
     cargoNix = import scripts/Cargo.nix { inherit pkgs; };
-    # custom build b/c the iterm2 package in nix is currently broken
-    my-iterm2 = pypkgs: with pypkgs; buildPythonPackage rec {
-      pname = "iterm2";
-      version = "1.14";
-      src = fetchPypi {
-        inherit pname version;
-        sha256 = "089pln3c41n6dyh91hw9gy6mpm9s663lpmdc4gamig3g6pfmbsk4";
-      };
-      doCheck = false;
-      propagatedBuildInputs = [ protobuf websockets ];
-    };
     builders = with pkgs;
       let
         wrapPath = name: deps:
@@ -72,8 +61,7 @@ naersk: pkgs: scriptsPath:
         hs = build "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file";
         py = { deps, requirements ? [] }:
           interp ''${
-            python3.withPackages (
-              pkgs: map (x: getAttr x (pkgs // {iterm2 = my-iterm2 pkgs;})) requirements)
+            python3.withPackages (pkgs: map (x: getAttr x pkgs) requirements)
           }/bin/python'' { inherit deps; };
         rs = { deps }: file: name: naersk.buildPackage { root = scriptsPath; };
       };
