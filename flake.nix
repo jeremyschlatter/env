@@ -72,7 +72,6 @@
       with pkgs; super ++ [
         my-configs # Config files for some of the programs in this list.
         (self.scripts system pkgs ./scripts) # Little utility programs.
-        # nix
 
         # My shell.
         my-shell
@@ -128,6 +127,7 @@
         # My terminal. On macOS I use iTerm2 instead of kitty.
         (fixGL kitty)
         file   # Get high-level semantic info about a file.
+        nix
         # etcher # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
       ];
   };
