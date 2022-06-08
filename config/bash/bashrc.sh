@@ -83,6 +83,8 @@ eval "$(direnv hook bash)"
 
 eval "$(starship init bash)"
 
+eval "$(zoxide init bash)"
+
 if [ -a ~/.local_bashrc ]; then
     source ~/.local_bashrc
 fi

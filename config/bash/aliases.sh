@@ -22,8 +22,6 @@ alias vit='vi -c ":vsplit term://shell"'
 
 alias x=xonsh
 
-alias z=zoxide
-
 clone() {
     eval "$(github $1)"
 }
