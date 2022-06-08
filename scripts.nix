@@ -20,7 +20,6 @@
 naersk: pkgs: scriptsPath:
   with builtins;
   let
-    cargoNix = import scripts/Cargo.nix { inherit pkgs; };
     builders = with pkgs;
       let
         wrapPath = name: deps:
@@ -59,9 +58,11 @@ naersk: pkgs: scriptsPath:
             postInstall = "${wrapPath name deps}";
           };
         hs = build "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file";
-        py = { deps, requirements ? [] }:
+        py = { deps, requirements ? [], darwinRequirements ? [] }:
           interp ''${
-            python3.withPackages (pkgs: map (x: getAttr x pkgs) requirements)
+            python3.withPackages (pyPkgs:
+              map (x: getAttr x pyPkgs) requirements ++ (if pkgs.stdenv.isDarwin then map (x: getAttr x pyPkgs) darwinRequirements else [])
+            )
           }/bin/python'' { inherit deps; };
         rs = { deps }: file: name: naersk.buildPackage { root = scriptsPath; };
       };

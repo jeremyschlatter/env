@@ -1,10 +1,12 @@
-# {"requirements": ["click", "iterm2"], "deps": ["neovim-remote"]} #nix
+# {"requirements": ["click"], "darwinRequirements": ["iterm2"], "deps": ["neovim-remote"]} #nix
 import os.path
 from subprocess import check_output, run
 import sys
 
 import click
-import iterm2
+
+if sys.platform == 'darwin':
+    import iterm2
 
 #################  entrypoints  #################
 
