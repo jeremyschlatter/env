@@ -70,7 +70,7 @@
         fixGL = pkg: [pkg (hiPrio (writeShellScriptBin pkg.pname ''
           ${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel ${pkg}/bin/${pkg.pname} $@
         ''))];
-        mcfly = (themed "MCFLY_LIGHT=1" "=" pkgs.mcfly);
+        mcfly = themed "MCFLY_LIGHT=1" "=" pkgs.mcfly;
       in
 
       super ++ [
