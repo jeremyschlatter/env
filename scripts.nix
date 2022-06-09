@@ -57,7 +57,6 @@ naersk: pkgs: scriptsPath:
             inherit name src vendorSha256;
             postInstall = "${wrapPath name deps}";
           };
-        hs = build "${ghc}/bin/ghc -XLambdaCase -o $dest -outputdir $TMPDIR/$file $file";
         py = { deps, requirements ? [], darwinRequirements ? [] }:
           interp ''${
             python3.withPackages (pyPkgs:
