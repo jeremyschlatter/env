@@ -95,7 +95,6 @@
         git        # Track version history for text files.
         gitAndTools.hub   # GitHub CLI.
         gnumake           # Near-omnipresent generic build tool.
-        gnupg             # Cryptography tools.
         go_1_18           # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
