@@ -27,7 +27,7 @@
     # flakes, so... 🤷)
     merge = flakes:
       let env = system:
-        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; overlays = [ (final: prev: { golangci-lint = prev.golangci-lint.overrideAttrs (_: { meta.broken = false; } ); } ) ]; };
         in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
           paths = trivial.pipe []
@@ -60,7 +60,7 @@
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
-        my-vim = import ./neovim.nix pkgs unstable;
+        my-vim = import ./neovim.nix pkgs;
         themed = light: dark: pkg: pkgs.writeShellScriptBin pkg.pname ''
           [[ $(${pkgs.coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
           env "$v" ${pkg}/bin/${pkg.pname} $@
