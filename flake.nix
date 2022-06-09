@@ -84,8 +84,8 @@
         (writeShellScriptBin "$" "\"$@\"")
 
         # Life on the command line.
-        (bat-themed bat)      # Display files, with syntax highlighting.
         bash-completion       # Tab-completion for a bunch of commands.
+        (bat-themed bat)      # Display files, with syntax highlighting.
         caddy                 # Run a webserver.
         comma                 # Use programs from the nix repo without installing them.
         coreutils             # Basic file, shell and text manipulation utilities.
@@ -105,25 +105,25 @@
         htop                  # Show CPU + memory usage.
         x86.httpie            # Create and execute HTTP queries.
         less                  # Scroll through long files.
-        (python3.withPackages # Run Python.
-          (ps: [ps.ipython])) # Better Python repl than the default.
         x86.magic-wormhole    # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mcfly                 # Shell history search.
-        vim                   # Edit text.
         nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
+        (python3.withPackages # Run Python.
+          (ps: [ps.ipython])) # Better Python repl than the default.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
         unzip                 # Open .zip files.
+        vim                   # Edit text.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
         zoxide                # A smarter cd command.
       ] ++ lib.optionals (system == "x86_64-linux") [
+        # etcher                # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file                  # Get high-level semantic info about a file.
         (fixGL kitty)         # My terminal. On macOS I use iTerm2 instead of kitty.
         nix                   # Nix.
-        # etcher                # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
       ];
   };
 }
