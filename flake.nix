@@ -83,8 +83,6 @@
         (themed bat)     # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
         caddy            # Run a webserver.
-        calc             # A simple calculator.
-        cloc             # Count lines of code.
         comma            # Use programs from the nix repo without installing them.
         coreutils        # Basic file, shell and text manipulation utilities.
         (themed delta)   # Better git diffs.
@@ -96,7 +94,6 @@
         fzf        # Fuzzy text search.
         git        # Track version history for text files.
         gitAndTools.hub   # GitHub CLI.
-        git-crypt         # Encrypt select files in a git repo.
         gnumake           # Near-omnipresent generic build tool.
         gnupg             # Cryptography tools.
         go_1_18           # Run Go code.
@@ -104,20 +101,16 @@
         gotools           # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
         unstable.httpie       # Create and execute HTTP queries.
-        jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
         ]))                   # Run Python.
         unstable.magic-wormhole        # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
-        mypy                  # Static type checking for python.
         my-vim                # Edit text.
         nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
-        pm2                   # Nice interface for running long-lived background programs.
         ripgrep               # Text search. (Phenomenal grep replacement.)
-        sd                    # Text find-and-replace. (Decent sed replacement.)
         starship              # Nice command prompt.
         unzip                 # Open .zip files.
         watch                 # Run a command repeatedly.
