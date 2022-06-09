@@ -86,11 +86,6 @@ def set_colors(which, restore=False):
         if server.startswith('/'):
             run(['nvr', '--servername', server, '--remote-send', f'<esc>:set bg={which}<cr>'], check=True)
 
-    # Set xonsh config var.
-    if os.getenv('XONSHRC'):
-        # xonsh
-        print(f'$XONSH_COLOR_STYLE = "solarized-{which}"')
-
     # Change system theme on Ubuntu.
     if not restore and sys.platform == 'linux':
          run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', f'prefer-{which}'], check=True)
