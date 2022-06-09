@@ -85,5 +85,4 @@ naersk: pkgs: scriptsPath:
          in if hasAttr ext builders
             then getAttr ext builders (buildInfo // { inherit deps; }) fullPath name
             else null
-            # else info "not a recognized type of script: ${f}" []
     )
