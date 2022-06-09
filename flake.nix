@@ -61,9 +61,11 @@
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         my-vim = import ./neovim.nix pkgs unstable;
-        themed = pkg: pkgs.writeShellScriptBin pkg.pname ''
-          BAT_THEME="Solarized (`${pkgs.coreutils}/bin/cat ~/.config/colors`)" ${pkg}/bin/${pkg.pname} $@
+        themed = light: dark: pkg: pkgs.writeShellScriptBin pkg.pname ''
+          [[ $(${pkgs.coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
+          env "$v" ${pkg}/bin/${pkg.pname} $@
         '';
+        bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
         fixGL = pkg: [pkg (pkgs.hiPrio (pkgs.writeShellScriptBin pkg.pname ''
           ${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel ${pkg}/bin/${pkg.pname} $@
         ''))];
@@ -80,12 +82,12 @@
         (writeShellScriptBin "$" "\"$@\"")
 
         # Life on the command line.
-        (themed bat)     # Display files, with syntax highlighting.
+        (bat-themed bat)     # Display files, with syntax highlighting.
         bash-completion  # Tab-completion for a bunch of commands.
         caddy            # Run a webserver.
         comma            # Use programs from the nix repo without installing them.
         coreutils        # Basic file, shell and text manipulation utilities.
-        (themed delta)   # Better git diffs.
+        (bat-themed delta)   # Better git diffs.
         direnv     # Set environment variables per-project.
         docker     # Bundle programs with their dependencies.
         exa        # List files in the current directory.
@@ -115,6 +117,7 @@
         watch                 # Run a command repeatedly.
         wget                  # Download files.
         zoxide
+        (themed "MCFLY_LIGHT=1" "=" mcfly)
       ] ++ lib.optionals (system == "x86_64-linux") [
         # My terminal. On macOS I use iTerm2 instead of kitty.
         (fixGL kitty)

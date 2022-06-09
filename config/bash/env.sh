@@ -27,3 +27,6 @@ export PATH=$HOME/go/bin:$PATH
 # Don't log starship warnings.
 # (Most common warning: git command timed out in large git directory).
 export STARSHIP_LOG=error
+
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_RESULTS=25

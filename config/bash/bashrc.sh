@@ -80,9 +80,8 @@ sf() {
 }
 
 eval "$(direnv hook bash)"
-
+eval "$(mcfly init bash)"
 eval "$(starship init bash)"
-
 eval "$(zoxide init bash)"
 
 if [ -a ~/.local_bashrc ]; then
