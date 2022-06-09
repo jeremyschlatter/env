@@ -35,6 +35,7 @@
               (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
                 unstable = import unstable { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = ["electron-12.2.3"]; };
+                x86 = import nixpkgs { system = "x86_64-${builtins.elemAt (strings.splitString "-" system) 1 }"; config.allowUnfree = true; };
               })));
         };
       in {
@@ -55,7 +56,7 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    profile = { pkgs, unstable, system, super }:
+    profile = { pkgs, unstable, system, super, x86 }:
       let
         my-configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-shell = pkgs.writeShellScriptBin "shell" ''exec ${pkgs.bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
@@ -99,13 +100,13 @@
         go_1_18           # Run Go code.
         google-cloud-sdk  # Google Cloud CLI.
         gotools           # Tools to facilitate coding in Go.
-        htop                  # Show CPU + memory usage.
-        unstable.httpie       # Create and execute HTTP queries.
+        htop              # Show CPU + memory usage.
+        x86.httpie        # Create and execute HTTP queries.
         less                  # Scroll through long files.
         (python3.withPackages (pkgs: with pkgs; [
           ipython             # Better Python repl than the default.
         ]))                   # Run Python.
-        unstable.magic-wormhole        # Copy files between computers.
+        x86.magic-wormhole    # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         my-vim                # Edit text.
         nix-direnv            # Optimized direnv+nix integration.
