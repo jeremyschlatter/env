@@ -29,5 +29,4 @@ export PATH=$HOME/go/bin:$PATH
 export STARSHIP_LOG=error
 
 export MCFLY_KEY_SCHEME=vim
-export MCFLY_RESULTS=25
 export MCFLY_FUZZY=2
