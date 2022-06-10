@@ -59,11 +59,7 @@ def set_colors(which, restore=False):
         run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.nix-profile/config/kitty/{which}.conf', ], check=True)
     elif os.getenv('TERM_PROGRAM') == 'iTerm.app':
         # iterm2
-        #
-        # We don't need to restore on iterm2, because the color is stored in the profile.
-        # And every time we change the color, iterm2 pops up a confirmation box, which
-        # we don't want on every new tab and window.
-        if not restore:
+        if not restore: # We don't need to restore on iterm2 because the color is stored in the profile.
             async def iterm2_set_colors(connection):
                 preset = await iterm2.ColorPreset.async_get(
                     connection,
