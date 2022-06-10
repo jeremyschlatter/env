@@ -1,4 +1,5 @@
 # {"requirements": ["click"], "darwinRequirements": ["iterm2"], "deps": ["neovim-remote"]} #nix
+import os
 import os.path
 from subprocess import check_output, run
 import sys
@@ -23,6 +24,10 @@ def dark():
     set_colors('dark')
 
 @cli.command()
+def system_update():
+    set_colors('dark' if os.getenv('DARKMODE') == '1' else 'light', system=True)
+
+@cli.command()
 def restore_colors():
     try:
         with open(color_config_path) as f:
@@ -36,7 +41,7 @@ def restore_colors():
 
 color_config_path = os.path.expanduser('~/.config/colors')
 
-def set_colors(which, restore=False):
+def set_colors(which, restore=False, system=False):
     # Set terminal colors.
     #
     # There are several possible terminals I might be in, and the behavior I
@@ -54,12 +59,12 @@ def set_colors(which, restore=False):
         #
         # Do nothing to the terminal, but continue with other changes.
         pass
-    elif 'kitty' in os.getenv('TERM'):
+    elif system and sys.platform == 'linux' or 'kitty' in os.getenv('TERM', ''):
         # kitty
         run(['kitty', '@', 'set-colors', '--configured', '--all', f'~/.nix-profile/config/kitty/{which}.conf', ], check=True)
-    elif os.getenv('TERM_PROGRAM') == 'iTerm.app':
+    elif system and sys.platform == 'darwin' or os.getenv('TERM_PROGRAM') == 'iTerm.app':
         # iterm2
-        if not restore: # We don't need to restore on iterm2 because the color is stored in the profile.
+        if system or not restore: # We don't need to restore on iterm2 because the color is stored in the profile.
             async def iterm2_set_colors(connection):
                 preset = await iterm2.ColorPreset.async_get(
                     connection,
@@ -82,14 +87,16 @@ def set_colors(which, restore=False):
         if server.startswith('/'):
             run(['nvr', '--servername', server, '--remote-send', f'<esc>:set bg={which}<cr>'], check=True)
 
-    # Change system theme on Ubuntu.
-    if not restore and sys.platform == 'linux':
+    # Change system theme (unless we are responding to a system change):
+    if not system:
+        # Change system theme on Ubuntu.
+        if sys.platform == 'linux':
          run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', f'prefer-{which}'], check=True)
          run(['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', f'Yaru{"-dark" if which == "dark" else ""}'], check=True)
 
-    # Change system theme on macOS.
-    if not restore and sys.platform == 'darwin':
-        run(['osascript', '-e', f'tell app "System Events" to tell appearance preferences to set dark mode to {"true" if which == "dark" else "false"}'], check=True)
+        # Change system theme on macOS.
+        if sys.platform == 'darwin':
+            run(['osascript', '-e', f'tell app "System Events" to tell appearance preferences to set dark mode to {"true" if which == "dark" else "false"}'], check=True)
 
     # Persist for next time.
     # My vim config also reads this file to determine colors on startup.

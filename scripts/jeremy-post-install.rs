@@ -1,7 +1,9 @@
 extern crate dirs;
 
 use anyhow::{anyhow, bail, Result};
-use std::{collections, fs, io::ErrorKind, os, process};
+use std::{
+    collections::HashSet, env::consts::OS, fs, io::ErrorKind, os, process::Command, str::from_utf8,
+};
 
 fn main() -> Result<()> {
     let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
@@ -11,9 +13,9 @@ fn main() -> Result<()> {
     // Make ~/.config if it does not yet exist.
     fs::create_dir_all(&home_conf)?;
 
-    let mut want_symlink = collections::HashSet::new();
+    let mut want_symlink = HashSet::new();
 
-    // Symlink ~/.nix-profile/config/* into ~/.config
+    // Symlink ~/.nix-profile/config/* into ~/.config.
     for entry in fs::read_dir(&nix_conf)? {
         let name = entry?.file_name();
         if name == "README.md" {
@@ -46,7 +48,7 @@ fn main() -> Result<()> {
         }
     }
 
-    // Remove old symlinks from ~/.config
+    // Remove old symlinks from ~/.config.
     for entry in fs::read_dir(&home_conf)? {
         let entry = entry?;
         let name = entry.file_name();
@@ -59,19 +61,50 @@ fn main() -> Result<()> {
         }
     }
 
-    // Build bat theme
+    // Build bat theme.
     match fs::metadata(home.join(".cache/bat/themes.bin")) {
         Err(err) if err.kind() == ErrorKind::NotFound => {
             println!("installing solarized theme for bat...");
-            if !process::Command::new("bat")
+            if !Command::new("bat")
                 .args(["cache", "--build"])
                 .status()?
                 .success()
             {
                 bail!("`bat cache --build` failed");
             }
-            Ok(())
         }
-        _ => Ok(()),
+        _ => (),
     }
+
+    // Install dark-mode-notify service on macOS if not already present.
+    if OS == "macos" {
+        match from_utf8(
+            Command::new("launchctl")
+                .arg("list")
+                .output()?
+                .stdout
+                .as_ref(),
+        )?
+        .find("ke.bou.dark-mode-notify")
+        {
+            Some(_) => (),
+            None => {
+                if !Command::new("launchctl")
+                    .args([
+                        "load",
+                        "-w",
+                        home.join(".config/dark-mode-notify/ke.bou.dark-mode-notify.plist")
+                            .to_str()
+                            .unwrap(),
+                    ])
+                    .status()?
+                    .success()
+                {
+                    bail!("`launchctl load -w <dark-mode-notify>` failed");
+                }
+            }
+        }
+    }
+
+    Ok(())
 }
