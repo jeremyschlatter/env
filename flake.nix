@@ -95,7 +95,6 @@
         exa                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
-        fzf                   # Fuzzy text search.
         git                   # Track version history for text files.
         gitAndTools.hub       # GitHub CLI.
         gnumake               # Near-omnipresent generic build tool.
