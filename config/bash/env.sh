@@ -16,6 +16,9 @@ export LESSCHARSET=UTF-8
 
 export XDG_DATA_DIRS=$NIX_PROFILE/share
 
+# https://stackoverflow.com/a/37578829
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/
+
 # kitty sets $TERM to "xterm-kitty". Need this terminfo file for programs to
 # make sense of that value. Otherwise programs like `less` and `man` print
 # "WARNING: terminal is not fully functional" and fall back to less-useful behavior.
