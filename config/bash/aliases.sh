@@ -24,6 +24,10 @@ clone() {
     eval "$(github $1)"
 }
 
+gitlab() {
+    eval "$($NIX_PROFILE/bin/gitlab $1)"
+}
+
 light() {
     eval "$(colorscheme light)"
 }
