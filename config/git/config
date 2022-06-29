@@ -44,6 +44,8 @@
 
 [core]
     pager = delta
+    fsmonitor = true
+    untrackedcache = true
 
 [init]
     defaultBranch = master
