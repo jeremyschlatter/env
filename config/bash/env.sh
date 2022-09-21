@@ -33,3 +33,4 @@ export STARSHIP_LOG=error
 
 export MCFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=2
+export MCFLY_RESULTS_SORT=LAST_RUN
