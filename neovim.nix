@@ -9,6 +9,7 @@ pkgs:
       '';
       packages.mine = with pkgs.vimPlugins; {
         start = [
+
           camelcasemotion
           ctrlp-vim
           fzf-vim
@@ -22,8 +23,10 @@ pkgs:
           vim-go
           vim-nix
           vim-numbertoggle
+          vim-solidity
           vim-toml
           vim-unicoder
+
         ];
       };
      };
