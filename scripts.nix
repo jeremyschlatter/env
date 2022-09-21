@@ -63,7 +63,19 @@ naersk: pkgs: scriptsPath:
               map (x: getAttr x pyPkgs) requirements ++ (if pkgs.stdenv.isDarwin then map (x: getAttr x pyPkgs) darwinRequirements else [])
             )
           }/bin/python'' { inherit deps; };
-        rs = { deps }: file: name: naersk.buildPackage { root = scriptsPath; };
+        rs = { deps }: file: name: naersk.buildPackage {
+          root = scriptsPath;
+          postInstall = ''
+            # hack around the fact that we build n^2 binary targets (for each rust target: we build all rust targets)
+            # would be better to not do n^2. perhaps if https://github.com/nix-community/naersk/issues/127 gets fixed.
+            # for now, the n^2 thing causes name collisions in wrapPath, unless we do the following workaround.
+            mv $out/bin $out/bins
+            mkdir $out/bin
+            cp $out/bins/${name} $out/bin
+
+            ${wrapPath name deps}
+          '';
+        };
       };
     inherit (pkgs.lib) strings attrsets sources lists warn;
   in lists.forEach (attrNames (readDir scriptsPath)) (f:

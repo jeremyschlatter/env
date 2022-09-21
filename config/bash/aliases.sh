@@ -28,9 +28,5 @@ gitlab() {
     eval "$($NIX_PROFILE/bin/gitlab $1)"
 }
 
-light() {
-    eval "$(colorscheme light)"
-}
-dark() {
-    eval "$(colorscheme dark)"
-}
+alias light="colorscheme light"
+alias dark="colorscheme dark"
