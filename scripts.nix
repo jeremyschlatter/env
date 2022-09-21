@@ -57,11 +57,9 @@ naersk: pkgs: scriptsPath:
             inherit name src vendorSha256;
             postInstall = "${wrapPath name deps}";
           };
-        py = { deps, requirements ? [], darwinRequirements ? [] }:
+        py = { deps, requirements ? [] }:
           interp ''${
-            python3.withPackages (pyPkgs:
-              map (x: getAttr x pyPkgs) requirements ++ (if pkgs.stdenv.isDarwin then map (x: getAttr x pyPkgs) darwinRequirements else [])
-            )
+            python3.withPackages (pyPkgs: map (x: getAttr x pyPkgs) requirements)
           }/bin/python'' { inherit deps; };
         rs = { deps }: file: name: naersk.buildPackage {
           root = scriptsPath;
