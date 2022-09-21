@@ -16,6 +16,11 @@ if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then
         . $completion
     done
 fi
+if [ -d $NIX_PROFILE/share/bash_completion ]; then
+    for completion in $NIX_PROFILE/share/bash_completion/*; do
+        . $completion
+    done
+fi
 
 . $NIX_PROFILE/config/bash/aliases.sh   # Some aliases
 . $NIX_PROFILE/config/bash/env.sh       # Set env vars
