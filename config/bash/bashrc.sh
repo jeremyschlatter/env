@@ -30,7 +30,7 @@ fi
 # git tab completion with 'g' alias
 __git_complete g __git_main
 
-eval "$(colorscheme restore-colors)"
+colorscheme restore-colors
 eval "$(direnv hook bash)"
 eval "$(mcfly init bash)"
 eval "$(starship init bash)"

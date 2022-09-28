@@ -1,6 +1,5 @@
 // {"deps": ["neovim-remote"]} #nix
 extern crate dirs;
-extern crate iterm2;
 
 use anyhow::{anyhow, bail, ensure, Result};
 use clap::{Parser, Subcommand};
@@ -88,12 +87,7 @@ fn set_colors(which: &str, restore: bool, system: bool) -> Result<()> {
     } else if system && OS == "macos" || var("TERM_PROGRAM") == Ok("iTerm.app".to_string()) {
         // iterm2
         if system || !restore { // We don't need to restore on iterm2 because the color is stored in the profile.
-            iterm2::set_color_palette(
-                &format!(
-                    "preset=Solarized {}",
-                    &(if which == "dark" { "Dark" } else { "Light" }),
-                )
-            )?
+            run("set-iterm2-colors", &[which])?
         }
     } else {
         eprintln!("I don't recognize this terminal, so not trying to change its color.");
