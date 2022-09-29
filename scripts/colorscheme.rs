@@ -1,4 +1,4 @@
-// {"deps": ["neovim-remote"]} #nix
+// {"deps": ["neovim-remote", "scripts.set-iterm2-colors"]} #nix
 extern crate dirs;
 
 use anyhow::{anyhow, bail, ensure, Result};
