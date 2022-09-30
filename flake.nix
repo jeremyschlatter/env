@@ -103,6 +103,7 @@
         gotools               # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
         x86.httpie            # Create and execute HTTP queries.
+        jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         x86.magic-wormhole    # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
