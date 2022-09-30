@@ -78,30 +78,26 @@ fn main() -> Result<()> {
 
     // Install dark-mode-notify service on macOS if not already present.
     if OS == "macos" {
-        match from_utf8(
+        if !from_utf8(
             Command::new("launchctl")
                 .arg("list")
                 .output()?
                 .stdout
                 .as_ref(),
-        )?
-        .find("ke.bou.dark-mode-notify")
-        {
-            Some(_) => (),
-            None => {
-                if !Command::new("launchctl")
-                    .args([
-                        "load",
-                        "-w",
-                        home.join(".config/dark-mode-notify/ke.bou.dark-mode-notify.plist")
-                            .to_str()
-                            .unwrap(),
-                    ])
-                    .status()?
-                    .success()
-                {
-                    bail!("`launchctl load -w <dark-mode-notify>` failed");
-                }
+        )?.contains("ke.bou.dark-mode-notify") {
+            println!("adding dark-mode-notify to launchctl...");
+            if !Command::new("launchctl")
+                .args([
+                    "load",
+                    "-w",
+                    home.join(".config/dark-mode-notify/ke.bou.dark-mode-notify.plist")
+                        .to_str()
+                        .unwrap(),
+                ])
+                .status()?
+                .success()
+            {
+                bail!("`launchctl load -w <dark-mode-notify>` failed");
             }
         }
     }
