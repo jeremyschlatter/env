@@ -4,7 +4,7 @@ from subprocess import run
 import sys
 
 if len(sys.argv) != 2:
-    print('usage: github <user/repo>', file=sys.stderr)
+    print('usage: gitlab <user/repo>', file=sys.stderr)
     sys.exit(1)
 
 repo = sys.argv[1]
