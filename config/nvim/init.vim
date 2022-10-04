@@ -45,9 +45,6 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.mlg,*.v set commentstring=(*\ %s\ *)
 augroup END
 
-" Prettier
-let g:prettier#autoformat = 0
-
 " Editing setup
 set mouse=a               " Enable the mouse.
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
