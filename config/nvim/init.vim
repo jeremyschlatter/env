@@ -30,6 +30,7 @@ augroup jeremyschlatter
 " Javascript
   au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.tsx,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
   au BufRead,BufNewFile *.tsx set filetype=typescript
+" Solidity
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
   au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 " Haskell
