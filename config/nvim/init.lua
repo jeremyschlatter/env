@@ -1,3 +1,6 @@
+require('leap').set_default_keymaps()
+
+vim.cmd([[
 let g:ctrlp_custom_ignore = 'node_modules'
 
 " jeffkreeftmeijer/vim-numbertoggle
@@ -62,6 +65,7 @@ set linebreak             " Wrapping for plaintext
 set completeopt-=preview  " Don't pop up a preview window for completions.
 set formatoptions+=r      " Auto-continue comments. Credit: http://stackoverflow.com/a/952561
 set splitright " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
+set termguicolors         " Enable higher-bit-count colors
 
 function! ToggleMouse()
   if &mouse == 'a'
@@ -136,7 +140,7 @@ let s:color = readfile(expand('~/.config/colors'))
 for s:colorLine in s:color
   let &background = s:colorLine
 endfor
-colorscheme solarized
+colorscheme NeoSolarized
 
 " Map escape to terminal escape sequence, as suggested in `:help terminal`
 tnoremap <Esc> <C-\><C-n>
@@ -154,3 +158,4 @@ nmap ;f :F<CR>
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL
+]])
