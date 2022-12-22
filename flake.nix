@@ -27,7 +27,7 @@
     # flakes, so... 🤷)
     merge = flakes:
       let env = system:
-        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; overlays = [ (final: prev: { golangci-lint = prev.golangci-lint.overrideAttrs (_: { meta.broken = false; } ); } ) ]; };
+        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
         in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
           paths = trivial.pipe []
