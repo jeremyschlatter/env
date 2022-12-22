@@ -3,7 +3,7 @@
 
   inputs = {
     unstable = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
-    nixpkgs = { url = github:NixOS/nixpkgs/release-22.05; };
+    nixpkgs = { url = github:NixOS/nixpkgs/release-22.11; };
     naersk = { url = github:nix-community/naersk; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
