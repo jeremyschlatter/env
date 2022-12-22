@@ -103,7 +103,7 @@
         google-cloud-sdk      # Google Cloud CLI.
         gotools               # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
-        x86.httpie            # Create and execute HTTP queries.
+        httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         x86.magic-wormhole    # Copy files between computers.
