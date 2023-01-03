@@ -1,4 +1,4 @@
-// {"deps": ["neovim-remote", "scripts.set-iterm2-colors"]} #nix
+// {"deps": ["neovim-remote"]} #nix
 extern crate dirs;
 
 use anyhow::{anyhow, bail, ensure, Result};
@@ -23,15 +23,23 @@ fn conf() -> Result<path::PathBuf> {
     Ok(dirs::home_dir().ok_or(anyhow!("no HOME"))?.join(".config/colors"))
 }
 
+#[derive(PartialEq, Eq)]
+enum Mode {
+    CLI,
+    System,
+    NewShell,
+}
+use Mode::*;
+
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match &cli.command {
         Commands::Light => {
-            set_colors("light", false, false)
+            set_colors("light", CLI)
         },
         Commands::Dark => {
-            set_colors("dark", false, false)
+            set_colors("dark", CLI)
         },
         Commands::RestoreColors => {
             set_colors(
@@ -42,8 +50,7 @@ fn main() -> Result<()> {
                         other_error => bail!("failed to read ~/.config/colors: {:?}", other_error)
                     },
                 }),
-                true,
-                false,
+                NewShell,
             )
         },
         Commands::SystemUpdate => {
@@ -53,14 +60,13 @@ fn main() -> Result<()> {
                 } else {
                     "light"
                 },
-                false,
-                true,
+                System,
             )
         },
     }
 }
 
-fn set_colors(which: &str, restore: bool, system: bool) -> Result<()> {
+fn set_colors(which: &str, mode: Mode) -> Result<()> {
     // Set terminal colors.
     //
     // There are several possible terminals I might be in, and the behavior I
@@ -76,7 +82,7 @@ fn set_colors(which: &str, restore: bool, system: bool) -> Result<()> {
         // will not try to manipulate its colors.
         //
         // Do nothing to the terminal, but continue with other changes.
-    } else if system && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
+    } else if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
         // kitty
         run("kitty", &[
             "@", "set-colors",
@@ -84,16 +90,15 @@ fn set_colors(which: &str, restore: bool, system: bool) -> Result<()> {
             "--all",
             &format!("~/.nix-profile/config/kitty/{which}.conf"),
         ])?
-    } else if system && OS == "macos" || var("TERM_PROGRAM") == Ok("iTerm.app".to_string()) {
-        // iterm2
-        if system || !restore { // We don't need to restore on iterm2 because the color is stored in the profile.
-            run("set-iterm2-colors", &[which])?
-        }
+    } else if mode == System && OS == "macos" || var("TERM_PROGRAM") == Ok("iTerm.app".to_string()) {
+        // iTerm2
+        //
+        // Do nothing. As of v3.5+, iTerm2 responds to system color changes itself.
     } else {
         eprintln!("I don't recognize this terminal, so not trying to change its color.");
     }
 
-    if restore {
+    if mode == NewShell {
         return Ok(());
     }
 
@@ -114,7 +119,7 @@ fn set_colors(which: &str, restore: bool, system: bool) -> Result<()> {
     }
 
     // Change system theme (unless we are responding to a system change):
-    if !system {
+    if mode != System {
         if OS == "linux" {
             // Change system theme on Ubuntu.
              run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")])?
