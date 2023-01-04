@@ -2,22 +2,7 @@
 extern crate dirs;
 
 use anyhow::{anyhow, bail, ensure, Result};
-use clap::{Parser, Subcommand};
-use std::{env::{consts::OS, var}, io, fs, path, process::Command, str};
-
-#[derive(Parser)]
-struct Cli {
-    #[clap(subcommand)]
-    command: Commands,
-}
-
-#[derive(Subcommand)]
-enum Commands {
-    Dark,
-    Light,
-    RestoreColors,
-    SystemUpdate,
-}
+use std::{env::{consts::OS, args, var}, io, fs, path, process::Command, str};
 
 fn conf() -> Result<path::PathBuf> {
     Ok(dirs::home_dir().ok_or(anyhow!("no HOME"))?.join(".config/colors"))
@@ -32,16 +17,11 @@ enum Mode {
 use Mode::*;
 
 fn main() -> Result<()> {
-    let cli = Cli::parse();
-
-    match &cli.command {
-        Commands::Light => {
-            set_colors("light", CLI)
-        },
-        Commands::Dark => {
-            set_colors("dark", CLI)
-        },
-        Commands::RestoreColors => {
+    let usage = "usage: colorscheme <light|dark|system-update|restore-colors>";
+    match args().nth(1).ok_or(anyhow!(usage))?.as_str() {
+        "light" => set_colors("light", CLI),
+        "dark" => set_colors("dark", CLI),
+        "restore-colors" =>
             set_colors(
                 &(match fs::read_to_string(conf()?) {
                     Ok(s) => s.trim().to_string(),
@@ -51,9 +31,8 @@ fn main() -> Result<()> {
                     },
                 }),
                 NewShell,
-            )
-        },
-        Commands::SystemUpdate => {
+            ),
+        "system-update" =>
             set_colors(
                 if var("DARKMODE") == Ok("1".to_string()) {
                     "dark"
@@ -61,8 +40,8 @@ fn main() -> Result<()> {
                     "light"
                 },
                 System,
-            )
-        },
+            ),
+        _ => bail!(usage),
     }
 }
 
