@@ -1,10 +1,10 @@
 // {"deps": ["neovim-remote"]} #nix
 extern crate dirs;
 
-use anyhow::{anyhow, bail, ensure, Result};
-use std::{env::{consts::OS, args, var}, io, fs, path, process::Command, str};
+use anyhow::{anyhow, bail, Result};
+use std::{env::{consts::OS, var}, fs, process::Command, str};
 
-fn conf() -> Result<path::PathBuf> {
+fn conf() -> Result<std::path::PathBuf> {
     Ok(dirs::home_dir().ok_or(anyhow!("no HOME"))?.join(".config/colors"))
 }
 
@@ -18,7 +18,7 @@ use Mode::*;
 
 fn main() -> Result<()> {
     let usage = "usage: colorscheme <light|dark|system-update|restore-colors>";
-    match args().nth(1).ok_or(anyhow!(usage))?.as_str() {
+    match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
         "light" => set_colors("light", CLI),
         "dark" => set_colors("dark", CLI),
         "restore-colors" =>
@@ -26,7 +26,7 @@ fn main() -> Result<()> {
                 &(match fs::read_to_string(conf()?) {
                     Ok(s) => s.trim().to_string(),
                     Err(error) => match error.kind() {
-                        io::ErrorKind::NotFound => "light".to_string(),
+                        std::io::ErrorKind::NotFound => "light".to_string(),
                         other_error => bail!("failed to read ~/.config/colors: {:?}", other_error)
                     },
                 }),
@@ -34,11 +34,7 @@ fn main() -> Result<()> {
             ),
         "system-update" =>
             set_colors(
-                if var("DARKMODE") == Ok("1".to_string()) {
-                    "dark"
-                } else {
-                    "light"
-                },
+                if var("DARKMODE") == Ok("1".to_string()) { "dark" } else { "light" },
                 System,
             ),
         _ => bail!(usage),
@@ -47,34 +43,16 @@ fn main() -> Result<()> {
 
 fn set_colors(which: &str, mode: Mode) -> Result<()> {
     // Set terminal colors.
-    //
-    // There are several possible terminals I might be in, and the behavior I
-    // want is different for each one.
-    if var("VIMRUNTIME").is_ok() {
-        // neovim terminal
-        //
-        // Do nothing to the terminal, but continue with other changes.
-    } else if var("SSH_TTY").is_ok() {
-        // Connected over ssh.
-        //
-        // The terminal is therefore not running on this machine, and we
-        // will not try to manipulate its colors.
-        //
-        // Do nothing to the terminal, but continue with other changes.
-    } else if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
-        // kitty
-        run("kitty", &[
-            "@", "set-colors",
-            "--configured",
-            "--all",
-            &format!("~/.nix-profile/config/kitty/{which}.conf"),
-        ])?
-    } else if mode == System && OS == "macos" || var("TERM_PROGRAM") == Ok("iTerm.app".to_string()) {
-        // iTerm2
-        //
-        // Do nothing. As of v3.5+, iTerm2 responds to system color changes itself.
-    } else {
-        eprintln!("I don't recognize this terminal, so not trying to change its color.");
+    if !var("VIMRUNTIME").is_ok() && !var("SSH_TTY").is_ok() { // unless in neovim or ssh
+        if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
+            // kitty
+            run("kitty", &[
+                "@", "set-colors",
+                "--configured",
+                "--all",
+                &format!("~/.nix-profile/config/kitty/{which}.conf"),
+            ])?
+        }
     }
 
     if mode == NewShell {
@@ -83,10 +61,7 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
 
     // Set colors in nvim windows.
     let nvim_servers = str::from_utf8(
-        &Command::new("nvr")
-            .arg("--serverlist")
-            .output()?
-            .stdout
+        &Command::new("nvr").arg("--serverlist").output()?.stdout
     )?.trim().to_owned();
     for server in nvim_servers.split("\n") {
         if server.starts_with("/") {
@@ -101,7 +76,7 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
     if mode != System {
         if OS == "linux" {
             // Change system theme on Ubuntu.
-             run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")])?
+            run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")])?
         } else if OS == "macos" {
             // Change system theme on macOS.
             run("osascript", &["-e", &format!(
@@ -117,7 +92,7 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
 }
 
 fn run(cmd: &str, args: &[&str]) -> Result<()> {
-    Ok(ensure!(
+    Ok(anyhow::ensure!(
         Command::new(cmd).args(args).status()?.success(),
         format!("failed to run {cmd}"),
     ))
