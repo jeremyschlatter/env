@@ -19,13 +19,10 @@ fn main() -> Result<()> {
         "dark" => set_colors("dark", CLI),
         "restore-colors" =>
             set_colors(
-                &(match fs::read_to_string(conf()?) {
-                    Ok(s) => s.trim().to_string(),
-                    Err(error) => match error.kind() {
-                        std::io::ErrorKind::NotFound => "light".to_string(),
-                        other_error => bail!("failed to read ~/.config/colors: {:?}", other_error)
-                    },
-                }),
+                &fs::read_to_string(conf()?).or_else(|err| match err.kind() {
+                    std::io::ErrorKind::NotFound => Ok("light".to_string()),
+                    _ => bail!("failed to read ~/.config/colors: {}", err)
+                })?,
                 NewShell,
             ),
         "system-update" => set_colors(&var("THEME").unwrap(), System),
@@ -34,6 +31,7 @@ fn main() -> Result<()> {
 }
 
 fn set_colors(which: &str, mode: Mode) -> Result<()> {
+    let which = which.trim();
     // Set terminal colors.
     if !var("VIMRUNTIME").is_ok() && !var("SSH_TTY").is_ok() { // unless in neovim or ssh
         if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
