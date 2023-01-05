@@ -32,11 +32,7 @@ fn main() -> Result<()> {
                 }),
                 NewShell,
             ),
-        "system-update" =>
-            set_colors(
-                if var("DARKMODE") == Ok("1".to_string()) { "dark" } else { "light" },
-                System,
-            ),
+        "system-update" => set_colors(&var("THEME").unwrap(), System),
         _ => bail!(usage),
     }
 }

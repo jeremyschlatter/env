@@ -15,7 +15,7 @@ func shell(_ args: [String]) -> Int32 {
     let task = Process()
     let isDark = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark"
     var env = ProcessInfo.processInfo.environment
-    env["DARKMODE"] = isDark ? "1" : "0"
+    env["THEME"] = isDark ? "dark" : "light"
     task.environment = env
     task.launchPath = "/usr/bin/env"
     task.arguments = args
