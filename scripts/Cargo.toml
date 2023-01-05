@@ -5,7 +5,6 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.57"
-clap = { version = "3.2.22", features = ["derive"] }
 dirs = "4.0.0"
 
 [[bin]]
