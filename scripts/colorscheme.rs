@@ -17,14 +17,12 @@ fn main() -> Result<()> {
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
         "light" => set_colors("light", CLI),
         "dark" => set_colors("dark", CLI),
-        "restore-colors" =>
-            set_colors(
-                &fs::read_to_string(conf()?).or_else(|err| match err.kind() {
-                    std::io::ErrorKind::NotFound => Ok("light".to_string()),
-                    _ => bail!("failed to read ~/.config/colors: {}", err)
-                })?,
-                NewShell,
-            ),
+        "restore-colors" => {
+            if !conf()?.exists() {
+                fs::write(conf()?, "light")?;
+            }
+            set_colors(&fs::read_to_string(conf()?)?, NewShell)
+        },
         "system-update" => set_colors(&var("THEME").unwrap(), System),
         _ => bail!(usage),
     }
