@@ -14,8 +14,6 @@ alias d=docker
 alias c="gcloud compute"
 alias cs="gcloud compute instances"
 
-alias gotop="gotop -c default-dark"
-
 alias cat="bat"
 
 alias vit='vi -c ":vsplit term://shell"'
