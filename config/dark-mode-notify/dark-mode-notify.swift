@@ -3,7 +3,7 @@
 // Copied from https://github.com/bouk/dark-mode-notify
 
 // Run as ./notify.swift <program to run when dark mode changes>
-// The program will have the DARKMODE env flag set to 1 or 0
+// The program will have the THEME env flag set to dark or light
 // You can also compile with:
 // swiftc notify.swift -o notify
 // And run the binary directly
