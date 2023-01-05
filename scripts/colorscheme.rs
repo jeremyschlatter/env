@@ -23,7 +23,7 @@ fn main() -> Result<()> {
             }
             set_colors(fs::read_to_string(conf()?)?.trim(), NewShell)
         },
-        "system-update" => set_colors(&var("THEME").unwrap(), System),
+        "system-update" => set_colors(&var("THEME")?, System),
         _ => bail!(usage),
     }
 }
