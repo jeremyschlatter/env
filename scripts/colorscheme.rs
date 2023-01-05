@@ -9,11 +9,7 @@ fn conf() -> Result<std::path::PathBuf> {
 }
 
 #[derive(PartialEq, Eq)]
-enum Mode {
-    CLI,
-    System,
-    NewShell,
-}
+enum Mode { CLI, System, NewShell }
 use Mode::*;
 
 fn main() -> Result<()> {
