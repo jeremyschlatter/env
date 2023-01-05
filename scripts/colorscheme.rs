@@ -87,7 +87,7 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
     }
 
     // Persist for next time.
-    // My vim config also reads this file to determine colors on startup.
+    // This file is also used by my configs for vim, mcfly, bat, and delta.
     Ok(fs::write(conf()?, which)?)
 }
 
