@@ -21,7 +21,7 @@ fn main() -> Result<()> {
             if !conf()?.exists() {
                 fs::write(conf()?, "light")?;
             }
-            set_colors(&fs::read_to_string(conf()?)?, NewShell)
+            set_colors(fs::read_to_string(conf()?)?.trim(), NewShell)
         },
         "system-update" => set_colors(&var("THEME").unwrap(), System),
         _ => bail!(usage),
@@ -29,7 +29,6 @@ fn main() -> Result<()> {
 }
 
 fn set_colors(which: &str, mode: Mode) -> Result<()> {
-    let which = which.trim();
     // Set terminal colors.
     if !var("VIMRUNTIME").is_ok() && !var("SSH_TTY").is_ok() { // unless in neovim or ssh
         if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
