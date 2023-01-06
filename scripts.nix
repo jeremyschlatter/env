@@ -35,8 +35,8 @@ naersk: pkgs: scriptsPath:
       with writers;
       {
         sh = _: writeBashBin;
-        py = { requirements ? [], ... }: name: file:
-          writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; } ("# flake8: noqa\n" + readFile file);
+        py = { requirements ? [], ... }: name:
+          writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
         rs = _: name: _: naersk.buildPackage {
           root = scriptsPath;
           postInstall = ''

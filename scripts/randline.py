@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """Usage: randline FILE [COUNT] [FILE2 [COUNT2] ...]
 
 Prints a random line from FILE.
@@ -7,7 +6,7 @@ If a numeric COUNT is given, print COUNT random lines from FILE.
 If multiple FILEs are given, print random random line(s) from each.
 All lines in the output are whitespace-trimmed and space-separated.
 """
-from sys import argv, exit
+from sys import argv
 from random import choice
 
 try:
@@ -27,7 +26,6 @@ try:
                 arr.append(choice(lines).strip())
 
     print(" ".join(arr))
-except:
+except Exception:
     print(__doc__)
     print()
-

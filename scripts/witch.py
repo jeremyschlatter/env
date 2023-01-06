@@ -8,6 +8,7 @@ from termcolor import cprint
 do_client_mode = 'WITCH_CLIENT_MODE'
 argv = sys.argv
 
+
 def main():
     try:
         if len(argv) > 2 and argv[1] == do_client_mode:
@@ -16,6 +17,7 @@ def main():
             entr_mode()
     except KeyboardInterrupt:
         pass
+
 
 def entr_mode():
     if len(argv) < 3:
@@ -29,6 +31,7 @@ def entr_mode():
     if entr.returncode != 0:
         sys.exit(entr.returncode)
 
+
 def client_mode(cmd):
     code = run(cmd).returncode
     if code == 0:
@@ -36,6 +39,7 @@ def client_mode(cmd):
     else:
         cprint('failed', 'red')
         sys.exit(code)
+
 
 if __name__ == '__main__':
     main()
