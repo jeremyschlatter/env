@@ -62,15 +62,23 @@
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         shell = writeShellScriptBin "shell" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         vim = import ./neovim.nix pkgs;
-        themed = light: dark: pkg: writeShellScriptBin pkg.pname ''
-          [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
-          env "$v" ${pkg}/bin/${pkg.pname} $@
+        wrapBinWithinPkg = wrapper: pkg: symlinkJoin {
+          pname = pkg.pname;
+          name = pkg.pname;
+          paths = [
+            (writeShellScriptBin pkg.pname (builtins.replaceStrings ["_BIN_"] ["${pkg}/bin/${pkg.pname}"] wrapper))
+            pkg
+          ];
+        };
+        themed = light: dark: wrapBinWithinPkg ''
+            [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
+            env "$v" _BIN_ $@
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
-        fixGL = pkg: [pkg (hiPrio (writeShellScriptBin pkg.pname ''
-          ${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel ${pkg}/bin/${pkg.pname} $@
-        ''))];
+        fixGL = wrapBinWithinPkg
+          "${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel _BIN_ $@";
         mcfly = themed "MCFLY_LIGHT=1" "=" pkgs.mcfly;
+        kitty = themed "KITTY_INITIAL_THEME=light" "KITTY_INITIAL_THEME=dark" (fixGL pkgs.kitty);
       in
 
       super ++ [
@@ -123,7 +131,7 @@
       ] ++ lib.optionals (system == "x86_64-linux") [
         # etcher                # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file                  # Get high-level semantic info about a file.
-        (fixGL kitty)         # My terminal. On macOS I use iTerm2 instead of kitty.
+        kitty                 # My terminal. On macOS I use iTerm2 instead of kitty.
         nix                   # Nix.
       ];
   };

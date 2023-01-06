@@ -8,30 +8,20 @@ fn conf() -> Result<std::path::PathBuf> {
     Ok(dirs::home_dir().ok_or(anyhow!("no HOME"))?.join(".config/colors"))
 }
 
-#[derive(PartialEq, Eq)]
-enum Mode { CLI, System, NewShell }
-use Mode::*;
-
 fn main() -> Result<()> {
-    let usage = "usage: colorscheme <light|dark|system-update|restore-colors>";
+    let usage = "usage: colorscheme <light|dark|system-update>";
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
-        "light" => set_colors("light", CLI),
-        "dark" => set_colors("dark", CLI),
-        "restore-colors" => {
-            if !conf()?.exists() {
-                fs::write(conf()?, "light")?;
-            }
-            set_colors(fs::read_to_string(conf()?)?.trim(), NewShell)
-        },
-        "system-update" => set_colors(&var("THEME")?, System),
+        "light"         => set_colors("light",        false),
+        "dark"          => set_colors("dark",         false),
+        "system-update" => set_colors(&var("THEME")?, true),
         _ => bail!(usage),
     }
 }
 
-fn set_colors(which: &str, mode: Mode) -> Result<()> {
+fn set_colors(which: &str, system: bool) -> Result<()> {
     // Set terminal colors.
     if !var("VIMRUNTIME").is_ok() && !var("SSH_TTY").is_ok() { // unless in neovim or ssh
-        if mode == System && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
+        if system && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
             // kitty
             run("kitty", &[
                 "@", "set-colors",
@@ -40,10 +30,6 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
                 &format!("~/.nix-profile/config/kitty/{which}.conf"),
             ])?
         }
-    }
-
-    if mode == NewShell {
-        return Ok(());
     }
 
     // Set colors in nvim windows.
@@ -60,7 +46,7 @@ fn set_colors(which: &str, mode: Mode) -> Result<()> {
     }
 
     // Change system theme (unless we are responding to a system change):
-    if mode != System {
+    if !system {
         if OS == "linux" {
             // Change system theme on Ubuntu.
             run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")])?
