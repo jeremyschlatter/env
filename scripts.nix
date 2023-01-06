@@ -19,51 +19,25 @@
 # that off.
 naersk: pkgs: scriptsPath:
   with builtins;
+  with pkgs;
   let
-    builders = with pkgs;
-      let
-        wrapPath = name: deps:
-          if deps == []
-          then ""
-          else ''
+    wrapPath = name: deps: pkg:
+      pkg.overrideAttrs (final: prev:
+        let attr = if (hasAttr "buildCommand" prev) then "buildCommand" else "postInstall"; in
+        lib.optionalAttrs (deps != [])
+        {
+          ${attr} = getAttr attr ({${attr} = "";} // prev) + ''
             . ${makeWrapper}/nix-support/setup-hook
-            wrapProgram $out/bin/${name} --prefix PATH : ${
-              buildEnv {
-                name = "${name}-runtime-deps";
-                paths = deps;
-              }
-            }/bin
-            '';
-        build = cmd: {deps}: file: name:
-          runCommandLocal name { buildInputs = deps;} ''
-            mkdir -p $out/bin
-            file=${file}
-            dest=$out/bin/${name}
-            ${cmd}
-            chmod +x $dest
-            ${wrapPath name deps}
-            '';
-        interp = interpreter: build "echo '#!'${interpreter} | cat - $file > $dest";
-      in {
-        sh = interp "${bash}/bin/sh";
-        go = build ''
-          mkdir build
-          cd build
-          GOCACHE=$TMPDIR ${go}/bin/go mod init `basename $dest`
-          GOCACHE=$TMPDIR GOPATH=$TMPDIR CGO_ENABLED=0 ${go}/bin/go build -o $dest $file
-        '';
-        goDir = src: name: deps: vendorSha256:
-          buildGoModule {
-            inherit name src vendorSha256;
-            postInstall = "${wrapPath name deps}";
-          };
-        py = { deps, requirements ? [], darwinRequirements ? [] }:
-          interp ''${
-            python3.withPackages (pyPkgs:
-              map (x: getAttr x pyPkgs) requirements ++ (if pkgs.stdenv.isDarwin then map (x: getAttr x pyPkgs) darwinRequirements else [])
-            )
-          }/bin/python'' { inherit deps; };
-        rs = { deps }: file: name: naersk.buildPackage {
+            wrapProgram $out/bin/${name} --prefix PATH : ${lib.makeBinPath deps}
+          '';
+        });
+    builders =
+      with writers;
+      {
+        sh = _: writeBashBin;
+        py = { requirements ? [], ... }: name: file:
+          writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; } ("# flake8: noqa\n" + readFile file);
+        rs = _: name: _: naersk.buildPackage {
           root = scriptsPath;
           postInstall = ''
             # hack around the fact that we build n^2 binary targets (for each rust target: we build all rust targets)
@@ -72,19 +46,20 @@ naersk: pkgs: scriptsPath:
             mv $out/bin bins
             mkdir $out/bin
             cp bins/${name} $out/bin
-
-            ${wrapPath name deps}
           '';
         };
       };
-    inherit (pkgs.lib) strings attrsets sources lists warn;
+    inherit (lib) strings attrsets sources lists;
   scripts = listToAttrs (filter (x: x != null) (lists.forEach (attrNames (readDir scriptsPath)) (f:
     let fullPath = scriptsPath + "/${f}";
     in if sources.pathIsDirectory fullPath
        then
          if f == ".mypy_cache" || f == "src" then null else
          let build = { deps = []; } // import (fullPath + "/build.nix") pkgs;
-         in { name = f; value = builders.goDir fullPath f build.deps build.sha256; }
+         in {
+           name = f;
+           value = wrapPath f build.deps (buildGoModule { name = f; src = fullPath; vendorSha256 = build.sha256; });
+         }
        else
          let ext = elemAt (tail (split "\\." f)) 1;
              name = strings.removeSuffix ".${ext}" f;
@@ -98,7 +73,7 @@ naersk: pkgs: scriptsPath:
          in if hasAttr ext builders
             then {
               inherit name;
-              value = getAttr ext builders (buildInfo // { inherit deps; }) fullPath name;
+              value = wrapPath name deps (getAttr ext builders buildInfo name fullPath);
             }
             else null
     )));
