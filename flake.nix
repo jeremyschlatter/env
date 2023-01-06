@@ -132,7 +132,6 @@
         # etcher                # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file                  # Get high-level semantic info about a file.
         kitty                 # My terminal. On macOS I use iTerm2 instead of kitty.
-        nix                   # Nix.
       ];
   };
 }
