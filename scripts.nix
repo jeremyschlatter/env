@@ -69,9 +69,9 @@ naersk: pkgs: scriptsPath:
             # hack around the fact that we build n^2 binary targets (for each rust target: we build all rust targets)
             # would be better to not do n^2. perhaps if https://github.com/nix-community/naersk/issues/127 gets fixed.
             # for now, the n^2 thing causes name collisions in wrapPath, unless we do the following workaround.
-            mv $out/bin $out/bins
+            mv $out/bin bins
             mkdir $out/bin
-            cp $out/bins/${name} $out/bin
+            cp bins/${name} $out/bin
 
             ${wrapPath name deps}
           '';
