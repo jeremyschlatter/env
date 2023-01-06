@@ -4,10 +4,6 @@ extern crate dirs;
 use anyhow::{anyhow, bail, Result};
 use std::{env::{consts::OS, var}, fs, process::Command, str};
 
-fn conf() -> Result<std::path::PathBuf> {
-    Ok(dirs::home_dir().ok_or(anyhow!("no HOME"))?.join(".config/colors"))
-}
-
 fn main() -> Result<()> {
     let usage = "usage: colorscheme <light|dark|system-update>";
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
@@ -61,7 +57,7 @@ fn set_colors(which: &str, system: bool) -> Result<()> {
 
     // Persist for next time.
     // This file is also used by my configs for vim, mcfly, bat, and delta.
-    Ok(fs::write(conf()?, which)?)
+    Ok(fs::write(dirs::home_dir().unwrap().join(".config/colors"), which)?)
 }
 
 fn run(cmd: &str, args: &[&str]) -> Result<()> {
