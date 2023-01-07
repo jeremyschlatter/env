@@ -54,7 +54,7 @@ naersk: pkgs: scriptsPath:
     let fullPath = scriptsPath + "/${f}";
     in if sources.pathIsDirectory fullPath
        then
-         if f == ".mypy_cache" || f == "src" then null else
+         if f == "src" then null else
          let build = { deps = []; } // import (fullPath + "/build.nix") pkgs;
          in {
            name = f;
