@@ -81,7 +81,7 @@
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         shell = writeShellScriptBin "shell" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         vim = import ./neovim.nix pkgs;
-        wrapBinWithinPkg = wrapper: pkg: symlinkJoin {
+        wrapBin = wrapper: pkg: symlinkJoin {
           pname = pkg.pname;
           name = pkg.pname;
           paths = [
@@ -89,12 +89,12 @@
             pkg
           ];
         };
-        themed = light: dark: wrapBinWithinPkg ''
+        themed = light: dark: wrapBin ''
             [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
             env "$v" _BIN_ $@
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
-        fixGL = wrapBinWithinPkg
+        fixGL = wrapBin
           "${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel _BIN_ $@";
         mcfly = themed "MCFLY_LIGHT=1" "=" pkgs.mcfly;
         kitty = themed "KITTY_INITIAL_THEME=light" "KITTY_INITIAL_THEME=dark" (fixGL pkgs.kitty);
@@ -106,8 +106,8 @@
 
         # My shell.
         shell
-        fish
-        zsh
+        (wrapBin ''_BIN_ -C "jeremy-shell-init fish | source"'' fish)
+        (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_'' zsh)
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"")

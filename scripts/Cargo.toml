@@ -12,3 +12,6 @@ name = "colorscheme"
 
 [[bin]]
 name = "jeremy-post-install"
+
+[[bin]]
+name = "jeremy-shell-init"

@@ -8,7 +8,7 @@ set   -o vi            # use vi-mode editing on the command line
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-export NIX_PROFILE=$HOME/.nix-profile
+eval "$(jeremy-shell-init bash)"
 
 # source bash completions
 if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then
@@ -22,18 +22,11 @@ if [ -d $NIX_PROFILE/share/bash_completion ]; then
     done
 fi
 
-. $NIX_PROFILE/config/bash/aliases.sh   # Some aliases
-. $NIX_PROFILE/config/bash/env.sh       # Set env vars
 . $NIX_PROFILE/etc/profile.d/bash_completion.sh
 . $NIX_PROFILE/share/bash-completion/completions/git
 
 # git tab completion with 'g' alias
 __git_complete g __git_main
-
-eval "$(direnv hook bash)"
-eval "$(mcfly init bash)"
-eval "$(starship init bash)"
-eval "$(zoxide init bash)"
 
 if [ -a ~/.local_bashrc ]; then
     source ~/.local_bashrc
