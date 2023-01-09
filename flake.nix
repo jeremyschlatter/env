@@ -34,7 +34,7 @@
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
-                unstable = import unstable { inherit system; config.allowUnfree = true; config.permittedInsecurePackages = ["electron-12.2.3"]; };
+                unstable = import unstable { inherit system; config.allowUnfree = true; };
                 x86 = import nixpkgs { system = "x86_64-${builtins.elemAt (strings.splitString "-" system) 1 }"; config.allowUnfree = true; };
               })));
         };
@@ -46,6 +46,25 @@
 
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
+
+#     clipboard = { gccStdenv /* latest clang does not yet support std::jthread */, fetchFromGitHub, cmake }:
+#       let version = "main"; in
+#       gccStdenv.mkDerivation {
+#         pname = "clipboard";
+#         inherit version;
+#         src = fetchFromGitHub {
+#           owner = "Slackadays";
+#           repo = "Clipboard";
+#           rev = version;
+#           sha256 = "sha256-SnfUeFOcwUrAi3MAdQE2EhhlygEIcnHC2RrWIdl10Fc=";
+#         };
+#         nativeBuildInputs = [ cmake ];
+#         installPhase = ''
+#           mkdir -p $out/bin
+#           mv clipboard $out/bin
+#           ln -s clipboard $out/bin/cb
+#         '';
+#       };
 
     # My package collection.
     #
@@ -87,9 +106,13 @@
 
         # My shell.
         shell
+        fish
+        zsh
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"")
+
+        # (pkgs.callPackage self.clipboard {})
 
         # Life on the command line.
         bash-completion       # Tab-completion for a bunch of commands.
@@ -104,14 +127,14 @@
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
         git                   # Track version history for text files.
-        gitAndTools.hub       # GitHub CLI.
         gnumake               # Near-omnipresent generic build tool.
         gnupg                 # gpg, I use it to sign git commits
-        go_1_18               # Run Go code.
+        go                    # Run Go code.
         google-cloud-sdk      # Google Cloud CLI.
         gotools               # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
+        hub                   # GitHub CLI.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         x86.magic-wormhole    # Copy files between computers.
