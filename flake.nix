@@ -47,25 +47,6 @@
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
 
-#     clipboard = { gccStdenv /* latest clang does not yet support std::jthread */, fetchFromGitHub, cmake }:
-#       let version = "main"; in
-#       gccStdenv.mkDerivation {
-#         pname = "clipboard";
-#         inherit version;
-#         src = fetchFromGitHub {
-#           owner = "Slackadays";
-#           repo = "Clipboard";
-#           rev = version;
-#           sha256 = "sha256-SnfUeFOcwUrAi3MAdQE2EhhlygEIcnHC2RrWIdl10Fc=";
-#         };
-#         nativeBuildInputs = [ cmake ];
-#         installPhase = ''
-#           mkdir -p $out/bin
-#           mv clipboard $out/bin
-#           ln -s clipboard $out/bin/cb
-#         '';
-#       };
-
     # My package collection.
     #
     # These are the software packages that I have installed on all of my machines.
@@ -111,8 +92,6 @@
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"")
-
-        # (pkgs.callPackage self.clipboard {})
 
         # Life on the command line.
         bash-completion       # Tab-completion for a bunch of commands.
