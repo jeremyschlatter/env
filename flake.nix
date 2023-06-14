@@ -117,7 +117,7 @@
         hub                   # GitHub CLI.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
-        x86.magic-wormhole    # Copy files between computers.
+        magic-wormhole        # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         mcfly                 # Shell history search.
         nix-direnv            # Optimized direnv+nix integration.
