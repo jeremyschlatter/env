@@ -2,13 +2,12 @@
   description = "Jeremy Schlatter's personal dev environment";
 
   inputs = {
-    unstable = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     nixpkgs = { url = github:NixOS/nixpkgs/release-23.05; };
     naersk = { url = github:nix-community/naersk; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, unstable, nixpkgs, naersk, nixGL }: {
+  outputs = { self, nixpkgs, naersk, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = system: (import ./scripts.nix) naersk.lib."${system}";
@@ -34,8 +33,6 @@
             (lists.forEach flakes
               (flake: super: lists.flatten (flake.profile {
                 inherit system pkgs super;
-                unstable = import unstable { inherit system; config.allowUnfree = true; };
-                x86 = import nixpkgs { system = "x86_64-${builtins.elemAt (strings.splitString "-" system) 1 }"; config.allowUnfree = true; };
               })));
         };
       in {
@@ -56,7 +53,7 @@
     # I can re-run my "i" script (see scripts/i.py) on any of my machines to get the update.
     # Note that I am not limited to adding packages. I can delete or change anything here and
     # it will effectively delete or change the software on all of my machines.
-    profile = { pkgs, unstable, system, super, x86 }:
+    profile = { pkgs, system, super }:
       with pkgs;
       let
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
