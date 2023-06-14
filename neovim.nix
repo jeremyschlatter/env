@@ -24,7 +24,6 @@ pkgs:
           vim-nix
           vim-numbertoggle
           vim-repeat
-          vim-solidity
           vim-toml
           vim-unicoder
 
