@@ -4,8 +4,7 @@
 # converts my scripts/ directory into a bunch of nix packages, one per
 # script.
 #
-# It knows how to package a few different languages, and two different
-# styles of Go programs (with and without Go module dependencies).
+# It knows how to package a few different languages.
 #
 # Scripts can declare in a comment at the top of the file that they depend
 # on other programs at runtime, and the packaging logic here will do the
