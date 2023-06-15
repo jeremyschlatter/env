@@ -17,7 +17,7 @@
 # All of this packaging works in sandbox mode, as well. This is important
 # to me because my work machine is in sandbox mode and I don't want to turn
 # that off.
-naersk: pkgs: scriptsPath:
+crane: pkgs: scriptsPath:
   with builtins;
   with pkgs;
   let
@@ -37,16 +37,10 @@ naersk: pkgs: scriptsPath:
         sh = _: writeBashBin;
         py = { requirements ? [], ... }: name:
           writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
-        rs = _: name: _: naersk.buildPackage {
-          root = scriptsPath;
-          postInstall = ''
-            # hack around the fact that we build n^2 binary targets (for each rust target: we build all rust targets)
-            # would be better to not do n^2. perhaps if https://github.com/nix-community/naersk/issues/127 gets fixed.
-            # for now, the n^2 thing causes name collisions in wrapPath, unless we do the following workaround.
-            mv $out/bin bins
-            mkdir $out/bin
-            cp bins/${name} $out/bin
-          '';
+        rs = _: name: _: crane.buildPackage {
+          src = scriptsPath;
+          buildInputs = lib.optionals stdenv.isDarwin [ libiconv ];
+          cargoExtraArgs = "--bin ${name}";
         };
       };
     inherit (lib) strings attrsets sources lists;

@@ -3,14 +3,14 @@
 
   inputs = {
     nixpkgs = { url = github:NixOS/nixpkgs/release-23.05; };
-    naersk = { url = github:nix-community/naersk; inputs.nixpkgs.follows = "nixpkgs"; };
+    crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, nixpkgs, naersk, nixGL }: {
+  outputs = { self, nixpkgs, crane, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
-    scripts = system: (import ./scripts.nix) naersk.lib."${system}";
+    scripts = system: (import ./scripts.nix) crane.lib."${system}";
 
     # Simple builder: copy an entire directory into the nix store.
     copyDir = pkgs: name: from: to: pkgs.runCommand name {} "mkdir -p ${dirOf to} && cp -R ${from} ${to}";
