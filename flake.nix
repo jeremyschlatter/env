@@ -58,7 +58,36 @@
       let
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
-        vim = import ./neovim.nix pkgs;
+        vim = neovim.override {
+          viAlias = true;
+          vimAlias = true;
+          configure = {
+            customRC = ''
+              set runtimepath^=~/.config/nvim/
+              source ~/.config/nvim/init.lua
+            '';
+            packages.mine = with vimPlugins; {
+              start = [
+                NeoSolarized
+                camelcasemotion
+                ctrlp-vim
+                fzf-vim
+                fzfWrapper
+                leap-nvim
+                rust-vim
+                vim-better-whitespace
+                vim-commentary
+                vim-fetch
+                vim-go
+                vim-nix
+                vim-numbertoggle
+                vim-repeat
+                vim-toml
+                vim-unicoder
+              ];
+            };
+           };
+        };
         wrapBin = wrapper: pkg: symlinkJoin {
           pname = pkg.pname;
           name = pkg.pname;
