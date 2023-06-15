@@ -16,7 +16,7 @@
 # All of this packaging works in sandbox mode, as well. This is important
 # to me because my work machine is in sandbox mode and I don't want to turn
 # that off.
-crane: pkgs: scriptsPath:
+crane: pkgs: src:
   with builtins;
   with pkgs;
   let
@@ -37,37 +37,34 @@ crane: pkgs: scriptsPath:
         py = { requirements ? [], ... }: name:
           writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
         rs = _: name: _: crane.buildPackage {
-          src = scriptsPath;
+          inherit src;
           buildInputs = lib.optional stdenv.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
         };
+        go = _: name: f: buildGoModule {
+          inherit name src;
+          vendorSha256 = import "${src}/go.nix";
+          preBuild = "rm *.go && cp ${f} ${name}.go && go mod edit -module ${name}";
+        };
       };
     inherit (lib) strings attrsets sources lists;
-  scripts = listToAttrs (filter (x: x != null) (lists.forEach (attrNames (readDir scriptsPath)) (f:
-    let fullPath = scriptsPath + "/${f}";
-    in if sources.pathIsDirectory fullPath
-       then
-         if f == "src" then null else
-         let build = { deps = []; } // import (fullPath + "/build.nix") pkgs;
-         in {
-           name = f;
-           value = wrapPath f build.deps (buildGoModule { name = f; src = fullPath; vendorSha256 = build.sha256; });
-         }
-       else
-         let ext = elemAt (tail (split "\\." f)) 1;
-             name = strings.removeSuffix ".${ext}" f;
-             firstLine = head (split "\n" (strings.fileContents fullPath));
-             buildInfo = let x = strings.removeSuffix "#nix" firstLine; in
-               if x == firstLine then {} else fromJSON (elemAt (split "^[^ ]+" x) 2);
-             deps = map
-               (x: attrsets.getAttrFromPath (strings.splitString "." x)
-                 (pkgs // { inherit scripts; }))
-               (buildInfo.deps or []);
-         in if hasAttr ext builders
-            then {
-              inherit name;
-              value = wrapPath name deps (getAttr ext builders buildInfo name fullPath);
-            }
-            else null
+  scripts = listToAttrs (filter (x: x != null) (lists.forEach (attrNames (readDir src)) (f:
+    let fullPath = src + "/${f}";
+    in if sources.pathIsDirectory fullPath then null else
+       let ext = elemAt (tail (split "\\." f)) 1;
+           name = strings.removeSuffix ".${ext}" f;
+           firstLine = head (split "\n" (strings.fileContents fullPath));
+           buildInfo = let x = strings.removeSuffix "#nix" firstLine; in
+             if x == firstLine then {} else fromJSON (elemAt (split "^[^ ]+" x) 2);
+           deps = map
+             (x: attrsets.getAttrFromPath (strings.splitString "." x)
+               (pkgs // { inherit scripts; }))
+             (buildInfo.deps or []);
+       in if hasAttr ext builders
+          then {
+            inherit name;
+            value = wrapPath name deps (getAttr ext builders buildInfo name fullPath);
+          }
+          else null
     )));
   in attrValues scripts
