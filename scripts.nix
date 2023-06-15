@@ -38,7 +38,7 @@ crane: pkgs: scriptsPath:
           writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
         rs = _: name: _: crane.buildPackage {
           src = scriptsPath;
-          buildInputs = lib.optionals stdenv.isDarwin [ libiconv ];
+          buildInputs = lib.optional stdenv.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
         };
       };
