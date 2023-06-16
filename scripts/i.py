@@ -45,4 +45,4 @@ if os.getenv('I_DOT_PY_DO_FULL_UPDATE'):
 
 subprocess.check_call(['nix', 'profile', 'upgrade'] + inputs + [index])
 
-subprocess.check_call(['jeremy-post-install'])
+subprocess.check_call(['_jeremy-post-install'])

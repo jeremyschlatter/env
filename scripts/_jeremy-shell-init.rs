@@ -20,7 +20,7 @@ fn main() -> anyhow::Result<()> {
             "function {k}; {v} $argv | source; end",
             "{k} fish | source",
         ),
-        _ => anyhow::bail!("usage: jeremy-env <bash|zsh|fish>"),
+        _ => anyhow::bail!("usage: _jeremy-shell-init <bash|zsh|fish>"),
     };
     fn fmt(f: &str, k: &str, v: &str) {
         println!("{}", f.replace("{k}", k).replace("{v}", v));
@@ -51,8 +51,8 @@ fn hooks() -> Box<[&'static str]> {
 
 fn eval_wraps() -> Box<[(&'static str, &'static str)]> {
     Box::new([
-        ("clone", "gitx github"),
-        ("gitlab", "gitx gitlab"),
+        ("clone", "_gitx github"),
+        ("gitlab", "_gitx gitlab"),
     ])
 }
 
@@ -77,8 +77,8 @@ fn aliases() -> Box<[(&'static str, &'static str)]> {
         ("vit",  "vi -c ':vsplit term://shell'"),
         ("d",    "docker"),
 
-        ("light", "colorscheme light"),
-        ("dark",  "colorscheme dark"),
+        ("light", "_colorscheme light"),
+        ("dark",  "_colorscheme dark"),
 
         ("ff", "vi $HOME/nix/public-base/flake.nix"),
         ("f", "vi $HOME/nix/public-base/flake.nix && i"),

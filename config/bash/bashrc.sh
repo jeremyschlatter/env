@@ -8,7 +8,7 @@ set   -o vi            # use vi-mode editing on the command line
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-eval "$(jeremy-shell-init bash)"
+eval "$(_jeremy-shell-init bash)"
 
 # source bash completions
 if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then

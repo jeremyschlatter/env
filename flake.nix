@@ -114,7 +114,7 @@
         # My shell.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
         my-bash
-        (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/jeremy-shell-init fish | source"'' fish)
+        (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source"'' fish)
         (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_'' zsh)
 
         # Undollar: ignore leading $'s from copy-pasted commands.

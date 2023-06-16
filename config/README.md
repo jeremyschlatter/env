@@ -1,3 +1,3 @@
 My config files.
 
-These get symlinked into ~/.config by the jeremy-post-install script.
+These get symlinked into ~/.config by the \_jeremy-post-install script.

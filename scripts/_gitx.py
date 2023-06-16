@@ -4,7 +4,7 @@ from subprocess import run
 import sys
 
 if len(sys.argv) != 3 or sys.argv[1] not in ["github", "gitlab"]:
-    print('usage: gitx {github|gitlab} <user/repo>', file=sys.stderr)
+    print('usage: _gitx {github|gitlab} <user/repo>', file=sys.stderr)
     sys.exit(1)
 
 host, repo = sys.argv[1:]

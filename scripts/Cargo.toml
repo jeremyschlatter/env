@@ -8,10 +8,10 @@ anyhow = "1.0.57"
 dirs = "4.0.0"
 
 [[bin]]
-name = "colorscheme"
+name = "_colorscheme"
 
 [[bin]]
-name = "jeremy-post-install"
+name = "_jeremy-post-install"
 
 [[bin]]
-name = "jeremy-shell-init"
+name = "_jeremy-shell-init"

@@ -14,7 +14,7 @@
     <key>ProgramArguments</key>
     <array>
        <string>/Users/jeremy/nix/public-base/config/dark-mode-notify/dark-mode-notify.swift</string>
-       <string>/Users/jeremy/.nix-profile/bin/colorscheme</string>
+       <string>/Users/jeremy/.nix-profile/bin/_colorscheme</string>
        <string>system-update</string>
     </array>
 </dict>

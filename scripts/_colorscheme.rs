@@ -5,7 +5,7 @@ use anyhow::{anyhow, bail, Result};
 use std::{env::{consts::OS, var}, fs, process::Command, str};
 
 fn main() -> Result<()> {
-    let usage = "usage: colorscheme <light|dark|system-update>";
+    let usage = "usage: _colorscheme <light|dark|system-update>";
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
         "light"         => set_colors("light",        false),
         "dark"          => set_colors("dark",         false),
