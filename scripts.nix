@@ -42,7 +42,8 @@ crane: pkgs: src:
           cargoExtraArgs = "--bin ${name}";
         };
         go = _: name: f: buildGoModule {
-          inherit name src;
+          inherit name;
+          src = lib.sources.sourceFilesBySuffices src [".go" ".mod" ".sum"];
           vendorSha256 = import "${src}/go.nix";
           preBuild = "rm *.go && cp ${f} ${name}.go && go mod edit -module ${name}";
         };
