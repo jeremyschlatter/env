@@ -51,8 +51,8 @@ fn hooks() -> Box<[&'static str]> {
 
 fn eval_wraps() -> Box<[(&'static str, &'static str)]> {
     Box::new([
-        ("clone", "github"),
-        ("gitlab", "$NIX_PROFILE/bin/gitlab"),
+        ("clone", "gitx github"),
+        ("gitlab", "gitx gitlab"),
     ])
 }
 
