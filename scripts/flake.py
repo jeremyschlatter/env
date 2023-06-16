@@ -1,5 +1,18 @@
+import json
 import os.path
 import subprocess
+
+# Look up the nix release used in the current environment on this machine.
+# We'll use the same one in flake.nix.
+with open(os.path.expandvars('$HOME/.nix-profile/manifest.json')) as f:
+    for e in json.load(f)['elements']:
+        if any(p.endswith('-bundled-environment') for p in e['storePaths']):
+            release = json.loads(subprocess.check_output(
+                ['nix', 'flake', 'metadata', '--json', e['originalUrl']]
+            ))['locks']['nodes']['nixpkgs']['original']['ref']
+            break
+    else:
+        raise 'this script requires a "bundled-environment" to be installed'
 
 
 def write(path, txt):
@@ -19,7 +32,7 @@ use flake
 write('flake.nix', '''
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/release-22.11;
+    nixpkgs.url = github:NixOS/nixpkgs/NIX_RELEASE;
     flake-utils.url = github:numtide/flake-utils;
   };
 
@@ -37,7 +50,7 @@ write('flake.nix', '''
       };
     });
 }
-''')  # noqa: E501
+'''.replace('NIX_RELEASE', release))  # noqa: E501
 
 print('Running `direnv allow`')
 subprocess.check_call(['direnv', 'allow'])
