@@ -44,7 +44,7 @@ crane: pkgs: src:
         go = _: name: f: buildGoModule {
           inherit name;
           src = lib.sources.sourceFilesBySuffices src [".go" ".mod" ".sum"];
-          vendorSha256 = import "${src}/go.nix";
+          vendorHash = import "${src}/go.nix";
           preBuild = "rm *.go && cp ${f} ${name}.go && go mod edit -module ${name}";
         };
       };

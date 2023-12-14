@@ -2,7 +2,7 @@
   description = "Jeremy Schlatter's personal dev environment";
 
   inputs = {
-    nixpkgs = { url = github:NixOS/nixpkgs/release-23.05; };
+    nixpkgs = { url = github:NixOS/nixpkgs/release-23.11; };
     crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
@@ -129,7 +129,7 @@
         (bat-themed delta)    # Better git diffs.
         direnv                # Set environment variables per-project.
         docker                # Bundle programs with their dependencies.
-        exa                   # List files in the current directory.
+        eza                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
         git                   # Track version history for text files.
