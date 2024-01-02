@@ -124,6 +124,7 @@
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
         caddy                 # Run a webserver.
+        calc                  # A simple arbitrary-precision calculator.
         comma                 # Use programs from the nix repo without installing them.
         coreutils             # Basic file, shell and text manipulation utilities.
         (bat-themed delta)    # Better git diffs.
