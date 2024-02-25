@@ -56,7 +56,7 @@ fn set_colors(which: &str, system: bool) -> Result<()> {
     }
 
     // Persist for next time.
-    // This file is also used by my configs for vim, mcfly, bat, and delta.
+    // This file is also used by my configs for vim, bat, and delta.
     Ok(fs::write(dirs::home_dir().unwrap().join(".config/colors"), which)?)
 }
 
