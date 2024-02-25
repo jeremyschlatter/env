@@ -144,6 +144,7 @@
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
         hub                   # GitHub CLI.
+        inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
         less                  # Scroll through long files.
         magic-wormhole        # Copy files between computers.
