@@ -43,7 +43,7 @@ fn main() -> anyhow::Result<()> {
 fn hooks() -> Box<[&'static str]> {
     Box::new([
         "direnv hook",
-        "mcfly init",
+        "atuin init",
         "starship init",
         "zoxide init",
     ])

@@ -3,11 +3,12 @@
 
   inputs = {
     nixpkgs = { url = github:NixOS/nixpkgs/release-23.11; };
+    nixpkgs-unstable = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, nixpkgs, crane, nixGL }: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, crane, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = system: (import ./scripts.nix) crane.lib."${system}";
@@ -56,6 +57,7 @@
     profile = { pkgs, system, super }:
       with pkgs;
       let
+        unstable = import nixpkgs-unstable { inherit system; };
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         vim = neovim.override {
@@ -103,7 +105,6 @@
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
         fixGL = wrapBin
           "${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel _BIN_ $@";
-        mcfly = themed "MCFLY_LIGHT=1" "=" pkgs.mcfly;
         kitty = themed "KITTY_INITIAL_THEME=light" "KITTY_INITIAL_THEME=dark" (fixGL pkgs.kitty);
       in
 
@@ -121,6 +122,7 @@
         (writeShellScriptBin "$" "\"$@\"")
 
         # Life on the command line.
+        unstable.atuin        # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
         caddy                 # Run a webserver.
@@ -146,7 +148,6 @@
         less                  # Scroll through long files.
         magic-wormhole        # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
-        mcfly                 # Shell history search.
         nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
         (python3.withPackages # Run Python.
