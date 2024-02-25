@@ -1,0 +1,13 @@
+diff --git a/atuin/src/command/client/stats.rs b/atuin/src/command/client/stats.rs
+index c2636536..a68aad76 100644
+--- a/atuin/src/command/client/stats.rs
++++ b/atuin/src/command/client/stats.rs
+@@ -75,7 +75,7 @@ fn compute_stats(settings: &Settings, history: &[History], count: usize) -> (usi
+         }
+ 
+         println!(
+-            "{ResetColor}] {gray}{count:num_pad$}{ResetColor} {bold}{}{ResetColor}",
++            "{ResetColor}] {count:num_pad$} {bold}{}{ResetColor}",
+             command.escape_control()
+         );
+     }

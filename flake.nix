@@ -122,7 +122,9 @@
         (writeShellScriptBin "$" "\"$@\"")
 
         # Life on the command line.
-        unstable.atuin        # Shell history search and sync.
+        (unstable.atuin.overrideAttrs (oldAttrs: {
+          patches = oldAttrs.patches ++ [./atuin.patch];
+        }))                   # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
         caddy                 # Run a webserver.
