@@ -146,6 +146,7 @@
         hub                   # GitHub CLI.
         inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
+        kubectl               # Kubernetes CLI.
         less                  # Scroll through long files.
         magic-wormhole        # Copy files between computers.
         man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
