@@ -47,6 +47,9 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.dart set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 " Coq
   au BufRead,BufNewFile *.mlg,*.v set commentstring=(*\ %s\ *)
+" Nickel
+  au BufRead,BufNewFile *.ncl setlocal commentstring=#\ %s
+  au BufRead,BufNewFile *.ncl setlocal et ts=2 sts=2 sw=2
 augroup END
 
 " Editing setup
