@@ -58,6 +58,10 @@ fn eval_wraps() -> Box<[(&'static str, &'static str)]> {
 
 fn aliases() -> Box<[(&'static str, &'static str)]> {
     Box::new([
+        ("k", "kubectl"),
+        ("kg", "kubectl get"),
+        ("kgp", "kubectl get pods"),
+
         ("e",   "exa --classify"),
         ("ea",  "exa --classify --all"),
         ("ee",  "exa --classify --long --header --git"),
