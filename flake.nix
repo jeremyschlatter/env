@@ -57,7 +57,7 @@
     profile = { pkgs, system, super }:
       with pkgs;
       let
-        unstable = import nixpkgs-unstable { inherit system; };
+        unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         vim = neovim.override {
