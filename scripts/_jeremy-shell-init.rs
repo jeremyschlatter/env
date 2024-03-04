@@ -118,6 +118,7 @@ fn env() -> Box<[(&'static str, &'static str)]> {
         // "WARNING: terminal is not fully functional" and fall back to less-useful behavior.
         ("TERMINFO", "$HOME/.nix-profile/share/terminfo"),
 
+        ("PATH", "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH"),
         ("PATH", "/nix/var/nix/profiles/default/bin:$PATH"),
         ("PATH", "$NIX_PROFILE/bin:$PATH"),
         ("PATH", "$HOME/go/bin:$PATH"),
