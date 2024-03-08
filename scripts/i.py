@@ -7,11 +7,11 @@ import sys
 from pathlib import Path
 
 targets = list(filter(
-    lambda s: s.endswith('-bundled-environment'),
-    subprocess.check_output(
-        ['nix', 'profile', 'list']
-    ).decode().strip().split('\n')),
-)
+    lambda x: x[1]['storePaths'][0].endswith('-bundled-environment'),
+    enumerate(json.loads(subprocess.check_output(
+        ['nix', 'profile', 'list', '--json']
+    ).decode())['elements']),
+))
 
 if len(targets) != 1:
     print(
@@ -21,8 +21,8 @@ if len(targets) != 1:
     )
     sys.exit(1)
 
-index = targets[0].split()[0]
-flake = targets[0].split()[1].split('#')[0]
+(index, pkg) = targets[0]
+flake = pkg['url']
 
 
 def flatten(x):
@@ -43,6 +43,6 @@ if os.getenv('I_DOT_PY_DO_FULL_UPDATE'):
         cwd=(Path.home() / 'nix' / 'public-base'),
     )
 
-subprocess.check_call(['nix', 'profile', 'upgrade'] + inputs + [index])
+subprocess.check_call(['nix', 'profile', 'upgrade'] + inputs + [str(index)])
 
 subprocess.check_call(['_jeremy-post-install'])
