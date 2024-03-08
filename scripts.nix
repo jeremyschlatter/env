@@ -41,12 +41,6 @@ crane: pkgs: src:
           buildInputs = lib.optional stdenv.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
         };
-        go = _: name: f: buildGoModule {
-          inherit name;
-          src = lib.sources.sourceFilesBySuffices src [".go" ".mod" ".sum"];
-          vendorHash = import "${src}/go.nix";
-          preBuild = "rm *.go && cp ${f} ${name}.go && go mod edit -module ${name}";
-        };
       };
     scripts = listToAttrs (filter (x: x != null) (lib.attrsets.mapAttrsToList script (readDir src)));
     script = f: kind:
