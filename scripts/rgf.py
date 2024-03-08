@@ -1,8 +1,0 @@
-from subprocess import run
-from sys import argv, stderr
-
-if len(argv) != 2:
-    print('usage: rgf <term>', file=stderr)
-    exit(1)
-
-exit(run(['rg', '-F', argv[1]]).returncode)
