@@ -2,7 +2,7 @@
   description = "Jeremy Schlatter's personal dev environment";
 
   inputs = {
-    nixpkgs = { url = github:NixOS/nixpkgs/release-23.11; };
+    nixpkgs = { url = github:NixOS/nixpkgs/release-24.05; };
     nixpkgs-unstable = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -11,7 +11,7 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, crane, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
-    scripts = system: (import ./scripts.nix) crane.lib."${system}";
+    scripts = (import ./scripts.nix) crane;
 
     # Simple builder: copy an entire directory into the nix store.
     copyDir = pkgs: name: from: to: pkgs.runCommand name {} "mkdir -p ${dirOf to} && cp -R ${from} ${to}";
@@ -110,7 +110,7 @@
 
       super ++ [
         configs # Config files for some of the programs in this list.
-        (self.scripts system pkgs ./scripts) # Little utility programs.
+        (self.scripts pkgs ./scripts) # Little utility programs.
 
         # My shell.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
