@@ -12,7 +12,7 @@ if not os.path.exists('.git'):
 # We'll use the same one in flake.nix.
 with open(os.path.expandvars('$HOME/.nix-profile/manifest.json')) as f:
     for e in json.load(f)['elements']:
-        if any(p.endswith('-bundled-environment') for p in e['storePaths']):
+        if any('-bundled-environment' in p for p in e['storePaths']):
             release = json.loads(subprocess.check_output(
                 ['nix', 'flake', 'metadata', '--json', e['originalUrl']]
             ))['locks']['nodes']['nixpkgs']['original']['ref']

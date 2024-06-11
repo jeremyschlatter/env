@@ -7,7 +7,8 @@ import sys
 from pathlib import Path
 
 targets = list(filter(
-    lambda x: x[1]['storePaths'][0].endswith('-bundled-environment'),
+    lambda x: x[1]['storePaths'][0].split('-', 1)[1]
+    .startswith('bundled-environment'),
     enumerate(json.loads(subprocess.check_output(
         ['nix', 'profile', 'list', '--json']
     ).decode())['elements']),
