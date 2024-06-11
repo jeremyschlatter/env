@@ -76,6 +76,8 @@ fn aliases() -> Box<[(&'static str, &'static str)]> {
         ("c",  "gcloud compute"),
         ("cs", "gcloud compute instances"),
 
+        ("cd", "z"),
+
         ("cd..", "cd .."),
         ("cat",  "bat"),
         ("vit",  "vi -c ':vsplit term://shell'"),
