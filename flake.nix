@@ -135,7 +135,6 @@
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
         git                   # Track version history for text files.
-        gnumake               # Near-omnipresent generic build tool.
         gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
         google-cloud-sdk      # Google Cloud CLI.
