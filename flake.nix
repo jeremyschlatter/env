@@ -125,7 +125,6 @@
         }))                   # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
-        caddy                 # Run a webserver.
         calc                  # A simple arbitrary-precision calculator.
         comma                 # Use programs from the nix repo without installing them.
         coreutils             # Basic file, shell and text manipulation utilities.
