@@ -31,15 +31,11 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.java 2match TooLongLine /.\%>80v/
 " Go
   au BufRead,BufNewFile *.go 2match Underlined /.\%101v\|.\%81v/
-  " Syntax highlighting sometimes breaks in long files. This setting help that. See
-  "   http://vim.wikia.com/wiki/Fix_Syntax_Highlighting#MetaCosm_FixSyntaxHighlighting
-  au BufRead,BufNewFile,BufWritePost *.go syntax sync minlines=800
 " Python
   au BufRead,BufNewFile *.py,*.bazel,*.bzl 2match Underlined /.\%81v/
   au BufRead,BufNewFile *.py,*.bazel,*.bzl set et ts=4 sts=4 sw=4
 " Javascript
   au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.tsx,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
-  au BufRead,BufNewFile *.tsx set filetype=typescript
 " Solidity
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
   au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
