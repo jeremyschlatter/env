@@ -2,6 +2,7 @@ require('leap').set_default_keymaps()
 
 require'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
+  indent = { enable = true },
 }
 
 vim.filetype.add({
@@ -33,26 +34,20 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.go 2match Underlined /.\%101v\|.\%81v/
 " Python
   au BufRead,BufNewFile *.py,*.bazel,*.bzl 2match Underlined /.\%81v/
-  au BufRead,BufNewFile *.py,*.bazel,*.bzl set et ts=4 sts=4 sw=4
 " Javascript
   au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.tsx,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
 " Solidity
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
-  au BufRead,BufNewFile *.sol set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 " Haskell
   au BufRead,BufNewFile *.hs 2match TooLongLine /.\%>101v/
-  au BufRead,BufNewFile *.hs set expandtab tabstop=2 softtabstop=2 shiftwidth=2 cc=101
 " Bel
   au BufRead,BufNewFile *.bel set expandtab tabstop=2 softtabstop=2 shiftwidth=2 commentstring=;\ %s
 " Dhall
   au BufRead,BufNewFile *.dhall set commentstring=--\ %s
-" Dart
-  au BufRead,BufNewFile *.dart set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 " Coq
   au BufRead,BufNewFile *.mlg,*.v set commentstring=(*\ %s\ *)
 " Nickel
   au BufRead,BufNewFile *.ncl setlocal commentstring=#\ %s
-  au BufRead,BufNewFile *.ncl setlocal et ts=2 sts=2 sw=2
 augroup END
 
 " Editing setup
