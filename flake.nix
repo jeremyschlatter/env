@@ -75,15 +75,31 @@
                 fzf-vim
                 fzfWrapper
                 leap-nvim
-                rust-vim
+
+		# Sadly I can't use withAllGrammars here, because it won't build on macOS:
+		#   sandbox-exec: pattern serialization length 70022 exceeds maximum (65535)
+		# See https://github.com/NixOS/nix/issues/4119.
+		# Could be worked around by dropping the bundled-environment approach and
+		# splitting up my installed packages.
+		#
+                # nvim-treesitter.withAllGrammars
+                (nvim-treesitter.withPlugins (p: with p; [
+		  c
+		  vimdoc
+		  lua
+                  rust
+                  go
+                  nix
+                  toml
+                  nickel
+                ]))
+                nvim-ts-context-commentstring
+
                 vim-better-whitespace
                 vim-commentary
                 vim-fetch
-                vim-go
-                vim-nix
                 vim-numbertoggle
                 vim-repeat
-                vim-toml
                 vim-unicoder
               ];
             };

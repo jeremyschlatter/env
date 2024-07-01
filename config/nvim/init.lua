@@ -1,5 +1,15 @@
 require('leap').set_default_keymaps()
 
+require'nvim-treesitter.configs'.setup {
+  highlight = { enable = true },
+}
+
+vim.filetype.add({
+  extension = {
+    ncl = 'nickel',
+  }
+})
+
 vim.cmd([[
 let g:ctrlp_custom_ignore = 'node_modules'
 
@@ -10,9 +20,6 @@ let g:NumberToggleTrigger = '<Leader>l'
 let g:go_template_autocreate = 0
 au FileType go nmap <Leader>t <Plug>(go-info)
 au FileType go nmap <Leader>b :GoBuild<CR>
-
-" Switch syntax highlighting on.
-syntax on
 
 """ Filetype rules
 highlight def link TooLongLine Error
