@@ -1,9 +1,16 @@
-require('leap').set_default_keymaps()
+require'leap'.set_default_keymaps()
 
 require'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
   indent = { enable = true },
 }
+
+require'tabs-vs-spaces'.setup {
+  indentation = "auto",
+  user_commands = true,
+}
+
+require'guess-indent'.setup {}
 
 vim.filetype.add({
   extension = {
@@ -34,14 +41,12 @@ augroup jeremyschlatter
   au BufRead,BufNewFile *.go 2match Underlined /.\%101v\|.\%81v/
 " Python
   au BufRead,BufNewFile *.py,*.bazel,*.bzl 2match Underlined /.\%81v/
-" Javascript
-  au BufRead,BufNewFile *.js,*.jsx,*.json,*.ts,*.tsx,*.yaml,*.sol,*.yml set tabstop=2 softtabstop=2 shiftwidth=2
 " Solidity
   au BufRead,BufNewFile *.sol 2match TooLongLine /.\%>100v/
 " Haskell
   au BufRead,BufNewFile *.hs 2match TooLongLine /.\%>101v/
 " Bel
-  au BufRead,BufNewFile *.bel set expandtab tabstop=2 softtabstop=2 shiftwidth=2 commentstring=;\ %s
+  au BufRead,BufNewFile *.bel set commentstring=;\ %s
 " Dhall
   au BufRead,BufNewFile *.dhall set commentstring=--\ %s
 " Coq

@@ -95,6 +95,18 @@
                 ]))
                 nvim-ts-context-commentstring
 
+                guess-indent-nvim
+                (vimUtils.buildVimPlugin {
+                  pname = "tabs-vs-spaces.nvim";
+                  version = "2024-05-30";
+                  src = fetchFromGitHub {
+                    owner = "tenxsoydev";
+                    repo = "tabs-vs-spaces.nvim";
+                    rev = "86cfc69bee95647b802ea49fcb816ff0ea798fc7";
+                    sha256 = "sha256-a3q4MfSrewog3PHe9ubW6ehFWjuHnpaHTDMkMJLvTds=";
+                  };
+                  meta.homepage = "https://github.com/tenxsoydev/tabs-vs-spaces.nvim/";
+                })
                 vim-better-whitespace
                 vim-commentary
                 vim-fetch
