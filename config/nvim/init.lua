@@ -51,10 +51,7 @@ augroup jeremyschlatter
 augroup END
 
 " Editing setup
-set mouse=a               " Enable the mouse.
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
-call mkdir($HOME . "/.vim_runtime/bak", "p")
-set backupdir=$HOME/.vim_runtime/bak  " Write backup files to ~/.vim_runtime/bak/*
 set showmatch             " Show matches wile searching
 set lazyredraw            " Don't redraw while executing macros
 set number
@@ -66,14 +63,13 @@ set linebreak             " Wrapping for plaintext
 set completeopt-=preview  " Don't pop up a preview window for completions.
 set formatoptions+=r      " Auto-continue comments. Credit: http://stackoverflow.com/a/952561
 set splitright " https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
-set termguicolors         " Enable higher-bit-count colors
 
 function! ToggleMouse()
-  if &mouse == 'a'
+  if &mouse == 'nvi'
     set mouse=
     echo "Mouse usage disabled"
   else
-    set mouse=a
+    set mouse=nvi
     echo "Mouse usage enabled"
   endif
 endfunction
