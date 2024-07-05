@@ -159,7 +159,6 @@
         (bat-themed delta)    # Better git diffs.
         debase                # TUI to drag-and-drop git commits.
         direnv                # Set environment variables per-project.
-        docker                # Bundle programs with their dependencies.
         eza                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
@@ -173,22 +172,17 @@
         hub                   # GitHub CLI.
         inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
-        kubectl               # Kubernetes CLI.
-        less                  # Scroll through long files.
-        man-db                # View manuals. (Present on most OS's already -- this just ensures a recent version).
         nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
         (python3.withPackages # Run Python.
           (ps: [ps.ipython])) # Better Python repl than the default.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
-        unzip                 # Open .zip files.
         vim                   # Edit text.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
         zoxide                # A smarter cd command.
       ] ++ lib.optionals (system == "x86_64-linux") [
-        # etcher                # Burn .iso images to USB drives and SD cards, w/ user-friendly GUI.
         file                  # Get high-level semantic info about a file.
         kitty                 # My terminal. On macOS I use iTerm2 instead of kitty.
       ];
