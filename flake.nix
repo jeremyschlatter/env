@@ -148,6 +148,7 @@
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"")
+        (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"")
 
         # Life on the command line.
         (unstable.atuin.overrideAttrs (oldAttrs: {
@@ -156,7 +157,6 @@
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
         calc                  # A simple arbitrary-precision calculator.
-        comma                 # Use programs from the nix repo without installing them.
         coreutils             # Basic file, shell and text manipulation utilities.
         (bat-themed delta)    # Better git diffs.
         debase                # TUI to drag-and-drop git commits.
