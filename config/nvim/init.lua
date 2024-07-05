@@ -2,7 +2,6 @@ require'leap'.set_default_keymaps()
 
 require'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
-  indent = { enable = true },
 }
 
 require'tabs-vs-spaces'.setup {
