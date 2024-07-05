@@ -128,5 +128,7 @@ fn env() -> Box<[(&'static str, &'static str)]> {
         // Don't log starship warnings.
         // (Most common warning: git command timed out in large git directory).
         ("STARSHIP_LOG", "error"),
+
+        ("SHELL", "fish"),
     ])
 }
