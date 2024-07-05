@@ -141,7 +141,7 @@ let s:color = readfile(expand('~/.config/colors'))
 for s:colorLine in s:color
   let &background = s:colorLine
 endfor
-colorscheme NeoSolarized
+colorscheme solarized
 
 " Map escape to terminal escape sequence, as suggested in `:help terminal`
 tnoremap <Esc> <C-\><C-n>

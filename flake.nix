@@ -2,14 +2,13 @@
   description = "Jeremy Schlatter's personal dev environment";
 
   inputs = {
-    nixpkgs = { url = github:NixOS/nixpkgs/release-24.05; };
-    nixpkgs-unstable = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
+    nixpkgs = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
     jeremy = { url = github:jeremyschlatter/nixpkgs/debase; };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, crane, nixGL, jeremy }: {
+  outputs = { self, nixpkgs, crane, nixGL, jeremy }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -58,7 +57,6 @@
     profile = { pkgs, system, super }:
       with pkgs;
       let
-        unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
         vim = neovim.override {
           viAlias = true;
@@ -70,7 +68,7 @@
             '';
             packages.mine = with vimPlugins; {
               start = [
-                NeoSolarized
+                nvim-solarized-lua
                 camelcasemotion
                 ctrlp-vim
                 fzf-vim
@@ -151,7 +149,7 @@
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"")
 
         # Life on the command line.
-        (unstable.atuin.overrideAttrs (oldAttrs: {
+        (atuin.overrideAttrs (oldAttrs: {
           patches = oldAttrs.patches ++ [./atuin.patch];
         }))                   # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.

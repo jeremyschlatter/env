@@ -1,13 +1,13 @@
-diff --git a/atuin/src/command/client/stats.rs b/atuin/src/command/client/stats.rs
-index c2636536..a68aad76 100644
---- a/atuin/src/command/client/stats.rs
-+++ b/atuin/src/command/client/stats.rs
-@@ -75,7 +75,7 @@ fn compute_stats(settings: &Settings, history: &[History], count: usize) -> (usi
-         }
+diff --git a/crates/atuin-history/src/stats.rs b/crates/atuin-history/src/stats.rs
+index b73a5dbb..9527ef1b 100644
+--- a/crates/atuin-history/src/stats.rs
++++ b/crates/atuin-history/src/stats.rs
+@@ -157,7 +157,7 @@ pub fn pretty_print(stats: Stats, ngram_size: usize) {
+             .collect::<Vec<_>>()
+             .join(" | ");
  
-         println!(
--            "{ResetColor}] {gray}{count:num_pad$}{ResetColor} {bold}{}{ResetColor}",
-+            "{ResetColor}] {count:num_pad$} {bold}{}{ResetColor}",
-             command.escape_control()
-         );
+-        println!("{ResetColor}] {gray}{count:num_pad$}{ResetColor} {bold}{formatted_command}{ResetColor}");
++        println!("{ResetColor}] {count:num_pad$} {bold}{formatted_command}{ResetColor}");
      }
+     println!("Total commands:   {}", stats.total_commands);
+     println!("Unique commands:  {}", stats.unique_commands);

@@ -35,6 +35,22 @@
         "type": "github"
       }
     },
+    "jeremy": {
+      "locked": {
+        "lastModified": 1718913535,
+        "narHash": "sha256-MIDcNjxaDi9n9e6jqg/SmqCHvkZuDK+z8jLfJxkxtGI=",
+        "owner": "jeremyschlatter",
+        "repo": "nixpkgs",
+        "rev": "613ca81ce95cd073c5e07d99ee39c4691c374bb7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jeremyschlatter",
+        "ref": "debase",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixGL": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -91,6 +107,7 @@
     "root": {
       "inputs": {
         "crane": "crane",
+        "jeremy": "jeremy",
         "nixGL": "nixGL",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable"
