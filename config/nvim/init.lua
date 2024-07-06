@@ -11,6 +11,10 @@ require'tabs-vs-spaces'.setup {
 
 require'guess-indent'.setup {}
 
+require'config-local'.setup {
+  lookup_parents = true,
+}
+
 vim.filetype.add({
   extension = {
     ncl = 'nickel',

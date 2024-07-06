@@ -68,12 +68,12 @@
             '';
             packages.mine = with vimPlugins; {
               start = [
-                nvim-solarized-lua
                 camelcasemotion
                 ctrlp-vim
                 fzf-vim
                 fzfWrapper
                 leap-nvim
+                nvim-config-local
 
                 # Sadly I can't use withAllGrammars here, because it won't build on macOS:
                 #   sandbox-exec: pattern serialization length 70022 exceeds maximum (65535)
@@ -92,8 +92,9 @@
                   toml
                   nickel
                 ]))
-                nvim-ts-context-commentstring
 
+                nvim-solarized-lua
+                nvim-ts-context-commentstring
                 guess-indent-nvim
                 (vimUtils.buildVimPlugin {
                   pname = "tabs-vs-spaces.nvim";
