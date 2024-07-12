@@ -5,10 +5,9 @@
     nixpkgs = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     crane = { url = github:ipetkov/crane; inputs.nixpkgs.follows = "nixpkgs"; };
     nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
-    jeremy = { url = github:jeremyschlatter/nixpkgs/debase; };
   };
 
-  outputs = { self, nixpkgs, crane, nixGL, jeremy }: {
+  outputs = { self, nixpkgs, crane, nixGL }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -134,7 +133,6 @@
         fixGL = wrapBin
           "${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel _BIN_ $@";
         kitty = themed "KITTY_INITIAL_THEME=light" "KITTY_INITIAL_THEME=dark" (fixGL pkgs.kitty);
-        debase = (import jeremy { inherit system; config.allowUnfree = true; }).debase;
       in
 
       super ++ [
@@ -159,7 +157,6 @@
         calc                  # A simple arbitrary-precision calculator.
         coreutils             # Basic file, shell and text manipulation utilities.
         (bat-themed delta)    # Better git diffs.
-        debase                # TUI to drag-and-drop git commits.
         direnv                # Set environment variables per-project.
         eza                   # List files in the current directory.
         fd                    # Find file by name.
