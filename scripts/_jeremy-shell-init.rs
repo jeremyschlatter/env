@@ -129,6 +129,8 @@ fn env() -> Box<[(&'static str, &'static str)]> {
         // (Most common warning: git command timed out in large git directory).
         ("STARSHIP_LOG", "error"),
 
-        ("SHELL", "fish"),
+        // without this, nix remote building hangs. with SHELL=fish, it says
+        // 'Couldn't execute fish -c "echo started": No such file or directory'
+        ("SHELL", ""),
     ])
 }
