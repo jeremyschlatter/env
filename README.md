@@ -8,21 +8,15 @@ There are many ways that this setup provides me value, but one of the most legib
 
 **Usage**
 
-1. [Install nix](https://nixos.org/download.html)
+1. [Install nix](https://github.com/DeterminateSystems/nix-installer?tab=readme-ov-file#the-determinate-nix-installer)
 
-2. Enable experimental features:*
-
-    `sudo mkdir -p /etc/nix && echo 'experimental-features = nix-command flakes' | sudo tee -a /etc/nix/nix.conf`
-
-3. Install my environment:
+2. Install my environment:
 
     `nix profile install github:jeremyschlatter/nixpkgs`
     
-4. Run my post-install script:
+3. Run my post-install script:
 
     `jeremy-post-install`
-    
-<sub>*I am using an [experimental feature](https://github.com/NixOS/rfcs/pull/49) called [Nix flakes](https://www.tweag.io/blog/2020-05-25-flakes). These steps are needed to opt into it before it stabilizes.</sub>
 
 **Composing env definitions**
 
