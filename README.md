@@ -37,7 +37,11 @@ To pick up the Fira Code font in Gnome I made this symlink:
 
     ln -s ~/.nix-profile/share/fonts/ ~/.local/share/
 
-To pick up application launchers for kitty and alacritty in Gnome I made this symlink:
+To pick up application launchers for kitty and obsidian in Gnome I made this symlink:
 
     rmdir ~/.local/share/applications
     ln -s ~/.nix-profile/share/applications/ ~/.local/share/
+
+To get desktop icons:
+
+    ln -s ~/.nix-profile/share/icons/ ~/.local/share/
