@@ -184,6 +184,7 @@
       ] ++ lib.optionals (system == "x86_64-linux") [
         file                  # Get high-level semantic info about a file.
         kitty                 # My terminal. On macOS I use iTerm2 instead of kitty.
+        obsidian
       ];
   };
 }
