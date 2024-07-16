@@ -1,9 +1,4 @@
-*.swp
 .DS_Store
-
-/bazel-*
-
-tags
 
 jeremy-scratch
 
