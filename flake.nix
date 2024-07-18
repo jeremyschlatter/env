@@ -58,7 +58,7 @@
       with pkgs;
       let
         configs = self.copyDir pkgs "my-configs" ./config "$out/config";
-        my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive_5}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
+        my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
         vim = neovim.override {
           viAlias = true;
           vimAlias = true;
@@ -140,9 +140,9 @@
         configs # Config files for some of the programs in this list.
         (self.scripts pkgs ./scripts) # Little utility programs.
 
-        # My shell.
+        # Shells.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
-        my-bash
+        blesh my-bash
         (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source"'' fish)
         (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_'' zsh)
 

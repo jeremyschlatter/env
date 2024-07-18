@@ -11,19 +11,19 @@ set   -o vi            # use vi-mode editing on the command line
 eval "$(_jeremy-shell-init bash)"
 
 # source bash completions
+. $NIX_PROFILE/etc/profile.d/bash_completion.sh
 if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then
     for completion in $NIX_PROFILE/etc/bash_completion.d/*; do
         . $completion
     done
 fi
-if [ -d $NIX_PROFILE/share/bash_completion ]; then
-    for completion in $NIX_PROFILE/share/bash_completion/*; do
-        . $completion
-    done
+if [ -d $NIX_PROFILE/share/bash-completion ]; then
+    . $NIX_PROFILE/share/bash-completion/bash_completion
+    # for completion in $NIX_PROFILE/share/bash-completion/completions/*; do
+        # . $completion
+    # done
+    . $NIX_PROFILE/share/bash-completion/completions/git
 fi
-
-. $NIX_PROFILE/etc/profile.d/bash_completion.sh
-. $NIX_PROFILE/share/bash-completion/completions/git
 
 # git tab completion with 'g' alias
 __git_complete g __git_main

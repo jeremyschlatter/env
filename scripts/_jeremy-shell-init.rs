@@ -1,31 +1,31 @@
-use std::boxed::Box;
+use std::{vec, vec::Vec};
 
 fn main() -> anyhow::Result<()> {
-    let fmts = match std::env::args().nth(1).as_deref() {
-        Some("bash") => (
+    let (shell, fmts) = match std::env::args().nth(1).as_deref() {
+        Some("bash") => ("bash", (
             "export {k}=\"{v}\"",
             "alias {k}=\"{v}\"",
             "{k}() { eval \"$({v} $1)\" ; }",
             "eval \"$({k} bash)\"",
-        ),
-        Some("zsh") => (
+        )),
+        Some("zsh") => ("zsh", (
             "export {k}=\"{v}\"",
             "alias {k}=\"{v}\"",
             "{k}() { eval \"$({v} $1)\" ; }",
             "eval \"$({k} zsh)\"",
-        ),
-        Some("fish") => (
+        )),
+        Some("fish") => ("fish", (
             "set -gx {k} \"{v}\"",
             "abbr --add {k} \"{v}\"",
             "function {k}; {v} $argv | source; end",
             "{k} fish | source",
-        ),
+        )),
         _ => anyhow::bail!("usage: _jeremy-shell-init <bash|zsh|fish>"),
     };
     fn fmt(f: &str, k: &str, v: &str) {
         println!("{}", f.replace("{k}", k).replace("{v}", v));
     }
-    for (k, v) in env().iter() {
+    for (k, v) in env(shell).iter() {
         fmt(fmts.0, k, v);
     }
     for (k, v) in aliases().iter() {
@@ -34,30 +34,33 @@ fn main() -> anyhow::Result<()> {
     for (k, v) in eval_wraps().iter() {
         fmt(fmts.2, k, v);
     }
+    if shell == "bash" {
+        println!("source $(blesh-share)/ble.sh");
+    }
     for k in hooks().iter() {
         fmt(fmts.3, k, "");
     }
     Ok(())
 }
 
-fn hooks() -> Box<[&'static str]> {
-    Box::new([
+fn hooks() -> Vec<&'static str> {
+    vec![
         "direnv hook",
-        "atuin init",
         "starship init",
+        "atuin init",
         "zoxide init",
-    ])
+    ]
 }
 
-fn eval_wraps() -> Box<[(&'static str, &'static str)]> {
-    Box::new([
+fn eval_wraps() -> Vec<(&'static str, &'static str)> {
+    vec![
         ("clone", "_gitx github"),
         ("gitlab", "_gitx gitlab"),
-    ])
+    ]
 }
 
-fn aliases() -> Box<[(&'static str, &'static str)]> {
-    Box::new([
+fn aliases() -> Vec<(&'static str, &'static str)> {
+    vec![
         ("k", "kubectl"),
         ("kg", "kubectl get"),
         ("kgp", "kubectl get pods"),
@@ -89,11 +92,11 @@ fn aliases() -> Box<[(&'static str, &'static str)]> {
         ("ff", "vi $HOME/nix/public-base/flake.nix"),
         ("f", "vi $HOME/nix/public-base/flake.nix && i"),
         ("u", "I_DOT_PY_DO_FULL_UPDATE=1 i"),
-    ])
+    ]
 }
 
-fn env() -> Box<[(&'static str, &'static str)]> {
-    Box::new([
+fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
+    vec![
         ("NIX_PROFILE", "$HOME/.nix-profile"),
 
         // enable solarized color support of ls (on Linux), exa, and fd
@@ -129,8 +132,10 @@ fn env() -> Box<[(&'static str, &'static str)]> {
         // (Most common warning: git command timed out in large git directory).
         ("STARSHIP_LOG", "error"),
 
-        // without this, nix remote building hangs. with SHELL=fish, it says
-        // 'Couldn't execute fish -c "echo started": No such file or directory'
-        ("SHELL", ""),
-    ])
+        // with SHELL=fish, nix remote building says
+        //   `Couldn't execute fish -c "echo started": No such file or directory`
+        // with SHELL= , nix remote building works but nix shell says
+        //   `unable to execute '': No such file or directory`
+        ("SHELL", shell),
+    ]
 }
