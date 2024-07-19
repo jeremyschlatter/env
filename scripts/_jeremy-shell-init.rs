@@ -34,9 +34,6 @@ fn main() -> anyhow::Result<()> {
     for (k, v) in eval_wraps().iter() {
         fmt(fmts.2, k, v);
     }
-    if shell == "bash" {
-        println!("source $(blesh-share)/ble.sh");
-    }
     for k in hooks().iter() {
         fmt(fmts.3, k, "");
     }

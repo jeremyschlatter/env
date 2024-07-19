@@ -8,6 +8,15 @@ set   -o vi            # use vi-mode editing on the command line
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Activate ble.sh. My primary motivation for this is to get
+# atuin to work in bash. Atuin in bash requires either ble.sh
+# or bash-preexec, with ble.sh being preferred:
+#
+#     https://docs.atuin.sh/guide/installation/#shell-plugin
+#     https://github.com/atuinsh/docs/blob/c08b284a32ad32800565c4d0dbc2ca2a9477d104/src/content/docs/guide/installation.mdx?plain=1#L150-L158
+#
+# ble.sh also adds line-editing features to bash, which is cool I guess.
+source $(blesh-share)/ble.sh
 eval "$(_jeremy-shell-init bash)"
 
 # source bash completions

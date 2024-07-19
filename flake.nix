@@ -142,7 +142,7 @@
 
         # Shells.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
-        blesh my-bash
+        blesh my-bash # See blesh note in config/bash/bashrc.sh
         (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source"'' fish)
         (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_'' zsh)
 
