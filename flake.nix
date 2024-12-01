@@ -152,6 +152,7 @@
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"")
 
         man
+        talosctl
 
         # Life on the command line.
         (atuin.overrideAttrs (oldAttrs: {
