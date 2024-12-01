@@ -92,6 +92,7 @@
                   nix
                   toml
                   nickel
+                  python
                 ]))
 
                 nvim-solarized-lua
