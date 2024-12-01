@@ -9,15 +9,11 @@ def read_metadata():
     profile = check_output(['nix', 'profile', 'list', '--json']).decode()
     targets = []
     for k, v in json.loads(profile)['elements'].items():
-        print(k)
         for p in v['storePaths']:
-            print(f'\t{p}')
             if p.endswith('-bundled-environment'):
-                print('true')
                 targets += [(k, v['originalUrl'])]
                 break
 
-    print(targets)
     if len(targets) != 1:
         print(
             'I need exactly one derivation with a "bundled-environment" ' +
@@ -37,3 +33,4 @@ check_call(
 )
 
 check_call(['nix', 'profile', 'upgrade', package_name])
+check_call(['_jeremy-post-install'])
