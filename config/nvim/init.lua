@@ -46,7 +46,7 @@ highlight def link TooLongLine Error
 augroup jeremyschlatter
   au!
 " C/C++, sh, bash, javascript
-  au BufRead,BufNewFile *.js,*.sh,*.bash,*.c,*.cc,*.cpp,*.h match TooLongLine /.\%>81v/
+  " au BufRead,BufNewFile *.js,*.sh,*.bash,*.c,*.cc,*.cpp,*.h match TooLongLine /.\%>81v/
 " Java
   au BufRead,BufNewFile *.java 2match TooLongLine /.\%>80v/
 " Go
