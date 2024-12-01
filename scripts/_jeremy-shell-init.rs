@@ -115,10 +115,6 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         // https://stackoverflow.com/a/37578829
         ("XDG_DATA_DIRS", "$XDG_DATA_DIRS:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/"),
 
-        // kitty sets $TERM to "xterm-kitty". Need this terminfo file for programs to
-        // make sense of that value. Otherwise programs like `less` and `man` print
-        // "WARNING: terminal is not fully functional" and fall back to less-useful behavior.
-        ("TERMINFO", "$HOME/.nix-profile/share/terminfo"),
 
         ("PATH", "$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"),
         ("PATH", "/nix/var/nix/profiles/default/bin:$PATH"),
