@@ -1,49 +1,39 @@
-import itertools
 import json
 import os
-import subprocess
 import sys
 
-from pathlib import Path
-
-targets = list(filter(
-    lambda x: x[1]['storePaths'][0].split('-', 1)[1]
-    .startswith('bundled-environment'),
-    enumerate(json.loads(subprocess.check_output(
-        ['nix', 'profile', 'list', '--json']
-    ).decode())['elements']),
-))
-
-if len(targets) != 1:
-    print(
-        'I need exactly one derivation called "bundled-environment" ' +
-        'to be in `nix profile list`',
-        file=sys.stderr,
-    )
-    sys.exit(1)
-
-(index, pkg) = targets[0]
-flake = pkg['url']
+from subprocess import check_call, check_output
 
 
-def flatten(x):
-    return [item for sublist in x for item in sublist]
+def read_metadata():
+    profile = check_output(['nix', 'profile', 'list', '--json']).decode()
+    targets = []
+    for k, v in json.loads(profile)['elements'].items():
+        print(k)
+        for p in v['storePaths']:
+            print(f'\t{p}')
+            if p.endswith('-bundled-environment'):
+                print('true')
+                targets += [(k, v['originalUrl'])]
+                break
+
+    print(targets)
+    if len(targets) != 1:
+        print(
+            'I need exactly one derivation with a "bundled-environment" ' +
+            'store path to be in `nix profile list`',
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    return targets[0]
 
 
-inputs = flatten(zip(
-    itertools.repeat('--update-input'),
-    json.loads(
-        subprocess.check_output([
-            'nix', 'flake', 'metadata', '--json', flake,
-        ]))['locks']['nodes']['root']['inputs'].keys(),
-))
+(package_name, flake_path) = read_metadata()
 
-if os.getenv('I_DOT_PY_DO_FULL_UPDATE'):
-    subprocess.check_call(
-        ['nix', 'flake', 'update'],
-        cwd=(Path.home() / 'nix' / 'public-base'),
-    )
+check_call(
+    ['nix', 'flake', 'update', '--flake', flake_path, '--commit-lock-file'] +
+    ([] if os.getenv('I_DOT_PY_DO_FULL_UPDATE') else ['public-base'])
+)
 
-subprocess.check_call(['nix', 'profile', 'upgrade'] + inputs + [str(index)])
-
-subprocess.check_call(['_jeremy-post-install'])
+check_call(['nix', 'profile', 'upgrade', package_name])
