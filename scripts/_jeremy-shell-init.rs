@@ -3,18 +3,21 @@ use std::{vec, vec::Vec};
 fn main() -> anyhow::Result<()> {
     let (shell, fmts) = match std::env::args().nth(1).as_deref() {
         Some("bash") => ("bash", (
+            "ghostty.bash",
             "export {k}=\"{v}\"",
             "alias {k}=\"{v}\"",
             "{k}() { eval \"$({v} $1)\" ; }",
             "eval \"$({k} bash)\"",
         )),
         Some("zsh") => ("zsh", (
+            "ghostty-integration",
             "export {k}=\"{v}\"",
             "alias {k}=\"{v}\"",
             "{k}() { eval \"$({v} $1)\" ; }",
             "eval \"$({k} zsh)\"",
         )),
         Some("fish") => ("fish", (
+            "vendor_conf.d/ghostty-shell-integration.fish",
             "set -gx {k} \"{v}\"",
             "abbr --add {k} \"{v}\"",
             "function {k}; {v} $argv | source; end",
@@ -25,17 +28,20 @@ fn main() -> anyhow::Result<()> {
     fn fmt(f: &str, k: &str, v: &str) {
         println!("{}", f.replace("{k}", k).replace("{v}", v));
     }
-    for (k, v) in env(shell).iter() {
-        fmt(fmts.0, k, v);
+    if std::env::var("GHOSTTY_RESOURCES_DIR").is_ok() {
+        println!("source $GHOSTTY_RESOURCES_DIR/shell-integration/{}/{}", shell, fmts.0);
     }
-    for (k, v) in aliases().iter() {
+    for (k, v) in env(shell).iter() {
         fmt(fmts.1, k, v);
     }
-    for (k, v) in eval_wraps().iter() {
+    for (k, v) in aliases().iter() {
         fmt(fmts.2, k, v);
     }
+    for (k, v) in eval_wraps().iter() {
+        fmt(fmts.3, k, v);
+    }
     for k in hooks().iter() {
-        fmt(fmts.3, k, "");
+        fmt(fmts.4, k, "");
     }
     Ok(())
 }
