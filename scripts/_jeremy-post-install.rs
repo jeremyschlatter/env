@@ -111,8 +111,8 @@ fn main() -> Result<()> {
             _ => bail!("Unsupported operating system"),
         } {
             println!("changing shell to {}...", want_shell);
-            if !Command::new("chsh")
-                .args(["-s", want_shell])
+            if !Command::new("sudo")
+                .args(["chsh", "-s", want_shell, "jeremy"])
                 .status()?
                 .success()
             {
