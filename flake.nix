@@ -167,6 +167,7 @@
         eza                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
+        gh                    # GitHub CLI.
         git                   # Track version history for text files.
         gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
@@ -174,7 +175,6 @@
         gotools               # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
-        hub                   # GitHub CLI.
         inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
         nix-direnv            # Optimized direnv+nix integration.
