@@ -1,4 +1,3 @@
-import json
 import os.path
 import subprocess
 
@@ -7,20 +6,6 @@ if not os.path.exists('.git'):
     # a check that we are in the correct directory.
     # (I accidentally ran this command in my home dir once.)
     raise Exception('Not a git directory. Run \'git init\' first.')
-
-# Look up the nix release used in the current environment on this machine.
-# We'll use the same one in flake.nix.
-with open(os.path.expandvars('$HOME/.nix-profile/manifest.json')) as f:
-    for e in json.load(f)['elements']:
-        if any('-bundled-environment' in p for p in e['storePaths']):
-            release = json.loads(subprocess.check_output(
-                ['nix', 'flake', 'metadata', '--json', e['originalUrl']]
-            ))['locks']['nodes']['nixpkgs']['original']['ref']
-            break
-    else:
-        raise Exception(
-            'this script requires a "bundled-environment" to be installed'
-        )
 
 
 def write(path, txt):
@@ -40,7 +25,7 @@ use flake
 write('flake.nix', '''
 {
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/NIX_RELEASE;
+    nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     flake-utils.url = github:numtide/flake-utils;
   };
 
@@ -58,7 +43,7 @@ write('flake.nix', '''
       };
     });
 }
-'''.replace('NIX_RELEASE', release))  # noqa: E501
+''')  # noqa: E501
 
 print('Running `git add flake.nix`')
 subprocess.check_call(['git', 'add', 'flake.nix'])
