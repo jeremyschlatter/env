@@ -34,6 +34,7 @@ def read_metadata():
 output = sh.nix(
     ['flake', 'update', '--flake', flake_path, '--commit-lock-file'] +
     ([] if os.getenv('I_DOT_PY_DO_FULL_UPDATE') else ['public-base']),
+    _err_to_out=True,
     _out=sys.stdout,
     _tee=True,
 )
