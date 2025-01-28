@@ -155,6 +155,7 @@
         talosctl
 
         # Life on the command line.
+        _1password-cli
         (atuin.overrideAttrs (oldAttrs: {
           patches = oldAttrs.patches ++ [./atuin.patch];
         }))                   # Shell history search and sync.
