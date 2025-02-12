@@ -4,10 +4,9 @@
   inputs = {
     nixpkgs = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
     crane = { url = github:ipetkov/crane; };
-    nixGL = { url = github:guibou/nixGL; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, nixpkgs, crane, nixGL }: {
+  outputs = { self, nixpkgs, crane }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -132,9 +131,6 @@
             env "$v" _BIN_ $@
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
-        fixGL = wrapBin
-          "${nixGL.packages."${system}".nixGLIntel}/bin/nixGLIntel _BIN_ $@";
-        kitty = themed "KITTY_INITIAL_THEME=light" "KITTY_INITIAL_THEME=dark" (fixGL pkgs.kitty);
       in
 
       super ++ [
@@ -190,7 +186,7 @@
         zoxide                # A smarter cd command.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file                  # Get high-level semantic info about a file.
-        kitty                 # My terminal. On macOS I use iTerm2 instead of kitty.
+        ghostty               # My terminal. Installed separately on macOS.
         obsidian
       ];
   };
