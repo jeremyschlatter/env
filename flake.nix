@@ -2,8 +2,8 @@
   description = "Jeremy Schlatter's personal dev environment";
 
   inputs = {
-    nixpkgs = { url = github:NixOS/nixpkgs/nixpkgs-unstable; };
-    crane = { url = github:ipetkov/crane; };
+    nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    crane.url = github:ipetkov/crane;
   };
 
   outputs = { self, nixpkgs, crane }: {
