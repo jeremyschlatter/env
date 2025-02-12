@@ -31,22 +31,21 @@ def read_metadata():
 
 (package_name, flake_path) = read_metadata()
 
-output = sh.nix(
-    ['flake', 'update', '--flake', flake_path, '--commit-lock-file'] +
-    ([] if os.getenv('I_DOT_PY_DO_FULL_UPDATE') else ['public-base']),
-    _err_to_out=True,
-    _out=sys.stdout,
-    _tee=True,
-)
+if os.getenv('I_DOT_PY_DO_FULL_UPDATE'):
+    output = sh.nix(
+        ['flake', 'update', '--flake', flake_path, '--commit-lock-file'],
+        _err_to_out=True,
+        _out=sys.stdout,
+        _tee=True,
+    )
+    if 'will not write lock file of flake' in output:
+        fail('check in your changes!')
 
-if 'will not write lock file of flake' in output:
-    fail('check in your changes!')
-
-boop = {
+stdio = {
     '_in': sys.stdin,
     '_out': sys.stdout,
     '_err': sys.stderr,
 }
 
-sh.nix('profile', 'upgrade', package_name, **boop)
-sh.Command('_jeremy-post-install')(**boop)
+sh.nix('profile', 'upgrade', package_name, **stdio)
+sh.Command('_jeremy-post-install')(**stdio)
