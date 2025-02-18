@@ -165,8 +165,8 @@
           ];
           patches = [(
             fetchpatch {
-              url = "https://github.com/jeremyschlatter/ollama/commit/561bf162016935f80112582a832126064c7dc5dc.patch";
-              hash = "sha256-FtFEHz3pYM4+Sxn/m+JXkpUknXS8VlRIddJJtBMfNZw=";
+              url = "https://github.com/ollama/ollama/pull/9079.diff";
+              hash = "sha256-63m9OY8uSWjiE9bs9Ry9RmDEQjsN0p8seTcFgHsEL+4=";
             }
           )];
         }))
