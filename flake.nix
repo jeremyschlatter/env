@@ -201,6 +201,7 @@
           (ps: [ps.ipython])) # Better Python repl than the default.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
+        uv
         vim                   # Edit text.
         watch                 # Run a command repeatedly.
         wget                  # Download files.
