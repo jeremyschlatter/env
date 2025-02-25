@@ -124,6 +124,7 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         ("PATH", "$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"),
         ("PATH", "$NIX_PROFILE/bin:$PATH"),
         ("PATH", "$HOME/go/bin:$PATH"),
+        ("PATH", "$HOME/.npm-global/bin:$PATH"),
 
         // Don't log starship warnings.
         // (Most common warning: git command timed out in large git directory).
