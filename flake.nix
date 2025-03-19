@@ -132,7 +132,7 @@
         };
         themed = light: dark: wrapBin ''
             [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
-            env "$v" _BIN_ $@
+            env "$v" _BIN_ "$@"
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
         mypkgs = personal.packages.${system};
