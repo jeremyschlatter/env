@@ -4,9 +4,13 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     crane.url = github:ipetkov/crane;
+    personal = {
+      url = github:jeremyschlatter/packages;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, crane }: {
+  outputs = { self, nixpkgs, crane, personal }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -131,6 +135,7 @@
             env "$v" _BIN_ $@
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
+        mypkgs = personal.packages.${system};
       in
 
       super ++ [
@@ -149,6 +154,7 @@
 
         man
         talosctl
+        mypkgs.daylight
 
         # AI stuff
         (ollama.overrideAttrs (oldAttrs: rec {
