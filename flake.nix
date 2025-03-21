@@ -156,27 +156,6 @@
         talosctl
         mypkgs.daylight
 
-        # AI stuff
-        (ollama.overrideAttrs (oldAttrs: rec {
-          version = "0.5.11";
-          src = oldAttrs.src.override {
-            tag = "v${version}";
-            hash = "sha256-Yc/FwIoPvzYSxlrhjkc6xFL5iCunDYmZkG16MiWVZck=";
-          };
-          vendorHash = "sha256-wtmtuwuu+rcfXsyte1C4YLQA4pnjqqxFmH1H18Fw75g=";
-          preBuild = "";
-          doCheck = false;
-          ldflags = oldAttrs.ldflags ++ [
-            "-X=github.com/ollama/ollama/version.Version=${version}"
-          ];
-          patches = [(
-            fetchpatch {
-              url = "https://github.com/ollama/ollama/pull/9079.diff";
-              hash = "sha256-63m9OY8uSWjiE9bs9Ry9RmDEQjsN0p8seTcFgHsEL+4=";
-            }
-          )];
-        }))
-
         # Life on the command line.
         _1password-cli
         (atuin.overrideAttrs (oldAttrs: {
