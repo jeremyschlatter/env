@@ -95,6 +95,8 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("ff", "vi $HOME/nix/public-base/flake.nix"),
         ("f", "vi $HOME/nix/public-base/flake.nix && i"),
         ("u", "I_DOT_PY_DO_FULL_UPDATE=1 i"),
+
+        ("gemma", "llm -m gemma3:12b"),
     ]
 }
 
