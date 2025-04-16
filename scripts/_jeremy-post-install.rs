@@ -84,7 +84,7 @@ fn main() -> Result<()> {
     }
 
     // Update shell.
-    let want_shell = "/usr/local/bin/jeremy-shell-wrapper";
+    let want_shell = "/usr/local/bin/fish";
     if Path::new(want_shell).is_file() {
         if want_shell != match OS {
             "macos" => {
