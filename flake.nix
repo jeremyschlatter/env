@@ -183,7 +183,11 @@
         nix-direnv            # Optimized direnv+nix integration.
         nix-index             # Find which nix package has the program you need.
         (python3.withPackages # Run Python.
-          (ps: [ps.ipython])) # Better Python repl than the default.
+          (ps: with ps; [
+            llm
+            llm-ollama
+            ipython      # Better Python repl than the default.
+          ]))
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
         uv
