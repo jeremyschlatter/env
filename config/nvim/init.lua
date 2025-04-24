@@ -149,6 +149,8 @@ aug QFClose
   au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
 colorscheme solarized
+" colorscheme catppuccin
+" colorscheme gruvbox
 
 " Map escape to terminal escape sequence, as suggested in `:help terminal`
 tnoremap <Esc> <C-\><C-n>

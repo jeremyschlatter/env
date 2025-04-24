@@ -99,6 +99,9 @@
                 ]))
 
                 nvim-solarized-lua
+                catppuccin-nvim
+                gruvbox-nvim
+
                 nvim-ts-context-commentstring
                 guess-indent-nvim
                 (vimUtils.buildVimPlugin {
