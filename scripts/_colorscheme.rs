@@ -15,19 +15,6 @@ fn main() -> Result<()> {
 }
 
 fn set_colors(which: &str, system: bool) -> Result<()> {
-    // Set colors in nvim windows.
-    let nvim_servers = str::from_utf8(
-        &Command::new("nvr").arg("--serverlist").output()?.stdout
-    )?.trim().to_owned();
-    for server in nvim_servers.split("\n") {
-        if server.starts_with("/") {
-            run("nvr", &[
-                "--servername", server,
-                "--remote-send", &format!("<esc>:set bg={which}<cr>"),
-            ])?
-        }
-    }
-
     // Change system theme (unless we are responding to a system change):
     if !system {
         if OS == "linux" {

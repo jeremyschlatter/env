@@ -148,12 +148,6 @@ aug QFClose
   au!
   au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
 aug END
-
-" Read current color (light vs dark), defaulting to dark
-let s:color = readfile(expand('~/.config/colors'))
-for s:colorLine in s:color
-  let &background = s:colorLine
-endfor
 colorscheme solarized
 
 " Map escape to terminal escape sequence, as suggested in `:help terminal`
