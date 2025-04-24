@@ -48,16 +48,6 @@
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
 
-    packages.aarch64-darwin = {
-      # Workaround for the fact that fish has a custom sandbox profile, which is only allowed
-      # with sandbox = relaxed. Build with `nix build --option sandbox relaxed .#myFish`.
-      # That will cache the build, and then you can rebuild the rest of the profile the normal way,
-      # with sandbox = true.
-      myFish = nixpkgs.legacyPackages.aarch64-darwin.fish.overrideAttrs (oldAttrs: rec {
-        patches = oldAttrs.patches ++ [./fish-omitted-newline.patch];
-      });
-    };
-
     # My package collection.
     #
     # These are the software packages that I have installed on all of my machines.
@@ -155,7 +145,7 @@
         # Shells.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
         blesh my-bash # See blesh note in config/bash/bashrc.sh
-        (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source" "$@"'' self.packages.${system}.myFish)
+        (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source" "$@"'' fish)
         (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_ "$@"'' zsh)
 
         # Undollar: ignore leading $'s from copy-pasted commands.
