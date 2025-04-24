@@ -15,19 +15,6 @@ fn main() -> Result<()> {
 }
 
 fn set_colors(which: &str, system: bool) -> Result<()> {
-    // Set terminal colors.
-    if !var("VIMRUNTIME").is_ok() && !var("SSH_TTY").is_ok() { // unless in neovim or ssh
-        if system && OS == "linux" || var("TERM").unwrap_or("".to_string()).contains("kitty") {
-            // kitty
-            run("kitty", &[
-                "@", "set-colors",
-                "--configured",
-                "--all",
-                &format!("~/.nix-profile/config/kitty/{which}.conf"),
-            ])?
-        }
-    }
-
     // Set colors in nvim windows.
     let nvim_servers = str::from_utf8(
         &Command::new("nvr").arg("--serverlist").output()?.stdout

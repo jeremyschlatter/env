@@ -26,10 +26,7 @@ I have not yet written instructions for how to compose these definitions. I may 
 
 **About my environment**
 
-This config installs [kitty](https://sw.kovidgoyal.net/kitty/), which I use as my terminal emulator.
-
-It configures kitty to use a custom shell (bash with a custom bashrc). To use my shell config outside
-kitty, you can run it manually as `shell`.
+This config installs [ghostty](https://ghostty.org/), which I use as my terminal emulator.
 
 **Other Notes**
 
@@ -37,7 +34,7 @@ To pick up the Fira Code font in Gnome I made this symlink:
 
     ln -s ~/.nix-profile/share/fonts/ ~/.local/share/
 
-To pick up application launchers for kitty and obsidian in Gnome I made this symlink:
+To pick up application launchers in Gnome I made this symlink:
 
     rmdir ~/.local/share/applications
     ln -s ~/.nix-profile/share/applications/ ~/.local/share/
