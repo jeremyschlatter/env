@@ -1,0 +1,6 @@
+quit-after-last-window-closed = true
+clipboard-paste-protection = false
+scrollback-limit = 1_000_000_000
+theme = dark:Builtin Solarized Dark,light:Builtin Solarized Light
+# theme = dark:catppuccin-mocha,light:catppuccin-latte
+# theme = dark:GruvboxDark,light:GruvboxLight
