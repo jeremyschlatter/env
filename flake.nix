@@ -188,6 +188,7 @@
             llm-ollama
             ipython      # Better Python repl than the default.
           ]))
+        nodejs_22
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
         uv
