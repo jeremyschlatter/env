@@ -1,0 +1,15 @@
+diff --git a/src/common.rs b/src/common.rs
+index 49b51df13..9aa898c6c 100644
+--- a/src/common.rs
++++ b/src/common.rs
+@@ -1313,8 +1313,8 @@ macro_rules! LL {
+         OMITTED_NEWLINE_STR.store(LL!("^J"));
+         OBFUSCATION_READ_CHAR.store(u32::from('*'), Ordering::Relaxed);
+     } else {
+-        if can_be_encoded('\u{23CE}') {
+-            OMITTED_NEWLINE_STR.store(LL!("\u{23CE}")); // "return symbol" (⏎)
++        if can_be_encoded('\u{2764}') {
++            OMITTED_NEWLINE_STR.store(LL!("\u{2764}")); // (❤)
+         } else {
+             OMITTED_NEWLINE_STR.store(LL!("^J"));
+         }
