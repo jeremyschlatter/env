@@ -1,4 +1,3 @@
-// {"deps": ["neovim-remote"]} #nix
 extern crate dirs;
 
 use anyhow::{anyhow, bail, Result};
