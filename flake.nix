@@ -139,6 +139,9 @@
         '';
         bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
         mypkgs = personal.packages.${system};
+        patch = pkg: patches: pkg.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or []) ++ patches;
+        });
       in
 
       super ++ [
@@ -161,15 +164,13 @@
 
         # Life on the command line.
         _1password-cli
-        (atuin.overrideAttrs (oldAttrs: {
-          patches = oldAttrs.patches ++ [./atuin.patch];
-        }))                   # Shell history search and sync.
+        (patch atuin [./atuin.patch]) # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
         (bat-themed bat)      # Display files, with syntax highlighting.
         calc                  # A simple arbitrary-precision calculator.
         coreutils             # Basic file, shell and text manipulation utilities.
         (bat-themed delta)    # Better git diffs.
-        direnv                # Set environment variables per-project.
+        (patch direnv [./direnv.patch]) # Set environment variables per-project.
         eza                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
