@@ -113,11 +113,10 @@
             pkg
           ];
         };
-        themed = light: dark: wrapBin ''
-            [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && v='${light}' || v='${dark}'
-            env "$v" _BIN_ "$@"
+        themed = var: light: dark: wrapBin ''
+            [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && c='${light}' || c='${dark}'
+            env "${var}=$c" _BIN_ "$@"
         '';
-        bat-themed = themed "BAT_THEME=Solarized (light)" "BAT_THEME=Solarized (dark)";
         mypkgs = personal.packages.${system};
         patch = pkg: patches: pkg.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or []) ++ patches;
@@ -146,10 +145,12 @@
         _1password-cli
         (patch atuin [./atuin.patch]) # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
-        (bat-themed bat)      # Display files, with syntax highlighting.
+        (themed "BAT_THEME" "Catppuccin Latte" "Catppuccin Mocha"
+         bat)                 # Display files, with syntax highlighting.
         calc                  # A simple arbitrary-precision calculator.
         coreutils             # Basic file, shell and text manipulation utilities.
-        (bat-themed delta)    # Better git diffs.
+        (themed "DELTA_FEATURES" "catppuccin-latte" "catppuccin-mocha"
+         delta)               # Better git diffs.
         (patch direnv [./direnv.patch]) # Set environment variables per-project.
         eza                   # List files in the current directory.
         fd                    # Find file by name.

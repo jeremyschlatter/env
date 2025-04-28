@@ -1,3 +1,6 @@
+[include]
+    path = ./catppuccin.gitconfig
+
 [user]
     name = Jeremy Schlatter
     email = jeremy@jeremyschlatter.com
