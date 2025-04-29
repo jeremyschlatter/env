@@ -143,7 +143,7 @@
 
         # Life on the command line.
         _1password-cli
-        (patch atuin [./atuin.patch]) # Shell history search and sync.
+        atuin                 # Shell history search and sync.
         bash-completion       # Tab-completion for a bunch of commands.
         (themed "BAT_THEME" "Catppuccin Latte" "Catppuccin Mocha"
          bat)                 # Display files, with syntax highlighting.
