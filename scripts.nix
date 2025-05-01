@@ -20,14 +20,13 @@ crane: pkgs: src:
   with builtins;
   with pkgs;
   let
-    craneLib = crane.mkLib pkgs;
     builders =
       with writers;
       {
         sh = _: writeBashBin;
         py = { requirements ? [], ... }: name:
           writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
-        rs = _: name: _: craneLib.buildPackage {
+        rs = _: name: _: (crane.mkLib pkgs).buildPackage {
           src = lib.sources.sourceFilesBySuffices src [".rs" "bin" ".toml" ".lock"];
           buildInputs = lib.optional stdenv.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
