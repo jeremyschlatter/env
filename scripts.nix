@@ -42,19 +42,19 @@ crane: pkgs: src:
         buildInfo = let firstLine = head (split "\n" (strings.fileContents fullPath)); in
           let x = strings.removeSuffix "#nix" firstLine; in
           if x == firstLine then {} else fromJSON (elemAt (split "^[^ ]+" x) 2);
-        deps = map
-          (x: lib.attrsets.getAttrFromPath (strings.splitString "." x)
-            (pkgs // { inherit scripts; }))
-          (buildInfo.deps or []);
       in if (kind == "regular" && hasAttr ext builders) then {
         inherit name;
         value = (getAttr ext builders buildInfo name fullPath).overrideAttrs (final: prev:
           let attr = if (hasAttr "buildCommand" prev) then "buildCommand" else "postInstall"; in
-          lib.optionalAttrs (deps != [])
+          lib.optionalAttrs (hasAttr "deps" buildInfo)
           {
             ${attr} = getAttr attr ({${attr} = "";} // prev) + ''
               . ${makeWrapper}/nix-support/setup-hook
-              wrapProgram $out/bin/${name} --prefix PATH : ${lib.makeBinPath deps}
+              wrapProgram $out/bin/${name} --prefix PATH : ${lib.makeBinPath (map
+                  (x: lib.attrsets.getAttrFromPath (strings.splitString "." x)
+                    (pkgs // { inherit scripts; }))
+                  buildInfo.deps
+              )}
             '';
           });
       } else null;
