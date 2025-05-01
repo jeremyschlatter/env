@@ -20,16 +20,6 @@ crane: pkgs: src:
   with builtins;
   with pkgs;
   let
-    wrapPath = name: deps: pkg:
-      pkg.overrideAttrs (final: prev:
-        let attr = if (hasAttr "buildCommand" prev) then "buildCommand" else "postInstall"; in
-        lib.optionalAttrs (deps != [])
-        {
-          ${attr} = getAttr attr ({${attr} = "";} // prev) + ''
-            . ${makeWrapper}/nix-support/setup-hook
-            wrapProgram $out/bin/${name} --prefix PATH : ${lib.makeBinPath deps}
-          '';
-        });
     craneLib = crane.mkLib pkgs;
     builders =
       with writers;
@@ -59,6 +49,14 @@ crane: pkgs: src:
           (buildInfo.deps or []);
       in if (kind == "regular" && hasAttr ext builders) then {
         inherit name;
-        value = wrapPath name deps (getAttr ext builders buildInfo name fullPath);
+        value = (getAttr ext builders buildInfo name fullPath).overrideAttrs (final: prev:
+          let attr = if (hasAttr "buildCommand" prev) then "buildCommand" else "postInstall"; in
+          lib.optionalAttrs (deps != [])
+          {
+            ${attr} = getAttr attr ({${attr} = "";} // prev) + ''
+              . ${makeWrapper}/nix-support/setup-hook
+              wrapProgram $out/bin/${name} --prefix PATH : ${lib.makeBinPath deps}
+            '';
+          });
       } else null;
   in attrValues scripts
