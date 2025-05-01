@@ -39,8 +39,8 @@ crane: pkgs: src:
         fullPath = src + "/${f}";
         ext = elemAt (tail (split "\\." f)) 1;
         name = strings.removeSuffix ".${ext}" f;
-        firstLine = head (split "\n" (strings.fileContents fullPath));
-        buildInfo = let x = strings.removeSuffix "#nix" firstLine; in
+        buildInfo = let firstLine = head (split "\n" (strings.fileContents fullPath)); in
+          let x = strings.removeSuffix "#nix" firstLine; in
           if x == firstLine then {} else fromJSON (elemAt (split "^[^ ]+" x) 2);
         deps = map
           (x: lib.attrsets.getAttrFromPath (strings.splitString "." x)
