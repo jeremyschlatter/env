@@ -32,7 +32,6 @@ crane: pkgs: src:
           cargoExtraArgs = "--bin ${name}";
         };
       };
-    scripts = listToAttrs (filter (x: x != null) (lib.attrsets.mapAttrsToList script (readDir src)));
     script = f: kind:
       let
         inherit (lib) strings;
@@ -58,4 +57,5 @@ crane: pkgs: src:
             '';
           });
       } else null;
+    scripts = listToAttrs (filter (x: x != null) (lib.attrsets.mapAttrsToList script (readDir src)));
   in attrValues scripts
