@@ -79,9 +79,7 @@
                 leap-nvim
                 nvim-config-local
                 nvim-treesitter.withAllGrammars
-                nvim-solarized-lua
                 catppuccin-nvim
-                gruvbox-nvim
                 nvim-ts-context-commentstring
                 guess-indent-nvim
                 (vimUtils.buildVimPlugin {
