@@ -158,7 +158,6 @@
         gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
         google-cloud-sdk      # Google Cloud CLI.
-        gotools               # Tools to facilitate coding in Go.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
         inetutils             # Ping.
