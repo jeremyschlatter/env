@@ -137,7 +137,6 @@
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"")
 
         man
-        talosctl
         mypkgs.daylight
 
         # Life on the command line.
