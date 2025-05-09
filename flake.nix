@@ -96,6 +96,7 @@
                 vim-better-whitespace
                 vim-commentary
                 vim-fetch
+                vim-go
                 vim-numbertoggle
                 vim-repeat
                 vim-unicoder
