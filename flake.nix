@@ -174,7 +174,6 @@
         inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
         nix-direnv            # Optimized direnv+nix integration.
-        nix-index             # Find which nix package has the program you need.
         (python3.withPackages # Run Python.
           (ps: with ps; [
             llm
