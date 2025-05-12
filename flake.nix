@@ -65,8 +65,9 @@
     profile = { pkgs, system, super }:
       with pkgs;
       let
-        configs = self.copyDir pkgs "my-configs" ./config "$out/config";
-        my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"'';
+        configs = self.copyDir pkgs "my-configs" ./config "$out/config" // { pname = "my-configs"; version = "1"; };
+        my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"''
+          // { version = bashInteractive.version; pname = "bash"; };
         vim = neovim.override {
           viAlias = true;
           vimAlias = true;
@@ -112,6 +113,7 @@
         wrapBin = wrapper: pkg: symlinkJoin {
           pname = pkg.pname;
           name = pkg.pname;
+          version = pkg.version;
           paths = [
             (writeShellScriptBin pkg.pname (builtins.replaceStrings ["_BIN_"] ["${pkg}/bin/${pkg.pname}"] wrapper))
             pkg
@@ -127,19 +129,20 @@
         });
       in
 
-      super ++ [
+      super
+      ++ (self.scripts pkgs ./scripts) # Little utility programs.
+      ++ [
         configs # Config files for some of the programs in this list.
-        (self.scripts pkgs ./scripts) # Little utility programs.
 
         # Shells.
-        (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'')
+        (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'' // { pname = "shell"; version = fish.version; })
         blesh my-bash # See blesh note in config/bash/bashrc.sh
         (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source" "$@"'' fish)
         (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_ "$@"'' zsh)
 
         # Undollar: ignore leading $'s from copy-pasted commands.
-        (writeShellScriptBin "$" "\"$@\"")
-        (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"")
+        (writeShellScriptBin "$" "\"$@\"" // { pname = "dollar"; version = "1"; })
+        (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"" // { pname = "comma"; version = "1"; })
 
         man
         mypkgs.daylight
