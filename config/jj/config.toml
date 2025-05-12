@@ -1,0 +1,11 @@
+[user]
+name = "Jeremy Schlatter"
+email = "jeremy@jeremyschlatter.com"
+
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "4D081B793DF81368"
+
+[ui]
+default-command = "log"

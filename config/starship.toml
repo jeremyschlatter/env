@@ -7,6 +7,7 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
+${custom.jj}\
 $sudo\
 $cmd_duration\
 $time\
@@ -27,3 +28,31 @@ disabled = false # enabled!
 [shell]
 disabled = false # enabled!
 style = "none"
+
+[custom.jj]
+command = '''
+jj log -r@ -n1 --ignore-working-copy --no-graph --color always  -T '
+  separate(" ",
+    bookmarks.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+    tags.map(|x| truncate_end(10, x.name(), "…")).join(" "),
+    surround("\"", "\"", truncate_end(24, description.first_line(), "…")),
+    if(conflict, "conflict"),
+    if(divergent, "divergent"),
+    if(hidden, "hidden"),
+  )
+'
+'''
+when = "jj root"
+symbol = "jj "
+
+[custom.jjstate]
+when = "jj root"
+command = '''
+jj log -r@ -n1 --no-graph -T "" --stat | tail -n1 | sd "(\d+) files? changed, (\d+) insertions?\(\+\), (\d+) deletions?\(-\)" ' ${1}m ${2}+ ${3}-' | sd " 0." ""
+'''
+
+# [custom.jj]
+# command='''starship-jj --ignore-working-copy starship prompt'''
+# format = "[$symbol](blue bold) $output "
+# symbol = "󱗆 "
+# when = "jj root --ignore-working-copy"

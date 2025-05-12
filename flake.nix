@@ -8,9 +8,14 @@
       url = github:jeremyschlatter/packages;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    master.url = github:NixOS/nixpkgs/master;
+    starship-jj = {
+      url = gitlab:lanastara_foss/starship-jj;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, crane, personal }: {
+  outputs = { self, nixpkgs, crane, personal, master, starship-jj }: {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -138,6 +143,9 @@
 
         man
         mypkgs.daylight
+
+        master.legacyPackages.${system}.jujutsu
+        starship-jj.packages.${system}.starship-jj
 
         # Life on the command line.
         _1password-cli
