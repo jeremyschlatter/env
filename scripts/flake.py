@@ -1,11 +1,21 @@
 import os.path
-import subprocess
+from subprocess import check_call
 
-if not os.path.exists('.git'):
+jj = os.path.exists('.jj')
+git = os.path.exists('.git')
+
+if not (jj or git):
     # We could run git init automatically, but this kind of serves as
     # a check that we are in the correct directory.
     # (I accidentally ran this command in my home dir once.)
-    raise Exception('Not a git directory. Run \'git init\' first.')
+    raise Exception(
+        'Not a git directory. Run \'git init\' (or \'jj init\') first.'
+    )
+
+message = 'add nix flake direnv config'
+
+if jj:
+    check_call(['jj', 'new', '-m', message])
 
 
 def write(path, txt):
@@ -45,19 +55,24 @@ write('flake.nix', '''
 }
 ''')  # noqa: E501
 
-print('Running `git add flake.nix`')
-subprocess.check_call(['git', 'add', 'flake.nix'])
+if git:
+    print('Running `git add flake.nix`')
+    check_call(['git', 'add', 'flake.nix'])
 
 print('Running `direnv allow`')
-subprocess.check_call(['direnv', 'allow'])
-subprocess.check_call(['direnv', 'exec', '.', 'true'])
+check_call(['direnv', 'allow'])
+check_call(['direnv', 'exec', '.', 'true'])
 
-print('Running `git commit`')
-subprocess.check_call(['git', 'add', '.envrc'])
-subprocess.check_call([
-    'git', 'commit',
-    '.envrc', 'flake.nix', 'flake.lock',
-    '-m', 'add nix flake direnv config',
-])
+if git:
+    print('Running `git commit`')
+    check_call(['git', 'add', '.envrc'])
+    check_call([
+        'git', 'commit',
+        '.envrc', 'flake.nix', 'flake.lock',
+        '-m', message,
+    ])
+if jj:
+    print('Running `jj new`')
+    check_call(['jj', 'new'])
 
 print('Done.')
