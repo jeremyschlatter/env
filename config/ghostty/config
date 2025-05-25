@@ -2,3 +2,4 @@ quit-after-last-window-closed = true
 clipboard-paste-protection = false
 scrollback-limit = 1_000_000_000
 theme = dark:catppuccin-mocha,light:catppuccin-latte
+keybind = shift+enter=text:\n
