@@ -58,22 +58,6 @@
         "type": "github"
       }
     },
-    "master": {
-      "locked": {
-        "lastModified": 1747084188,
-        "narHash": "sha256-NwDI9hf2FSfwRekwaD2w8ZF8jaE/PC1y5N+xsHk5h9s=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "811c6c1aa5daf6530a11a81af05276287b36f7d4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1746576598,
@@ -115,7 +99,6 @@
     "root": {
       "inputs": {
         "crane": "crane",
-        "master": "master",
         "nixpkgs": "nixpkgs",
         "personal": "personal",
         "starship-jj": "starship-jj"
