@@ -55,7 +55,8 @@ crane: pkgs: src:
                   buildInfo.deps
               )}
             '';
-          } // { pname = name; version = "0.0.0"; });
+            pname = name;
+          } // (if (hasAttr "version" prev) then {} else { version = "0.0.0"; }));
       } else null;
     scripts = listToAttrs (filter (x: x != null) (lib.attrsets.mapAttrsToList script (readDir src)));
   in attrValues scripts
