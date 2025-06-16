@@ -159,7 +159,12 @@
         coreutils             # Basic file, shell and text manipulation utilities.
         (themed "DELTA_FEATURES" "catppuccin-latte" "catppuccin-mocha"
          delta)               # Better git diffs.
-        (patch direnv [./direnv.patch]) # Set environment variables per-project.
+        (direnv.overrideAttrs (oldAttrs: {
+          src = oldAttrs.src.override {
+            rev = "63e95577b0f4c6fc3d9b23753c7d1c9e579c1773";
+            hash = "sha256-7gJ6B742umSJN1taeRs1C0okilwYfeMysMRn3nIy7hA=";
+          };
+        }))                   # Set environment variables per-project.
         eza                   # List files in the current directory.
         fd                    # Find file by name.
         fira-code             # Font that renders symbols in code nicely.
