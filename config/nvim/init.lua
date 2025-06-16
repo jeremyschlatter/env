@@ -112,7 +112,11 @@ map U <ESC>
 " shorten the commands to move between windows
 for c in ['h', 'l', 'j', 'k']
   for m in ['n', 't', 'i']
-    execute m . "noremap \<c-" . c . "> \<c-\>\<c-N>\<c-w>" . c
+    " Don't map c-j in insert mode, since c-j is equivalent to \n, which
+    " I have bound to Shift+Enter for Claude Code.
+    if !(c == 'j' && m == 'i')
+      execute m . "noremap <c-" . c . "> <c-\\><c-N><c-w>" . c
+    endif
   endfor
 endfor
 
