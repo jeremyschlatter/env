@@ -83,46 +83,6 @@ fn main() -> Result<()> {
         _ => (),
     }
 
-    // Update shell.
-    let want_shell = "/usr/local/bin/fish";
-    if Path::new(want_shell).is_file() {
-        if want_shell != match OS {
-            "macos" => {
-                String::from_utf8(Command::new("dscl")
-                    .args([".", "-read", "/Users/jeremy", "UserShell"])
-                    .output()?
-                    .stdout)?
-                    .trim()
-                    .strip_prefix("UserShell: ")
-                    .unwrap_or("")
-                    .to_string()
-            },
-            "linux" => {
-                String::from_utf8(Command::new("getent")
-                    .args(["passwd", "jeremy"])
-                    .output()?
-                    .stdout)?
-                    .split(':')
-                    .nth(6)
-                    .unwrap_or("")
-                    .trim()
-                    .to_string()
-            },
-            _ => bail!("Unsupported operating system"),
-        } {
-            println!("changing shell to {}...", want_shell);
-            if !Command::new("sudo")
-                .args(["chsh", "-s", want_shell, "jeremy"])
-                .status()?
-                .success()
-            {
-                bail!("chsh failed");
-            }
-        }
-    } else {
-        println!("not changing default shell, as {} is missing", want_shell);
-    }
-
     // Install dark-mode-notify service on macOS if not already present.
     if OS == "macos" {
         if !from_utf8(
