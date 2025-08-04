@@ -45,10 +45,8 @@ write('flake.nix', '''
     let
       scripts = {};
     in {
-      devShell = stdenvNoCC.mkDerivation {
-        name = "shell";
-        buildInputs = lib.attrsets.mapAttrsToList writeShellScriptBin scripts ++ [
-
+      devShell = mkShellNoCC {
+        packages = lib.attrsets.mapAttrsToList writeShellScriptBin scripts ++ [
         ];
       };
     });
