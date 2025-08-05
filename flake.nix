@@ -83,7 +83,9 @@
                 fzfWrapper
                 leap-nvim
                 nvim-config-local
-                nvim-treesitter.withAllGrammars
+                (nvim-treesitter.withPlugins (p:
+                  builtins.filter (x: x != p.dockerfile) nvim-treesitter.allGrammars
+                ))
                 catppuccin-nvim
                 nvim-ts-context-commentstring
                 guess-indent-nvim
