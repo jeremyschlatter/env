@@ -50,6 +50,8 @@
       };
 
     overlays.default = final: prev: {
+      # Workaround for https://github.com/neovim/neovim/issues/29550
+      # Remove when 0.12.0 is released.
       neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (prevAttrs: rec {
         version = "0.12.0-dev";
         src = prevAttrs.src.override {
@@ -95,6 +97,9 @@
                 leap-nvim
                 nvim-config-local
                 (nvim-treesitter.withPlugins (p:
+                  # Workaround for bugs in tree-sitter-dockerfile. Remove if fixed:
+                  # https://github.com/camdencheek/tree-sitter-dockerfile/issues/51
+                  # https://github.com/camdencheek/tree-sitter-dockerfile/issues/65
                   builtins.filter (x: x != p.dockerfile) nvim-treesitter.allGrammars
                 ))
                 catppuccin-nvim
