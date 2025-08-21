@@ -32,6 +32,7 @@ export PROJECT_ROOT=$(expand_path .)
 use flake
 ''')
 
+# TODO: duplicated in remote-flake.py
 write('flake.nix', '''
 {
   inputs = {
@@ -59,7 +60,7 @@ if git:
 
 print('Running `direnv allow`')
 check_call(['direnv', 'allow'])
-check_call(['direnv', 'exec', '.', 'true'])
+check_call(['direnv', 'reload'])
 
 if git:
     print('Running `git commit`')
