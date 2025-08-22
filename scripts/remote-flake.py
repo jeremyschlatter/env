@@ -1,70 +1,110 @@
+# {"requirements": ["click"]} #nix
+
 import os
+import re
 import sys
+import textwrap
+
+import readline  # noqa: F401
+
 from pathlib import Path
-from subprocess import check_call
+from subprocess import CompletedProcess, check_call, run
+
+import click
 
 
 def fail(msg: str):
     print(msg, file=sys.stderr)
-    sys.exit(1)
-
-
-my_flakes = Path.home() / 'src/my/flakes'
-try:
-    [_, flake_name] = sys.argv
-except ValueError:
-    fail(f'Usage: remote-flake <name>\n\n(flakes are stored in {my_flakes})')
-
-flake_dir = my_flakes / flake_name
-try:
-    flake_dir.mkdir(parents=True)
-except FileExistsError:
-    fail(f'"{flake_name}" is already taken')
+    try:
+        run(["direnv", "deny"])
+    except:  # noqa: E722
+        sys.exit(1)
 
 
 def write(path, txt):
+    if not txt.endswith("\n"):
+        txt += "\n"
     if os.path.exists(path):
-        print(f'{path} already exists, skipping it')
+        print(f"{path} already exists, skipping it")
         return
-    print(f'Creating {path}')
-    with open(path, 'w') as f:
-        f.write(txt.lstrip())
+    print(f"Creating {path}")
+    with open(path, "w") as f:
+        f.write(textwrap.dedent(txt).lstrip())
 
 
-# TODO: duplicated in flake.py
-write(flake_dir / 'flake.nix', '''
-{
-  inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-    flake-utils.url = github:numtide/flake-utils;
-  };
-
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-    with nixpkgs.legacyPackages.${system};
-    let
-      scripts = {};
-    in {
-      devShell = mkShellNoCC {
-        packages = lib.attrsets.mapAttrsToList writeShellScriptBin scripts ++ [
-        ];
-      };
-    });
-}
-''')  # noqa: E501
+def remote_git(*args, check=True) -> CompletedProcess:
+    args = ("git", "-C", flake_dir) + args
+    p = run(args)
+    if check and p.returncode:
+        fail(f"{args} returned {p.returncode}")
+    return p
 
 
-def remote_git(*args):
-    check_call(('git', '-C', flake_dir) + args)
+envrc = Path(".envrc")
 
+if envrc.exists():
+    match = re.match(r"use flake (\S+)", envrc.read_text())
+    if not match:
+        fail('Found .envrc, but no "use flake <path>" directive')
+    flake_dir = Path(match.group(1))
+    click.edit(filename=flake_dir / "flake.nix")
+    check_call(["direnv", "exec", ".", "true"])
+    if remote_git(
+        "diff",
+        "--quiet",
+        "flake.nix",
+        "flake.lock",
+        check=False,
+    ).returncode:
+        remote_git(
+            "commit",
+            "-m",
+            f"update flake: {flake_dir.name}",
+            "flake.nix",
+            "flake.lock",
+        )
+        remote_git("push")
+else:
+    while True:
+        flake_name = input("Choose a unique name for the new remote flake: ")
+        flake_dir = Path.home() / "src/my/flakes" / flake_name
+        if not flake_dir.exists():
+            break
+        print(f"{flake_dir} is already taken.")
 
-remote_git('add', 'flake.nix')
-remote_git('commit', '-m', f'add flake: {flake_name}')
-remote_git('push')
+    # TODO: duplicated in flake.py
+    flake_dir.mkdir(parents=True)
+    write(flake_dir / "flake.nix", """
+        {
+          inputs = {
+            nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+            flake-utils.url = github:numtide/flake-utils;
+          };
 
-write('.envrc', f'''
-use flake {flake_dir}
-''')
+          outputs = { self, nixpkgs, flake-utils }:
+            flake-utils.lib.eachDefaultSystem (system:
+            with nixpkgs.legacyPackages.${system};
+            let
+              scripts = {};
+            in {
+              devShell = mkShellNoCC {
+                packages = lib.attrsets.mapAttrsToList writeShellScriptBin scripts ++ [
+                ];
+              };
+            });
+        }
+    """)  # noqa: E501
+    click.edit(filename=flake_dir / "flake.nix")
+    remote_git("add", "flake.nix")
+    write(".envrc", f"use flake {flake_dir}")
+    check_call(["direnv", "allow"])
+    check_call(["direnv", "exec", ".", "true"])
 
-check_call(['direnv', 'allow'])
-check_call(['direnv', 'reload'])
+    remote_git(
+        "commit",
+        "-m",
+        f"add flake: {flake_name}",
+        "flake.nix",
+        "flake.lock",
+    )
+    remote_git("push")

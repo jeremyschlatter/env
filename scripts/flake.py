@@ -60,7 +60,7 @@ if git:
 
 print('Running `direnv allow`')
 check_call(['direnv', 'allow'])
-check_call(['direnv', 'reload'])
+check_call(['direnv', 'exec', '.', 'true'])
 
 if git:
     print('Running `git commit`')
