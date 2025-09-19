@@ -180,7 +180,6 @@
         direnv                # Set environment variables per-project.
         eza                   # List files in the current directory.
         fd                    # Find file by name.
-        fira-code             # Font that renders symbols in code nicely.
         gh                    # GitHub CLI.
         git                   # Track version history for text files.
         git-lfs               # Efficiently store large files in git.

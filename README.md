@@ -30,10 +30,6 @@ This config installs [ghostty](https://ghostty.org/), which I use as my terminal
 
 **Other Notes**
 
-To pick up the Fira Code font in Gnome I made this symlink:
-
-    ln -s ~/.nix-profile/share/fonts/ ~/.local/share/
-
 To pick up application launchers in Gnome I made this symlink:
 
     rmdir ~/.local/share/applications
