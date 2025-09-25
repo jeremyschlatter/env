@@ -1,7 +1,9 @@
+import os
 import subprocess
 import sys
 
-subprocess.run(
-    ['nix', 'shell'] +
-    [f'nixpkgs#{pkg}' for pkg in sys.argv[1:]]
-)
+flake = 'nixpkgs'
+if os.environ.get('UNFREE') == '1':
+    flake = 'github:numtide/nixpkgs-unfree/nixpkgs-unstable'
+
+subprocess.run(['nix', 'shell'] + [f'{flake}#{pkg}' for pkg in sys.argv[1:]])

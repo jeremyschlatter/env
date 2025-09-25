@@ -159,7 +159,10 @@
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"" // { pname = "dollar"; version = "1"; })
+
+        # Comma: run programs without installing them.
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"" // { pname = "comma"; version = "1"; })
+        (writeShellScriptBin ",," "nix run github:numtide/nixpkgs-unfree/nixpkgs-unstable#\"$1\" -- \"\${@:2}\"" // { pname = "comma-unfree"; version = "1"; })
 
         man
         mypkgs.daylight
