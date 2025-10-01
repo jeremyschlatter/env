@@ -137,7 +137,7 @@
           ];
         };
         themed = var: light: dark: wrapBin ''
-            [[ $(${coreutils}/bin/cat ~/.config/colors) = 'light' ]] && c='${light}' || c='${dark}'
+            [[ $(_colorscheme read) = 'light' ]] && c='${light}' || c='${dark}'
             env "${var}=$c" _BIN_ "$@"
         '';
         mypkgs = personal.packages.${system};

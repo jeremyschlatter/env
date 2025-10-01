@@ -1,36 +1,51 @@
 extern crate dirs;
 
 use anyhow::{anyhow, bail, Result};
-use std::{env::{consts::OS, var}, fs, process::Command, str};
+use std::{env::{consts::OS}, io::{self, Write}, process::Command, str};
 
 fn main() -> Result<()> {
-    let usage = "usage: _colorscheme <light|dark|system-update>";
+    let usage = "usage: _colorscheme <light|dark|read>";
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
-        "light"         => set_colors("light",        false),
-        "dark"          => set_colors("dark",         false),
-        "system-update" => set_colors(&var("THEME")?, true),
+        "light"         => set_colors("light"),
+        "dark"          => set_colors("dark"),
+        "read"          => read_theme(),
         _ => bail!(usage),
     }
 }
 
-fn set_colors(which: &str, system: bool) -> Result<()> {
-    // Change system theme (unless we are responding to a system change):
-    if !system {
-        if OS == "linux" {
-            // Change system theme on Ubuntu.
-            run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")])?
-        } else if OS == "macos" {
-            // Change system theme on macOS.
+fn read_theme() -> Result<()> {
+    match OS {
+        "macos" => {
+            // See https://stackoverflow.com/a/25214873
+            let x = Command::new("defaults")
+                .args(["read", "-g", "AppleInterfaceStyle"])
+                .output()?;
+            if !x.status.success() {
+                Ok(println!("light"))
+            } else if x.stdout == b"Dark\n" {
+                Ok(println!("dark"))
+            } else {
+                let _ = io::stdout().write_all(&x.stdout);
+                let _ = io::stderr().write_all(&x.stderr);
+                bail!("^ unexpected result from defaults read -g AppleInterfaceStyle")
+            }
+        },
+        _ => bail!("_colorscheme read: not implemented yet on {}", OS),
+    }
+}
+
+fn set_colors(which: &str) -> Result<()> {
+    // Change system theme.
+    match OS {
+        "linux" =>
+            run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &format!("prefer-{which}")]),
+        "macos" =>
             run("osascript", &["-e", &format!(
                     "tell app \"System Events\" to tell appearance preferences to set dark mode to {}",
                     if which == "dark" { "true" } else { "false" }
-            )])?
-        }
+            )]),
+        _ => bail!("_colorscheme: not implemented yet on {}", OS),
     }
-
-    // Persist for next time.
-    // This file is also used by my configs for vim, bat, and delta.
-    Ok(fs::write(dirs::home_dir().unwrap().join(".config/colors"), which)?)
 }
 
 fn run(cmd: &str, args: &[&str]) -> Result<()> {
