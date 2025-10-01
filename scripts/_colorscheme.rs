@@ -1,14 +1,19 @@
 extern crate dirs;
 
 use anyhow::{anyhow, bail, Result};
-use std::{env::{consts::OS}, io::{self, Write}, process::Command, str};
+use std::{
+    env::consts::OS,
+    io::{self, Write},
+    process::Command,
+    str,
+};
 
 fn main() -> Result<()> {
     let usage = "usage: _colorscheme <light|dark|read>";
     match std::env::args().nth(1).ok_or(anyhow!(usage))?.as_str() {
-        "light"         => set_colors("light"),
-        "dark"          => set_colors("dark"),
-        "read"          => read_theme(),
+        "light" => set_colors("light"),
+        "dark" => set_colors("dark"),
+        "read" => read_theme(),
         _ => bail!(usage),
     }
 }
@@ -29,7 +34,7 @@ fn read_theme() -> Result<()> {
                 let _ = io::stderr().write_all(&x.stderr);
                 bail!("^ unexpected result from defaults read -g AppleInterfaceStyle")
             }
-        },
+        }
         _ => bail!("_colorscheme read: not implemented yet on {}", OS),
     }
 }
