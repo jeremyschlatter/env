@@ -19,24 +19,36 @@ fn main() -> Result<()> {
 }
 
 fn read_theme() -> Result<()> {
-    match OS {
+    Ok(println!("{}", match OS {
         "macos" => {
             // See https://stackoverflow.com/a/25214873
             let x = Command::new("defaults")
                 .args(["read", "-g", "AppleInterfaceStyle"])
                 .output()?;
             if !x.status.success() {
-                Ok(println!("light"))
+                "light"
             } else if x.stdout == b"Dark\n" {
-                Ok(println!("dark"))
+                "dark"
             } else {
                 let _ = io::stdout().write_all(&x.stdout);
                 let _ = io::stderr().write_all(&x.stderr);
                 bail!("^ unexpected result from defaults read -g AppleInterfaceStyle")
             }
         }
+        "linux" => {
+            let scheme = &*Command::new("gsettings")
+                .args(["get", "org.gnome.desktop.interface", "color-scheme"])
+                .output()?
+                .stdout;
+            match scheme {
+                b"'prefer-light'\n" => "light",
+                b"'prefer-dark'\n" => "dark",
+                _ => bail!("unexpected color-sheme: {}", String::from_utf8_lossy(scheme))
+            }
+
+        },
         _ => bail!("_colorscheme read: not implemented yet on {}", OS),
-    }
+    }))
 }
 
 fn set_colors(which: &str) -> Result<()> {
