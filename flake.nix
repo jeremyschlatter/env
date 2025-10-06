@@ -209,8 +209,8 @@
         zoxide                # A smarter cd command.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file                  # Get high-level semantic info about a file.
-        ghostty               # My terminal. Installed separately on macOS.
-        obsidian
+        # ghostty               # My terminal. Installed separately on macOS.
+        # obsidian
       ];
   };
 }
