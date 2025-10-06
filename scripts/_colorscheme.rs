@@ -43,7 +43,7 @@ fn read_theme() -> Result<()> {
             match scheme {
                 b"'prefer-light'\n" => "light",
                 b"'prefer-dark'\n" => "dark",
-                _ => bail!("unexpected color-sheme: {}", String::from_utf8_lossy(scheme))
+                _ => bail!("unexpected color-scheme: {}", String::from_utf8_lossy(scheme))
             }
 
         },
