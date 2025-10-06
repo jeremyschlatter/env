@@ -48,6 +48,9 @@
 [core]
     pager = delta
 
+[init]
+    defaultBranch = main
+
 [rerere]
     enabled = true
 
