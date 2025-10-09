@@ -133,6 +133,11 @@ fn env(shell: &'static str) -> Result<Vec<(&'static str, String)>> {
         // (Most common warning: git command timed out in large git directory).
         ("STARSHIP_LOG", "error"),
 
+        // ghostty (and most other terminals) set this by default,
+        // but it doesn't get propagated through ssh sessions.
+        // So we'll set it again just in case we're running in an ssh session.
+        ("COLORTERM", "truecolor"),
+
         // with SHELL=fish, nix remote building says
         //   `Couldn't execute fish -c "echo started": No such file or directory`
         // with SHELL= , nix remote building works but nix shell says
