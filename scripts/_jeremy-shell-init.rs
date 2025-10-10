@@ -125,7 +125,6 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         // https://stackoverflow.com/a/37578829
         ("XDG_DATA_DIRS", "$XDG_DATA_DIRS:/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/"),
 
-        ("PATH", "$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"),
         ("PATH", "$HOME/.npm-global/bin:$PATH"),
         ("PATH", "$NIX_PROFILE/bin:$PATH"),
         ("PATH", "$HOME/go/bin:$PATH"),
