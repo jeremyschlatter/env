@@ -103,6 +103,8 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
 }
 
 fn env(shell: &'static str) -> Result<Vec<(&'static str, String)>> {
+    // NOTE: The values here get interpreted by the shell before getting put in the environment.
+    // This may or may not be what I want?
     Ok([vec![
         ("NIX_PROFILE", "$HOME/.nix-profile"),
 
@@ -136,6 +138,8 @@ fn env(shell: &'static str) -> Result<Vec<(&'static str, String)>> {
         // but it doesn't get propagated through ssh sessions.
         // So we'll set it again just in case we're running in an ssh session.
         ("COLORTERM", "truecolor"),
+
+        ("NPM_CONFIG_USERCONFIG", "$HOME/.config/npmrc"),
 
         // with SHELL=fish, nix remote building says
         //   `Couldn't execute fish -c "echo started": No such file or directory`
