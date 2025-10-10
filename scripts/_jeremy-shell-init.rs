@@ -33,7 +33,7 @@ fn main() -> Result<()> {
     if std::env::var("GHOSTTY_RESOURCES_DIR").is_ok() {
         println!("source $GHOSTTY_RESOURCES_DIR/shell-integration/{}/{}", shell, fmts.0);
     }
-    for (k, v) in env(shell)?.iter() {
+    for (k, v) in env(shell).iter() {
         fmt(fmts.1, k, v);
     }
     for (k, v) in aliases().iter() {
@@ -102,10 +102,10 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
     ]
 }
 
-fn env(shell: &'static str) -> Result<Vec<(&'static str, String)>> {
+fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
     // NOTE: The values here get interpreted by the shell before getting put in the environment.
     // This may or may not be what I want?
-    Ok([vec![
+    vec![
         ("NIX_PROFILE", "$HOME/.nix-profile"),
 
         // enable catppuccin color support of ls (on Linux), exa, and fd
@@ -146,9 +146,7 @@ fn env(shell: &'static str) -> Result<Vec<(&'static str, String)>> {
         // with SHELL= , nix remote building works but nix shell says
         //   `unable to execute '': No such file or directory`
         ("SHELL", shell),
-    ].into_iter().map(|(k, v)| (k, v.to_string())).collect(),
-    vec![
-        ("GPG_TTY", String::from_utf8_lossy(&Command::new("tty").stdin(Stdio::inherit()).output()?.stdout).trim().into())
-    ],
-    ].concat())
+
+        ("GPG_TTY", "$(tty)"),
+    ]
 }
