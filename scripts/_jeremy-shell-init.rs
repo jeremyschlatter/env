@@ -139,6 +139,7 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         // So we'll set it again just in case we're running in an ssh session.
         ("COLORTERM", "truecolor"),
 
+        // npm defaults to ~/.npmrc for user config. Need this to get my checked-in config.
         ("NPM_CONFIG_USERCONFIG", "$HOME/.config/npmrc"),
 
         // with SHELL=fish, nix remote building says
@@ -147,6 +148,7 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         //   `unable to execute '': No such file or directory`
         ("SHELL", shell),
 
+        // Lame that gpg can't figure this out itself, but here we are.
         ("GPG_TTY", "$(tty)"),
     ]
 }
