@@ -140,6 +140,9 @@
             [[ $(_colorscheme read) = 'light' ]] && c='${light}' || c='${dark}'
             env "${var}=$c" _BIN_ "$@"
         '';
+        execToStr = cmd: builtins.readFile (runCommand "exec" {} "${cmd} > $out");
+        ls-colors = let v = c: execToStr "${vivid}/bin/vivid generate catppuccin-${c}"; in
+          themed "LS_COLORS" (v "latte") (v "mocha");
         mypkgs = personal.packages.${system};
         patch = pkg: patches: pkg.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or []) ++ patches;
@@ -181,7 +184,7 @@
         (themed "DELTA_FEATURES" "catppuccin-latte" "catppuccin-mocha"
          delta)               # Better git diffs.
         direnv                # Set environment variables per-project.
-        eza                   # List files in the current directory.
+        (ls-colors eza)       # List files in the current directory.
         fd                    # Find file by name.
         gh                    # GitHub CLI.
         git                   # Track version history for text files.
