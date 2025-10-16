@@ -31,6 +31,7 @@ crane: pkgs: src:
           buildInputs = lib.optional stdenv.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
         };
+        js = _: name: path: writeJSBin name {} (lib.strings.fileContents path);
       };
     script = f: kind:
       let
