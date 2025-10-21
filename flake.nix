@@ -1,6 +1,11 @@
 {
   description = "Jeremy Schlatter's personal dev environment";
 
+  nixConfig = {
+    extra-substituters = [ "https://jeremyschlatter-env.cachix.org" ];
+    extra-trusted-public-keys = [ "jeremyschlatter-env.cachix.org-1:+nMBUkfZO2bJ3NWrTUU2VulOCcOutGkBQm0VCCyWoHo=" ];
+  };
+
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     crane.url = github:ipetkov/crane;
