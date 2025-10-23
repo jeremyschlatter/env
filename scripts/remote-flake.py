@@ -40,12 +40,21 @@ def remote_git(*args, check=True) -> CompletedProcess:
     return p
 
 
-envrc = Path(".envrc")
+def find_envrc() -> Path | None:
+    current = Path.cwd()
+    while True:
+        envrc = current / ".envrc"
+        if envrc.exists():
+            return envrc
+        if current == current.parent:
+            return None
+        current = current.parent
 
-if envrc.exists():
+
+if envrc := find_envrc():
     match = re.match(r"use flake (\S+)", envrc.read_text())
     if not match:
-        fail('Found .envrc, but no "use flake <path>" directive')
+        fail(f'Found .envrc at {envrc}, but no "use flake <path>" directive')
     flake_dir = Path(match.group(1))
     click.edit(filename=flake_dir / "flake.nix")
     check_call(["direnv", "exec", ".", "true"])
