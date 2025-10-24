@@ -85,15 +85,11 @@ else:
     flake_dir.mkdir(parents=True)
     write(flake_dir / "flake.nix", """
         {
-          outputs = { self, nixpkgs, flake-utils }:
-            flake-utils.lib.eachDefaultSystem (system:
-            with nixpkgs.legacyPackages.${system};
-            {
-              devShell = mkShellNoCC {
-                packages = [
-                ];
-              };
-            });
+          inputs.mkShell.url = github:jeremyschlatter/mkShell;
+
+          outputs = { self, nixpkgs, mkShell }:
+            mkShell nixpkgs (pkgs: with pkgs; [
+            ]);
         }
     """)  # noqa: E501
     click.edit(filename=flake_dir / "flake.nix")
