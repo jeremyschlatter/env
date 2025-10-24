@@ -12,7 +12,7 @@ There are many ways that this setup provides me value, but one of the most legib
 
 2. Install my environment:
 
-    `nix profile install github:jeremyschlatter/nixpkgs`
+    `nix profile add github:jeremyschlatter/nixpkgs`
     
 3. Run my post-install script:
 
