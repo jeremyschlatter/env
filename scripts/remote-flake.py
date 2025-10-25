@@ -88,7 +88,7 @@ else:
           inputs.mkShell.url = github:jeremyschlatter/mkShell;
 
           outputs = { self, nixpkgs, mkShell }:
-            mkShell nixpkgs (pkgs: with pkgs; [
+            mkShell.noCC nixpkgs (pkgs: with pkgs; [
             ]);
         }
     """)  # noqa: E501
