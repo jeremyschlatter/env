@@ -15,10 +15,7 @@ import click
 
 def fail(msg: str):
     print(msg, file=sys.stderr)
-    try:
-        run(["direnv", "deny"])
-    except:  # noqa: E722
-        sys.exit(1)
+    sys.exit(1)
 
 
 def write(path, txt):
