@@ -172,6 +172,10 @@
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"" // { pname = "comma"; version = "1"; })
         (writeShellScriptBin ",," "nix run github:numtide/nixpkgs-unfree/nixpkgs-unstable#\"$1\" -- \"\${@:2}\"" // { pname = "comma-unfree"; version = "1"; })
 
+        # sha1collisiondetection: a version of sha1sum that detects attacks like shattered.io
+        # I'm adding a "sha1sum" wrapper around it (the upstream binary is called "sha1dcsum") to make it a true drop-in replacement.
+        (writeShellScriptBin "sha1sum" "${sha1collisiondetection}/bin/sha1dcsum \"$@\"" // { pname = "sha1sum-alias"; version = "1"; })
+
         man
         mypkgs.daylight
 
