@@ -28,7 +28,10 @@ require'config-local'.setup {
 vim.filetype.add({
   extension = {
     ncl = 'nickel',
-  }
+  },
+  filename = {
+    ['Caddyfile'] = 'caddy',
+  },
 })
 
 vim.cmd([[
