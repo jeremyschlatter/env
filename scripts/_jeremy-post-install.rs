@@ -1,16 +1,8 @@
+// {"deps": ["hashdeep"]} #nix
 extern crate dirs;
 
 use anyhow::{anyhow, bail, Result};
-use std::{
-    collections::HashSet,
-    env::consts::OS,
-    fs,
-    io::ErrorKind,
-    os,
-    path::Path,
-    process::Command,
-    str::from_utf8,
-};
+use std::{collections::HashSet, fs, io::ErrorKind, os, process::Command};
 
 fn main() -> Result<()> {
     let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
@@ -68,10 +60,30 @@ fn main() -> Result<()> {
         }
     }
 
-    // Build bat theme.
-    match fs::metadata(home.join(".cache/bat/themes.bin")) {
-        Err(err) if err.kind() == ErrorKind::NotFound => {
-            println!("installing solarized theme for bat...");
+    // Build bat cache if bat config changed. (Or we haven't built it before.)
+    {
+        let bat_config = nix_conf.join("bat");
+        let bat_cache = home.join(".cache/bat");
+        let config_hash = bat_cache.join("config-hash.txt");
+        if !config_hash.exists()
+            && Command::new("hashdeep")
+                .args(["-r", "-a", "-k"])
+                .arg(&config_hash)
+                .arg(&bat_config)
+                .output()?
+                .status
+                .success()
+        {
+            fs::create_dir_all(&bat_cache)?;
+            let output = Command::new("hashdeep")
+                .args(["-r"])
+                .arg(&bat_config)
+                .output()?;
+            if !output.status.success() {
+                bail!("`hashdeep -r` failed");
+            }
+            fs::write(&config_hash, output.stdout)?;
+            println!("rebuilding bat cache...");
             if !Command::new("bat")
                 .args(["cache", "--build"])
                 .status()?
@@ -80,7 +92,6 @@ fn main() -> Result<()> {
                 bail!("`bat cache --build` failed");
             }
         }
-        _ => (),
     }
 
     Ok(())
