@@ -1,8 +1,8 @@
 // {"deps": ["hashdeep"]} #nix
 extern crate dirs;
 
-use anyhow::{anyhow, bail, Result};
-use std::{collections::HashSet, fs, io::ErrorKind, os, process::Command};
+use anyhow::{anyhow, Result};
+use std::{collections::HashSet, fs, io::ErrorKind, os};
 
 fn main() -> Result<()> {
     let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
@@ -66,31 +66,12 @@ fn main() -> Result<()> {
         let bat_cache = home.join(".cache/bat");
         let config_hash = bat_cache.join("config-hash.txt");
         if !config_hash.exists()
-            && Command::new("hashdeep")
-                .args(["-r", "-a", "-k"])
-                .arg(&config_hash)
-                .arg(&bat_config)
-                .output()?
-                .status
-                .success()
+            && duct::cmd!("hashdeep", "-r", "-a", "-k", &config_hash, &bat_config).run().is_ok()
         {
-            fs::create_dir_all(&bat_cache)?;
-            let output = Command::new("hashdeep")
-                .args(["-r"])
-                .arg(&bat_config)
-                .output()?;
-            if !output.status.success() {
-                bail!("`hashdeep -r` failed");
-            }
-            fs::write(&config_hash, output.stdout)?;
             println!("rebuilding bat cache...");
-            if !Command::new("bat")
-                .args(["cache", "--build"])
-                .status()?
-                .success()
-            {
-                bail!("`bat cache --build` failed");
-            }
+            fs::create_dir_all(&bat_cache)?;
+            fs::write(&config_hash, duct::cmd!("hashdeep", "-r", &bat_config).read()?)?;
+            duct::cmd!("bat", "cache", "--build").run()?;
         }
     }
 
