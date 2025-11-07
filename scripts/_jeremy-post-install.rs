@@ -65,8 +65,11 @@ fn main() -> Result<()> {
         let bat_config = nix_conf.join("bat");
         let bat_cache = home.join(".cache/bat");
         let config_hash = bat_cache.join("config-hash.txt");
-        if !config_hash.exists()
-            && duct::cmd!("hashdeep", "-r", "-a", "-k", &config_hash, &bat_config).run().is_ok()
+        if !(config_hash.exists()
+            && duct::cmd!("hashdeep", "-r", "-a", "-k", &config_hash, &bat_config)
+                .stdout_capture()
+                .run()
+                .is_ok())
         {
             println!("rebuilding bat cache...");
             fs::create_dir_all(&bat_cache)?;
