@@ -38,7 +38,7 @@
     # flakes, so... 🤷)
     merge = flakes:
       let env = system:
-        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; overlays = [ self.overlays.default ]; };
+        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
         in with pkgs.lib; pkgs.buildEnv {
           name = "bundled-environment";
           paths = trivial.pipe []
@@ -53,19 +53,6 @@
         aarch64-linux = env "aarch64-linux";
         x86_64-linux = env "x86_64-linux";
       };
-
-    overlays.default = final: prev: {
-      # Workaround for https://github.com/neovim/neovim/issues/29550
-      # Remove when 0.12.0 is released.
-      neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (prevAttrs: rec {
-        version = "0.12.0-dev";
-        src = prevAttrs.src.override {
-          rev = "9139c4f90ff8dc7819474a3bd8d65ec7565c764d";
-          tag = null;
-          hash = "sha256-59nW1b1EQaFliNVWT7jp82Crn7jp/CgRNNlm+0bwa9c=";
-        };
-      });
-    };
 
     # This is what gets built if you build this flake directly, with no target specified.
     defaultPackage = self.merge [self];
