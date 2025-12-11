@@ -7,7 +7,6 @@ edition = "2021"
 anyhow = "1.0.57"
 dirs = "4.0.0"
 duct = "1.1.0"
-exec = "0.3"
 
 [[bin]]
 name = "_colorscheme"
@@ -17,6 +16,3 @@ name = "_jeremy-post-install"
 
 [[bin]]
 name = "_jeremy-shell-init"
-
-[[bin]]
-name = "_ssh-ghostty"

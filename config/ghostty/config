@@ -4,3 +4,4 @@ scrollback-limit = 1_000_000_000
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 keybind = shift+enter=text:\n
 command = /Users/jeremy/.nix-profile/bin/shell
+shell-integration-features = ssh-terminfo,ssh-env
