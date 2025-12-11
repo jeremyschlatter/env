@@ -100,6 +100,8 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("gemma", "llm -m gemma3:12b"),
 
         ("zw", "z $(work)"),
+
+        ("ssh", "_ssh-ghostty"),
     ]
 }
 
