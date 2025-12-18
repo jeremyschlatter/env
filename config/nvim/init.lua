@@ -95,11 +95,23 @@ function! ToggleMouse()
   endif
 endfunction
 
+let g:extra_whitespace_hidden = 0
+function! ToggleExtraWhitespace()
+  if g:extra_whitespace_hidden
+    hi ExtraWhitespace ctermbg=9 guibg=#ff0000
+    let g:extra_whitespace_hidden = 0
+  else
+    hi ExtraWhitespace NONE
+    let g:extra_whitespace_hidden = 1
+  endif
+endfunction
+
 " Used by agda-vim
 let maplocalleader = ","
 
 let mapleader = ";"
 nmap <silent> <leader>m :call ToggleMouse()<CR>
+nmap <silent> <leader>w :call ToggleExtraWhitespace()<CR>
 nmap <silent> <leader>h :split<CR>
 nmap <silent> <leader>v :vsplit<CR>
 
