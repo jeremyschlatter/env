@@ -168,6 +168,8 @@
 
         jujutsu
         starship-jj.packages.${system}.starship-jj
+        ast-grep
+        btop
 
         # Life on the command line.
         _1password-cli
