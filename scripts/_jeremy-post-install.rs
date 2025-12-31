@@ -2,7 +2,32 @@
 extern crate dirs;
 
 use anyhow::{anyhow, Result};
-use std::{collections::HashSet, fs, io::ErrorKind, os};
+use std::{collections::HashSet, fs, io::ErrorKind, os, path::Path};
+
+fn ensure_symlink(link_from: &Path, link_to: &Path, description: &str) -> Result<()> {
+    match fs::read_link(link_from) {
+        Ok(p) if p == link_to => (),
+        Ok(p) => println!(
+            "I want to install a symlink at {:?}, but it is already symlinked to {:?}",
+            link_from, p
+        ),
+        Err(err) if err.kind() == ErrorKind::NotFound => {
+            println!("symlinking {}...", description);
+            os::unix::fs::symlink(link_to, link_from)?;
+        }
+        Err(_) => match fs::metadata(link_from) {
+            Ok(_) => println!(
+                "I want to install a symlink at {:?}, but there is already something else there.",
+                link_from
+            ),
+            Err(err) => println!(
+                "I want to install a symlink at {:?}, but I failed to stat the existing file: {}",
+                link_from, err
+            ),
+        },
+    }
+    Ok(())
+}
 
 fn main() -> Result<()> {
     let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
@@ -21,30 +46,11 @@ fn main() -> Result<()> {
             continue;
         }
         want_symlink.insert(name.clone());
-        let link_from = home_conf.join(&name);
-        let have_link = fs::read_link(&link_from);
-        let want_link = nix_conf.join(&name);
-        match have_link {
-            Ok(p) if p == want_link => (), // Nothing more to do.
-            Ok(p) => println!(
-                "I want to install a symlink at {:?}, but it is already symlinked to {:?}",
-                link_from, p
-            ),
-            Err(err) if err.kind() == ErrorKind::NotFound => {
-                println!("symlinking {:?} config...", name);
-                os::unix::fs::symlink(want_link, link_from)?;
-            }
-            Err(_) => match fs::metadata(&link_from) {
-                Ok(_) => println!(
-                    "I want to install a symlink at {:?}, but there is already something else there.",
-                    link_from
-                ),
-                Err(err) => println!(
-                    "I want to install a symlink at {:?}, but I failed to stat the existing file: {}",
-                    link_from, err
-                ),
-            },
-        }
+        ensure_symlink(
+            &home_conf.join(&name),
+            &nix_conf.join(&name),
+            &format!("{:?} config", name),
+        )?;
     }
 
     // Remove old symlinks from ~/.config.
@@ -56,8 +62,19 @@ fn main() -> Result<()> {
                 println!("removing {:?} config...", name);
                 fs::remove_file(entry.path())?;
             }
-            _ => (), // doesn't matter
+            _ => (),
         }
+    }
+
+    // Symlink ~/.claude/skills to ~/.nix-profile/skills
+    {
+        let claude_dir = home.join(".claude");
+        fs::create_dir_all(&claude_dir)?;
+        ensure_symlink(
+            &claude_dir.join("skills"),
+            &home.join(".nix-profile/skills"),
+            "claude skills",
+        )?;
     }
 
     // Build bat cache if bat config changed. (Or we haven't built it before.)

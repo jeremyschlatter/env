@@ -70,6 +70,7 @@
       with pkgs;
       let
         configs = self.copyDir pkgs "my-configs" ./config "$out/config" // { pname = "my-configs"; version = "1"; };
+        skills = self.copyDir pkgs "my-skills" ./skills "$out/skills" // { pname = "my-skills"; version = "1"; };
         my-bash = writeShellScriptBin "bash" ''exec ${bashInteractive}/bin/bash --rcfile ${./config/bash/bashrc.sh} "$@"''
           // { version = bashInteractive.version; pname = "bash"; };
         vim = neovim.override {
@@ -145,6 +146,7 @@
       ++ (self.scripts pkgs ./scripts) # Little utility programs.
       ++ [
         configs # Config files for some of the programs in this list.
+        skills  # Claude Code skills.
 
         # Shells.
         (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'' // { pname = "shell"; version = fish.version; })
