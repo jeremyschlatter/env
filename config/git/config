@@ -65,3 +65,6 @@
 
 [hub]
     protocol = ssh
+
+[diff "lfs"]
+    textconv = cat
