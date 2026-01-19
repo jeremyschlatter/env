@@ -167,6 +167,7 @@
 
         man
         mypkgs.daylight
+        mypkgs.linear-cli
 
         jujutsu
         starship-jj.packages.${system}.starship-jj
