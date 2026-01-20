@@ -1,6 +1,13 @@
 ---
 name: dev-env
 description: Manage Jeremy's global dev environment (git, nvim, shell configs) and install tools. Use when asked to change global configs, add tools to the environment, or modify dotfiles.
+context: fork
+allowed-tools:
+  - Read
+  - Edit
+  - Write
+  - Bash(git *)
+  - Bash(i)
 ---
 
 # Managing Jeremy's Dev Environment
