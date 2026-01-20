@@ -19,6 +19,10 @@ nix build '.#<script-name>'
 nix run '.#<script-name>' -- <args>
 ```
 
+Where `<script-name>` is the name of the script without its file extension,
+eg `model` rather than `model.py`. When scripts are installed in the global
+dev environment, they are installed without a file extension.
+
 ## Pushing Changes
 
 `git push` doesn't work due to a config issue. Use:
