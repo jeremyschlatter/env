@@ -9,6 +9,7 @@ Uses cached results for instant display, updates in background.
 
 Usage:
   ./model-browser.py          # Browse models
+  ./model-browser.py list     # Print all models (for piping to grep/rg)
   ./model-browser.py keys     # Manage API keys
   ./model-browser.py help     # Show help
 
@@ -392,10 +393,18 @@ def main():
         manage_keys()
         return
 
+    if subcommand == "list":
+        ensure_cache_dir()
+        update_all_caches()
+        for model in get_all_cached_models():
+            print(model)
+        return
+
     if subcommand in ["help", "--help", "-h"]:
         print("LLM Model Browser - Quick reference for LLM model names\n")
         print("Usage:")
         print("  ./model-browser.py          Browse models with fzf")
+        print("  ./model-browser.py list     Print all models (one per line)")
         print("  ./model-browser.py keys     Manage API keys")
         print("  ./model-browser.py help     Show this help\n")
         print("Keys are read from:")
