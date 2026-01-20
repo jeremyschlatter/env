@@ -55,6 +55,10 @@
     packages = forAllSystems (system:
       self.scripts (pkgsFor system) ./scripts // { default = (self.merge [self]).${system}; });
 
+    # Legacy. As of 2026-01-20, all of my installed systems depend on this attribute name.
+    # I'm leaving it here until such time as I update all of them.
+    defaultPackage = forAllSystems (system: self.packages.${system}.default);
+
     # My package collection.
     #
     # These are the software packages that I have installed on all of my machines.
