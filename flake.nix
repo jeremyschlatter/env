@@ -19,7 +19,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, crane, personal, starship-jj }: {
+  outputs = { self, nixpkgs, crane, personal, starship-jj }:
+  let
+    forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
+    pkgsFor = system: import nixpkgs { inherit system; config.allowUnfree = true; };
+  in {
 
     # Function that automatically packages each of my one-off scripts.
     scripts = (import ./scripts.nix) crane;
@@ -36,26 +40,20 @@
     #
     # (In fact, the only reason I have this mechanism is so I can have private
     # flakes, so... 🤷)
-    merge = flakes:
-      let env = system:
-        let pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
-        in with pkgs.lib; pkgs.buildEnv {
-          name = "bundled-environment";
-          paths = trivial.pipe []
-            (lists.forEach flakes
-              (flake: super: lists.flatten (flake.profile {
-                inherit system pkgs super;
-              })));
-        };
-      in {
-        aarch64-darwin = env "aarch64-darwin";
-        x86_64-darwin = env "x86_64-darwin";
-        aarch64-linux = env "aarch64-linux";
-        x86_64-linux = env "x86_64-linux";
-      };
+    merge = flakes: forAllSystems (system:
+      let pkgs = pkgsFor system;
+      in with pkgs.lib; pkgs.buildEnv {
+        name = "bundled-environment";
+        paths = trivial.pipe []
+          (lists.forEach flakes
+            (flake: super: lists.flatten (flake.profile {
+              inherit system pkgs super;
+            })));
+      });
 
-    # This is what gets built if you build this flake directly, with no target specified.
-    defaultPackage = self.merge [self];
+    # Packages exposed by this flake.
+    packages = forAllSystems (system:
+      self.scripts (pkgsFor system) ./scripts // { default = (self.merge [self]).${system}; });
 
     # My package collection.
     #
@@ -143,7 +141,7 @@
       in
 
       super
-      ++ (self.scripts pkgs ./scripts) # Little utility programs.
+      ++ builtins.attrValues (self.scripts pkgs ./scripts) # Little utility programs.
       ++ [
         configs # Config files for some of the programs in this list.
         skills  # Claude Code skills.
