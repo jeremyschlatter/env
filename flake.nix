@@ -170,6 +170,7 @@
         man
         mypkgs.daylight
         mypkgs.linear-cli
+        mypkgs.opcli
 
         jujutsu
         starship-jj.packages.${system}.starship-jj
