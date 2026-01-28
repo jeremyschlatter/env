@@ -170,7 +170,6 @@
         man
         mypkgs.daylight
         mypkgs.linear-cli
-        mypkgs.opcli
 
         jujutsu
         starship-jj.packages.${system}.starship-jj
@@ -218,6 +217,8 @@
         file                  # Get high-level semantic info about a file.
         # ghostty               # My terminal. Installed separately on macOS.
         # obsidian
+      ] ++ lib.optionals stdenv.isDarwin [
+        mypkgs.opcli          # Fast 1Password CLI (macOS only).
       ];
   };
 }
