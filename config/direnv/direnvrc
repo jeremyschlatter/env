@@ -1,1 +1,39 @@
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
+
+# Custom dotenv that resolves 1Password secret references via `opcli inject`.
+dotenv() {
+  local path=${1:-}
+  if [[ -z $path ]]; then
+    path=$PWD/.env
+  elif [[ -d $path ]]; then
+    path=$path/.env
+  fi
+  watch_file "$path"
+  if ! [[ -f $path ]]; then
+    log_error ".env at $path not found"
+    return 1
+  fi
+  if grep -q 'op://' "$path"; then
+    eval "$(OP_ACCOUNT=palisaderesearchinc opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
+  else
+    eval "$("$direnv" dotenv bash "$path")"
+  fi
+}
+
+dotenv_if_exists() {
+  local path=${1:-}
+  if [[ -z $path ]]; then
+    path=$PWD/.env
+  elif [[ -d $path ]]; then
+    path=$path/.env
+  fi
+  watch_file "$path"
+  if ! [[ -f $path ]]; then
+    return
+  fi
+  if grep -q 'op://' "$path"; then
+    eval "$(OP_ACCOUNT=palisaderesearchinc opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
+  else
+    eval "$("$direnv" dotenv bash "$path")"
+  fi
+}
