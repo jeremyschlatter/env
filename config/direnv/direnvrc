@@ -1,7 +1,7 @@
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
 
 # Custom dotenv that resolves 1Password secret references via `opcli inject`.
-dotenv() {
+inject_dotenv() {
   local path=${1:-}
   if [[ -z $path ]]; then
     path=$PWD/.env
@@ -20,7 +20,7 @@ dotenv() {
   fi
 }
 
-dotenv_if_exists() {
+inject_dotenv_if_exists() {
   local path=${1:-}
   if [[ -z $path ]]; then
     path=$PWD/.env
