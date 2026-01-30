@@ -161,6 +161,7 @@
 
         # Comma: run programs without installing them.
         (writeShellScriptBin "," "nix run nixpkgs#\"$1\" -- \"\${@:2}\"" // { pname = "comma"; version = "1"; })
+        (writeShellScriptBin ",." "nix shell nixpkgs#\"$1\" --command \"\${@:2}\"" // { pname = "comma-dot"; version = "1"; })
         (writeShellScriptBin ",," "nix run github:numtide/nixpkgs-unfree/nixpkgs-unstable#\"$1\" -- \"\${@:2}\"" // { pname = "comma-unfree"; version = "1"; })
 
         # sha1collisiondetection: a version of sha1sum that detects attacks like shattered.io
