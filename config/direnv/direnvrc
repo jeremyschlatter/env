@@ -39,7 +39,7 @@ inject_dotenv() {
     return 1
   fi
   if grep -q 'op://' "$path"; then
-    eval "$(OP_ACCOUNT=palisaderesearchinc opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
+    eval "$(opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
   else
     eval "$("$direnv" dotenv bash "$path")"
   fi
@@ -57,7 +57,7 @@ inject_dotenv_if_exists() {
     return
   fi
   if grep -q 'op://' "$path"; then
-    eval "$(OP_ACCOUNT=palisaderesearchinc opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
+    eval "$(opcli inject -i "$path" | "$direnv" dotenv bash /dev/stdin)"
   else
     eval "$("$direnv" dotenv bash "$path")"
   fi
