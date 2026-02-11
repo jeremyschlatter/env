@@ -1,5 +1,30 @@
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
 
+dotenv() {
+  local path=${1:-$PWD/.env}
+  [[ -d $path ]] && path=$path/.env
+  watch_file "$path"
+  if ! [[ -f $path ]]; then
+    log_error ".env at $path not found"
+    return 1
+  fi
+  eval "$("$direnv" dotenv bash "$path")"
+  if [[ -n "${OPCLI_INJECT:-}" ]]; then
+    inject_dotenv "$path"
+  fi
+}
+
+dotenv_if_exists() {
+  local path=${1:-$PWD/.env}
+  [[ -d $path ]] && path=$path/.env
+  watch_file "$path"
+  [[ -f $path ]] || return
+  eval "$("$direnv" dotenv bash "$path")"
+  if [[ -n "${OPCLI_INJECT:-}" ]]; then
+    inject_dotenv_if_exists "$path"
+  fi
+}
+
 # Custom dotenv that resolves 1Password secret references via `opcli inject`.
 inject_dotenv() {
   local path=${1:-}
