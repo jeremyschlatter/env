@@ -1,0 +1,368 @@
+# Claude Bash Hook Default Configuration
+# This config is embedded in the binary and used when no user config exists.
+# To customize, copy to ~/.config/claude-bash-hook/config.toml
+
+# Default permission for commands not matching any rule
+# "passthrough" lets Claude Code's built-in permission system handle it
+default = "passthrough"
+
+# Enable AI-powered advice for permission decisions (uses claude-safe CLI)
+enable_advice = false
+
+# Rules are checked in order - first match wins
+# More specific rules should come before general ones
+
+# Read-only commands - always allow
+[[rules]]
+commands = [
+    "ls", "cat", "head", "tail", "less", "more", "man",
+    "pwd", "whoami", "hostname", "uname", "id", "groups",
+    "ps", "top", "htop", "df", "du", "free", "uptime", "date",
+    "grep", "rg", "find", "fd", "fdfind", "locate", "wc", "diff", "sort", "uniq", "shuf", "which", "whereis", "file", "tr", "cut", "paste", "col", "basename", "dirname", "readlink", "base64", "xxd", "od", "zcat", "zgrep", "gzip", "gzip -d", "gunzip", "bsdtar -xOf", "bsdtar -tvf", "bsdtar -tf", "comm", "command -v",
+    "jq", "yq", "xq", "bc",
+    "cd", "echo", "read", "mkdir", "cp", "mv", "chmod", "ln", "rmdir", "yes", "true", "false", "touch", "unset",
+    "sed", "sed -n", "awk", "sd", "perl", "perl -pe",  # inline only; -i variants denied below
+    "lsblk", "findmnt", "ldd", "nm", "nm -D", "readelf", "objdump", "lspci", "lscpu", "lsusb", "pkg-config --list-all", "conntrack -L", "strings", "lsof", "dmesg", "lsmod", "modinfo", "rocm-smi", "iostat", "pdfinfo", "infocmp", "crontab -l", "xkbcli list", "btrfs subvolume list", "btrfs filesystem df", "btrfs filesystem du", "btrfs filesystem show", "btrfs filesystem usage", "gemini --version", "rfkill list", "blkid", "nvme id-ns", "sfdisk -l", "efibootmgr -v", "mokutil --sb-state", "bootctl status", "rustc --print", "claude --version", "ollama --version", "bluetoothctl show", "bluetoothctl devices", "vulkaninfo", "nft list", "coredumpctl list", "iptables -L", "varlinkctl info", "varlinkctl introspect",
+    "sleep", "disown", "jobs", "ping", "dig", "dog", "journalctl", "ollama list", "pgrep", "stat", "apt-cache", "tree", "printenv", "env", "claude-bash-hook", "ss", "netstat", "wget", "mysqlbinlog", "brew leaves", "tokei",
+    "curl -s https://ifconfig.me",
+    "quickshell ipc query",
+    "php -l", "dpkg -l", "dpkg -S",
+    "openssl s_client -connect", "openssl x509 -noout -text", "openssl x509 -noout -dates",
+    "flatpak list", "snap list", "niri validate", "kitty --version", "yazi --help", "npm --version", "npm root", "npm run typecheck", "wezterm show-keys", "wezterm ls-fonts", "xdg-settings get", "xdg-mime query", "composer", "composer install", "composer show", "composer why",
+    "mago lint", "mago config", "phpstan analyze",
+    "shellharden", "shfmt",
+    "youtube search", "youtube info", "youtube playlist",
+]
+permission = "allow"
+reason = "read-only commands"
+
+# Git read-only operations
+[[rules]]
+commands = [
+    "git status", "git log", "git diff", "git diff-tree", "git branch",
+    "git remote", "git show", "git rev-parse", "git describe", "git merge-base", "git ls-files", "git ls-tree", "git tag", "git cat-file", "git check-ignore",
+]
+permission = "allow"
+reason = "git read-only"
+
+# Git switch with force flag - ask
+[[rules]]
+commands = ["git switch -f", "git switch --force"]
+permission = "passthrough"
+reason = "force switch can discard changes"
+
+# Git safe operations (git push handled specially in code)
+[[rules]]
+commands = ["git switch", "git restore", "git pull", "git add", "git rm", "git fetch", "git commit", "git init", "git clone"]
+permission = "allow"
+reason = "safe git operations"
+
+# Docker read-only and safe operations
+[[rules]]
+commands = [
+    "docker ps", "docker logs", "docker inspect", "docker images", "docker stats", "docker info",
+    "docker top", "docker port", "docker diff", "docker history", "docker events", "docker version",
+    "docker pull", "docker build", "docker tag", "docker search",
+    "docker network ls", "docker network inspect",
+    "docker volume ls", "docker volume inspect",
+    "docker system df", "docker system info",
+    "docker context ls", "docker context inspect", "docker context show",
+    "docker image ls", "docker image inspect", "docker image history",
+    "docker container ls", "docker container inspect", "docker container logs", "docker container top", "docker container stats",
+    "docker compose ps", "docker compose logs", "docker compose config", "docker compose top", "docker compose images", "docker compose port", "docker compose version",
+]
+permission = "allow"
+reason = "docker read-only and safe operations"
+
+# Docker destructive - ask
+[[rules]]
+commands = ["docker rm", "docker rmi", "docker system prune"]
+permission = "passthrough"
+reason = "docker destructive"
+
+# Kubectl read-only and safe operations
+[[rules]]
+commands = [
+    "kubectl get", "kubectl describe", "kubectl logs",
+    "kubectl explain", "kubectl api-resources", "kubectl top", "kubectl cluster-info",
+    "kubectl rollout history", "kubectl rollout status",
+    "kubectl cp",
+]
+permission = "allow"
+reason = "kubectl read-only and safe operations"
+
+# glab read-only and safe operations
+[[rules]]
+commands = [
+    "glab mr list", "glab mr view", "glab mr update",
+    "gh repo list", "gh issue list", "gh issue view", "gh pr view",
+    "glab ci status", "glab ci list", "glab ci view", "glab ci trace",
+    "glab ci run", "glab ci retry", "glab ci trigger",
+    "glab issue list", "glab issue view",
+    "glab repo view",
+]
+permission = "allow"
+reason = "glab read-only and safe operations"
+
+# gitlab CLI read-only
+[[rules]]
+commands = ["gitlab mr list", "gitlab mr show", "gitlab mr view", "gitlab ci status", "gitlab ci logs", "gitlab issue list", "gitlab issue show", "gitlab webhook list", "gitlab --help"]
+permission = "allow"
+reason = "gitlab read-only"
+
+# claude-agent read-only
+[[rules]]
+commands = ["claude-agent stats", "claude-agent jobs", "claude-agent logs", "claude-agent review"]
+permission = "allow"
+reason = "claude-agent read-only"
+
+# warp-cli allowed operations
+[[rules]]
+commands = ["warp-cli status", "warp-cli connect", "warp-cli disconnect", "warp-cli debug access-reauth"]
+permission = "allow"
+reason = "warp-cli safe operations"
+
+# gsettings read-only
+[[rules]]
+commands = ["gsettings get", "gsettings list-schemas", "gsettings list-keys", "gsettings list-recursively", "gsettings describe", "gsettings range"]
+permission = "allow"
+reason = "gsettings read-only"
+
+# dconf read-only
+[[rules]]
+commands = ["dconf read", "dconf list", "dconf dump"]
+permission = "allow"
+reason = "dconf read-only"
+
+# xdg-settings read-only
+[[rules]]
+commands = ["xdg-settings get", "xdg-settings check"]
+permission = "allow"
+reason = "xdg-settings read-only"
+
+# xdg-mime read-only
+[[rules]]
+commands = ["xdg-mime query"]
+permission = "allow"
+reason = "xdg-mime read-only"
+
+# ip read-only (show/list only)
+[[rules]]
+commands = [
+    "ip addr show", "ip address show", "ip link show", "ip route show", "ip route get",
+    "ip neigh show", "ip rule show", "ip netns list",
+]
+permission = "allow"
+reason = "ip read-only"
+
+# systemctl read-only
+[[rules]]
+commands = [
+    "systemctl status", "systemctl list-units", "systemctl list-unit-files", "systemctl list-jobs", "systemctl get-default",
+    "systemctl is-active", "systemctl is-enabled", "systemctl is-failed",
+    "systemctl show", "systemctl cat",
+]
+permission = "allow"
+reason = "systemctl read-only"
+
+# flux read-only and safe operations
+[[rules]]
+commands = ["flux get", "flux logs", "flux stats", "flux tree", "flux diff", "flux events", "flux reconcile"]
+permission = "allow"
+reason = "flux read-only and safe operations"
+
+# helm read-only
+[[rules]]
+commands = ["helm list", "helm status", "helm get", "helm show", "helm search", "helm history"]
+permission = "allow"
+reason = "helm read-only"
+
+# nmcli read-only
+[[rules]]
+commands = ["nmcli connection show", "nmcli device show", "nmcli device status", "nmcli general status", "nmcli general hostname"]
+permission = "allow"
+reason = "nmcli read-only"
+
+# resolvectl read-only
+[[rules]]
+commands = ["resolvectl status", "resolvectl query", "resolvectl statistics", "resolvectl dns", "resolvectl domain"]
+permission = "allow"
+reason = "resolvectl read-only"
+
+# kitty-remote/wezterm-remote safe operations (run subcommand is handled as wrapper)
+[[rules]]
+commands = [
+    "kitty-remote ls", "kitty-remote get-text", "kitty-remote send-text", "kitty-remote send-key",
+    "kitty-remote new-tab", "kitty-remote new-window", "kitty-remote focus-tab", "kitty-remote focus-window",
+    "kitty-remote set-title", "kitty-remote scroll",
+    "wezterm-remote ls", "wezterm-remote lsj", "wezterm-remote get-text", "wezterm-remote send-text", "wezterm-remote send-key",
+    "wezterm-remote new-tab", "wezterm-remote new-window", "wezterm-remote split", "wezterm-remote focus-tab",
+    "wezterm-remote focus-pane", "wezterm-remote set-title", "wezterm-remote zoom", "wezterm-remote find-pane",
+]
+permission = "allow"
+reason = "terminal remote control"
+
+# terraform read-only
+[[rules]]
+commands = ["terraform show", "terraform state list", "terraform state show", "terraform output", "terraform plan", "terraform version", "terraform providers", "terraform validate"]
+permission = "allow"
+reason = "terraform read-only"
+
+# cargo dev commands
+[[rules]]
+commands = ["cargo check", "cargo build", "cargo test", "cargo run", "cargo doc", "cargo search", "cargo tree", "cargo metadata", "cargo fmt", "cargo clippy", "cargo new", "cargo init", "cargo outdated", "cargo info", "cargo clean", "uv init", "ruff"]
+permission = "allow"
+reason = "cargo dev commands"
+
+# pacman read-only (query and search)
+[[rules]]
+commands = ["pacman -Q", "pacman -Qi", "pacman -Ql", "pacman -Qo", "pacman -Qs", "pacman -Qd", "pacman -Qdt", "pacman -Ss", "pacman -Si", "pacman -Sg", "pacman -Sl", "pacman -F", "pacman -Fl", "pactree"]
+permission = "allow"
+reason = "pacman read-only"
+
+# yay read-only (query and search)
+[[rules]]
+commands = ["yay -Q", "yay -Qi", "yay -Ql", "yay -Qo", "yay -Qs", "yay -Ss", "yay -Si", "yay -Sg", "yay -Ps", "yay -Sw", "yay -G"]
+permission = "allow"
+reason = "yay read-only"
+
+# brew read-only
+[[rules]]
+commands = ["brew list", "brew info", "brew search", "brew deps", "brew leaves", "brew outdated", "brew config", "brew doctor"]
+permission = "allow"
+reason = "brew read-only"
+
+# doctl read-only
+[[rules]]
+commands = [
+    "doctl account get", "doctl balance get", "doctl billing-history list",
+    "doctl compute droplet list", "doctl compute droplet get",
+    "doctl compute image list", "doctl compute region list", "doctl compute size list",
+    "doctl compute ssh-key list", "doctl compute volume list",
+    "doctl kubernetes cluster list", "doctl kubernetes cluster get",
+    "doctl databases list", "doctl databases get",
+    "doctl vpcs list", "doctl vpcs get",
+]
+permission = "allow"
+reason = "doctl read-only"
+
+# Recursive delete - ask
+[[rules]]
+commands = ["rm -rf", "rm -r", "rm --recursive"]
+permission = "passthrough"
+reason = "recursive delete"
+
+# Single file delete - ask
+[[rules]]
+commands = ["rm"]
+permission = "passthrough"
+reason = "file deletion"
+
+# In-place file modification - use Edit tool or regex-replace MCP instead
+# (inline/pipeline usage of sed/awk/perl is allowed above)
+[[rules]]
+commands = ["sed -i", "perl -i", "perl -pi", "perl -pie"]
+permission = "deny"
+reason = "in-place edit; use Edit tool or mcp__regex-replace__regex_replace instead"
+
+# Disk operations - deny
+[[rules]]
+commands = ["mkfs", "dd", "fdisk", "parted"]
+permission = "deny"
+reason = "disk operations"
+
+# SSH with host rules
+[[rules]]
+commands = ["ssh", "scp", "rsync"]
+permission = "check_host"
+reason = "remote connection"
+host_rules = [
+    { pattern = "*", permission = "allow" },
+]
+
+# Curl with host rules (localhost always allowed)
+[[rules]]
+commands = ["curl"]
+permission = "check_host"
+reason = "curl"
+host_rules = [
+    { pattern = "localhost", permission = "allow" },
+    { pattern = "*.localhost", permission = "allow" },
+    { pattern = "127.0.0.1", permission = "allow" },
+    { pattern = "127.*", permission = "allow" },
+    { pattern = "::1", permission = "allow" },
+    { pattern = "[::1]", permission = "allow" },
+    { pattern = "0.0.0.0", permission = "allow" },
+    { pattern = "claude-agent.globalcomixdev.com", permission = "allow" },
+    { pattern = "*", permission = "ask" },
+]
+
+# Wrapper configurations - these commands are "unwrapped" to analyze the inner command
+# Simple wrappers are config-driven (skip options, run inner command)
+# Complex wrappers have special handling: ssh, scp, rsync, env, kubectl exec, timeout
+
+[[wrappers]]
+command = "sudo"
+opts_with_args = ["-g", "-p", "-r", "-t", "-u", "-T", "-C", "-h", "-U"]
+
+[[wrappers]]
+command = "authsudo"
+opts_with_args = ["-u", "--user"]
+
+[[wrappers]]
+command = "nice"
+opts_with_args = ["-n"]
+
+[[wrappers]]
+command = "nohup"
+opts_with_args = []
+
+[[wrappers]]
+command = "time"
+opts_with_args = ["-o", "-f"]
+
+[[wrappers]]
+command = "strace"
+opts_with_args = ["-e", "-o", "-p", "-s", "-u"]
+
+[[wrappers]]
+command = "ltrace"
+opts_with_args = ["-e", "-o", "-p", "-s", "-u", "-n"]
+
+[[wrappers]]
+command = "nu"
+opts_with_args = ["-c", "--commands"]
+
+[[wrappers]]
+command = "fish"
+opts_with_args = ["-c", "-C", "--init-command"]
+
+# These have special handling (hardcoded) - listed here for documentation:
+# - ssh: extracts host, inner command after host
+# - scp: extracts host from user@host:path
+# - rsync: extracts host from user@host:path
+# - env: skips VAR=value, inner command after
+# - kubectl exec: inner command after --
+# - timeout: skips duration arg, inner command after
+
+# Command suggestions
+[[suggestions]]
+command = "git checkout"
+message = "Consider using 'git switch <branch>' or 'git restore <file>' instead"
+
+[[suggestions]]
+command = "docker-compose"
+message = "Use 'docker compose' (v2) instead of 'docker-compose'"
+
+[[suggestions]]
+command = "find"
+message = "Use the Glob tool or 'fd' for file search"
+
+[[suggestions]]
+command = "grep"
+message = "Use the Grep tool instead of grep/rg"
+
+[[suggestions]]
+command = "locate"
+message = "Use the Glob tool or 'fd' for file search"
+
