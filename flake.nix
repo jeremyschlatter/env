@@ -169,6 +169,7 @@
         (writeShellScriptBin "sha1sum" "${sha1collisiondetection}/bin/sha1dcsum \"$@\"" // { pname = "sha1sum-alias"; version = "1"; })
 
         man
+        mypkgs.claude-bash-hook
         mypkgs.daylight
         mypkgs.linear-cli
 

@@ -101,11 +101,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1770774167,
-        "narHash": "sha256-nwecHko5w71iH5qeIMCP2qxH1SV28Rv2RFtnXIYXVUA=",
+        "lastModified": 1770861563,
+        "narHash": "sha256-ahhIvaCV6Xin12SrcePufZ5x4Ek1+p8BKCP6a7k6LUk=",
         "owner": "jeremyschlatter",
         "repo": "packages",
-        "rev": "27aa35bf0d88a650a303d9d8411b58498e5115a1",
+        "rev": "0c9ddf78b02c4e9096089719119c47b024e9c60b",
         "type": "github"
       },
       "original": {
