@@ -1,6 +1,4 @@
-# Claude Bash Hook Default Configuration
-# This config is embedded in the binary and used when no user config exists.
-# To customize, copy to ~/.config/claude-bash-hook/config.toml
+# Claude Bash Hook Configuration
 
 # Default permission for commands not matching any rule
 # "passthrough" lets Claude Code's built-in permission system handle it
@@ -18,32 +16,40 @@ commands = [
     "ls", "cat", "head", "tail", "less", "more", "man",
     "pwd", "whoami", "hostname", "uname", "id", "groups",
     "ps", "top", "htop", "df", "du", "free", "uptime", "date",
-    "grep", "rg", "find", "fd", "fdfind", "locate", "wc", "diff", "sort", "uniq", "shuf", "which", "whereis", "file", "tr", "cut", "paste", "col", "basename", "dirname", "readlink", "base64", "xxd", "od", "zcat", "zgrep", "gzip", "gzip -d", "gunzip", "bsdtar -xOf", "bsdtar -tvf", "bsdtar -tf", "comm", "command -v",
+    "grep", "rg", "find", "fd", "fdfind", "locate", "wc", "diff", "sort", "uniq", "shuf", "which", "whereis", "file", "tr", "cut", "paste", "col", "basename", "dirname", "readlink", "base64", "xxd", "od", "zcat", "zgrep", "bsdtar -xOf", "bsdtar -tvf", "bsdtar -tf", "comm", "command -v",
     "jq", "yq", "xq", "bc",
-    "cd", "echo", "read", "mkdir", "cp", "mv", "chmod", "ln", "rmdir", "yes", "true", "false", "touch", "unset",
-    "sed", "sed -n", "awk", "sd", "perl", "perl -pe",  # inline only; -i variants denied below
-    "lsblk", "findmnt", "ldd", "nm", "nm -D", "readelf", "objdump", "lspci", "lscpu", "lsusb", "pkg-config --list-all", "conntrack -L", "strings", "lsof", "dmesg", "lsmod", "modinfo", "rocm-smi", "iostat", "pdfinfo", "infocmp", "crontab -l", "xkbcli list", "btrfs subvolume list", "btrfs filesystem df", "btrfs filesystem du", "btrfs filesystem show", "btrfs filesystem usage", "gemini --version", "rfkill list", "blkid", "nvme id-ns", "sfdisk -l", "efibootmgr -v", "mokutil --sb-state", "bootctl status", "rustc --print", "claude --version", "ollama --version", "bluetoothctl show", "bluetoothctl devices", "vulkaninfo", "nft list", "coredumpctl list", "iptables -L", "varlinkctl info", "varlinkctl introspect",
-    "sleep", "disown", "jobs", "ping", "dig", "dog", "journalctl", "ollama list", "pgrep", "stat", "apt-cache", "tree", "printenv", "env", "claude-bash-hook", "ss", "netstat", "wget", "mysqlbinlog", "brew leaves", "tokei",
+    "cd", "echo", "read", "yes", "true", "false", "unset",
+    "sed", "sed -n",
+    "lsblk", "findmnt", "ldd", "nm", "nm -D", "readelf", "objdump", "lspci", "lscpu", "lsusb", "pkg-config --list-all", "conntrack -L", "strings", "lsof", "dmesg", "lsmod", "modinfo", "rocm-smi", "iostat", "pdfinfo", "infocmp", "crontab -l", "xkbcli list",  "gemini --version", "rfkill list", "blkid", "nvme id-ns", "sfdisk -l", "efibootmgr -v", "mokutil --sb-state", "bootctl status", "rustc --print", "claude --version", "ollama --version", "bluetoothctl show", "bluetoothctl devices", "vulkaninfo", "nft list", "coredumpctl list", "iptables -L", "varlinkctl info", "varlinkctl introspect",
+    "sleep", "disown", "jobs", "ping", "dig", "dog", "journalctl", "ollama list", "pgrep", "stat", "apt-cache", "tree", "printenv", "env", "claude-bash-hook", "ss", "netstat", "mysqlbinlog", "brew leaves", "tokei",
     "curl -s https://ifconfig.me",
     "quickshell ipc query",
-    "php -l", "dpkg -l", "dpkg -S",
+    "dpkg -l", "dpkg -S",
     "openssl s_client -connect", "openssl x509 -noout -text", "openssl x509 -noout -dates",
-    "flatpak list", "snap list", "niri validate", "kitty --version", "yazi --help", "npm --version", "npm root", "npm run typecheck", "wezterm show-keys", "wezterm ls-fonts", "xdg-settings get", "xdg-mime query", "composer", "composer install", "composer show", "composer why",
-    "mago lint", "mago config", "phpstan analyze",
-    "shellharden", "shfmt",
+    "flatpak list", "snap list", "npm --version", "npm root", "npm run typecheck", "xdg-settings get", "xdg-mime query",
     "youtube search", "youtube info", "youtube playlist",
 ]
 permission = "allow"
 reason = "read-only commands"
 
+# "mkdir", "cp", "mv", "chmod", "ln", "rmdir", "touch", "wget", "gzip", "gzip -d", "gunzip", "sd", "composer install",
+# "shellharden", "shfmt",
+# "niri validate", "kitty --version", "yazi --help", "wezterm show-keys", "wezterm ls-fonts", "composer", "composer show", "composer why",
+# "mago lint", "mago config", "phpstan analyze",
+# "awk", "perl", "perl -pe",  # inline only; -i variants denied below
+# "btrfs subvolume list", "btrfs filesystem df", "btrfs filesystem du", "btrfs filesystem show", "btrfs filesystem usage",
+# "php -l",
+
 # Git read-only operations
 [[rules]]
 commands = [
-    "git status", "git log", "git diff", "git diff-tree", "git branch",
-    "git remote", "git show", "git rev-parse", "git describe", "git merge-base", "git ls-files", "git ls-tree", "git tag", "git cat-file", "git check-ignore",
+    "git status", "git log", "git diff", "git diff-tree",
+    "git show", "git rev-parse", "git describe", "git merge-base", "git ls-files", "git ls-tree", "git cat-file", "git check-ignore",
 ]
 permission = "allow"
 reason = "git read-only"
+
+# "git branch", "git tag", "git remote",
 
 # Git switch with force flag - ask
 [[rules]]
@@ -86,41 +92,43 @@ commands = [
     "kubectl get", "kubectl describe", "kubectl logs",
     "kubectl explain", "kubectl api-resources", "kubectl top", "kubectl cluster-info",
     "kubectl rollout history", "kubectl rollout status",
-    "kubectl cp",
 ]
 permission = "allow"
 reason = "kubectl read-only and safe operations"
 
+# "kubectl cp",
+
 # glab read-only and safe operations
 [[rules]]
 commands = [
-    "glab mr list", "glab mr view", "glab mr update",
     "gh repo list", "gh issue list", "gh issue view", "gh pr view",
-    "glab ci status", "glab ci list", "glab ci view", "glab ci trace",
-    "glab ci run", "glab ci retry", "glab ci trigger",
-    "glab issue list", "glab issue view",
-    "glab repo view",
 ]
 permission = "allow"
-reason = "glab read-only and safe operations"
+reason = "gh read-only and safe operations"
 
-# gitlab CLI read-only
-[[rules]]
-commands = ["gitlab mr list", "gitlab mr show", "gitlab mr view", "gitlab ci status", "gitlab ci logs", "gitlab issue list", "gitlab issue show", "gitlab webhook list", "gitlab --help"]
-permission = "allow"
-reason = "gitlab read-only"
+# "glab mr list", "glab mr view", "glab mr update",
+# "glab ci status", "glab ci list", "glab ci view", "glab ci trace",
+# "glab ci run", "glab ci retry", "glab ci trigger",
+# "glab issue list", "glab issue view",
+# "glab repo view",
 
-# claude-agent read-only
-[[rules]]
-commands = ["claude-agent stats", "claude-agent jobs", "claude-agent logs", "claude-agent review"]
-permission = "allow"
-reason = "claude-agent read-only"
+# # gitlab CLI read-only
+# [[rules]]
+# commands = ["gitlab mr list", "gitlab mr show", "gitlab mr view", "gitlab ci status", "gitlab ci logs", "gitlab issue list", "gitlab issue show", "gitlab webhook list", "gitlab --help"]
+# permission = "allow"
+# reason = "gitlab read-only"
 
-# warp-cli allowed operations
-[[rules]]
-commands = ["warp-cli status", "warp-cli connect", "warp-cli disconnect", "warp-cli debug access-reauth"]
-permission = "allow"
-reason = "warp-cli safe operations"
+# # claude-agent read-only
+# [[rules]]
+# commands = ["claude-agent stats", "claude-agent jobs", "claude-agent logs", "claude-agent review"]
+# permission = "allow"
+# reason = "claude-agent read-only"
+
+# # warp-cli allowed operations
+# [[rules]]
+# commands = ["warp-cli status", "warp-cli connect", "warp-cli disconnect", "warp-cli debug access-reauth"]
+# permission = "allow"
+# reason = "warp-cli safe operations"
 
 # gsettings read-only
 [[rules]]
@@ -189,18 +197,18 @@ commands = ["resolvectl status", "resolvectl query", "resolvectl statistics", "r
 permission = "allow"
 reason = "resolvectl read-only"
 
-# kitty-remote/wezterm-remote safe operations (run subcommand is handled as wrapper)
-[[rules]]
-commands = [
-    "kitty-remote ls", "kitty-remote get-text", "kitty-remote send-text", "kitty-remote send-key",
-    "kitty-remote new-tab", "kitty-remote new-window", "kitty-remote focus-tab", "kitty-remote focus-window",
-    "kitty-remote set-title", "kitty-remote scroll",
-    "wezterm-remote ls", "wezterm-remote lsj", "wezterm-remote get-text", "wezterm-remote send-text", "wezterm-remote send-key",
-    "wezterm-remote new-tab", "wezterm-remote new-window", "wezterm-remote split", "wezterm-remote focus-tab",
-    "wezterm-remote focus-pane", "wezterm-remote set-title", "wezterm-remote zoom", "wezterm-remote find-pane",
-]
-permission = "allow"
-reason = "terminal remote control"
+# # kitty-remote/wezterm-remote safe operations (run subcommand is handled as wrapper)
+# [[rules]]
+# commands = [
+#     "kitty-remote ls", "kitty-remote get-text", "kitty-remote send-text", "kitty-remote send-key",
+#     "kitty-remote new-tab", "kitty-remote new-window", "kitty-remote focus-tab", "kitty-remote focus-window",
+#     "kitty-remote set-title", "kitty-remote scroll",
+#     "wezterm-remote ls", "wezterm-remote lsj", "wezterm-remote get-text", "wezterm-remote send-text", "wezterm-remote send-key",
+#     "wezterm-remote new-tab", "wezterm-remote new-window", "wezterm-remote split", "wezterm-remote focus-tab",
+#     "wezterm-remote focus-pane", "wezterm-remote set-title", "wezterm-remote zoom", "wezterm-remote find-pane",
+# ]
+# permission = "allow"
+# reason = "terminal remote control"
 
 # terraform read-only
 [[rules]]
@@ -214,17 +222,17 @@ commands = ["cargo check", "cargo build", "cargo test", "cargo run", "cargo doc"
 permission = "allow"
 reason = "cargo dev commands"
 
-# pacman read-only (query and search)
-[[rules]]
-commands = ["pacman -Q", "pacman -Qi", "pacman -Ql", "pacman -Qo", "pacman -Qs", "pacman -Qd", "pacman -Qdt", "pacman -Ss", "pacman -Si", "pacman -Sg", "pacman -Sl", "pacman -F", "pacman -Fl", "pactree"]
-permission = "allow"
-reason = "pacman read-only"
+# # pacman read-only (query and search)
+# [[rules]]
+# commands = ["pacman -Q", "pacman -Qi", "pacman -Ql", "pacman -Qo", "pacman -Qs", "pacman -Qd", "pacman -Qdt", "pacman -Ss", "pacman -Si", "pacman -Sg", "pacman -Sl", "pacman -F", "pacman -Fl", "pactree"]
+# permission = "allow"
+# reason = "pacman read-only"
 
-# yay read-only (query and search)
-[[rules]]
-commands = ["yay -Q", "yay -Qi", "yay -Ql", "yay -Qo", "yay -Qs", "yay -Ss", "yay -Si", "yay -Sg", "yay -Ps", "yay -Sw", "yay -G"]
-permission = "allow"
-reason = "yay read-only"
+# # yay read-only (query and search)
+# [[rules]]
+# commands = ["yay -Q", "yay -Qi", "yay -Ql", "yay -Qo", "yay -Qs", "yay -Ss", "yay -Si", "yay -Sg", "yay -Ps", "yay -Sw", "yay -G"]
+# permission = "allow"
+# reason = "yay read-only"
 
 # brew read-only
 [[rules]]
@@ -277,7 +285,7 @@ commands = ["ssh", "scp", "rsync"]
 permission = "check_host"
 reason = "remote connection"
 host_rules = [
-    { pattern = "*", permission = "allow" },
+    # { pattern = "*", permission = "allow" },
 ]
 
 # Curl with host rules (localhost always allowed)
@@ -293,9 +301,10 @@ host_rules = [
     { pattern = "::1", permission = "allow" },
     { pattern = "[::1]", permission = "allow" },
     { pattern = "0.0.0.0", permission = "allow" },
-    { pattern = "claude-agent.globalcomixdev.com", permission = "allow" },
     { pattern = "*", permission = "ask" },
 ]
+
+# { pattern = "claude-agent.globalcomixdev.com", permission = "allow" },
 
 # Wrapper configurations - these commands are "unwrapped" to analyze the inner command
 # Simple wrappers are config-driven (skip options, run inner command)
