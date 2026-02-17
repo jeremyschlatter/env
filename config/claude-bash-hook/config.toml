@@ -10,6 +10,14 @@ enable_advice = false
 # Rules are checked in order - first match wins
 # More specific rules should come before general ones
 
+# Exceptional flags to read-only commands
+[[rules]]
+commands = [
+    "find -delete", "find -exec", "find -execdir", "find -fls", "find -fprint", "find -fprint0", "find -fprintf", "find -okdir",
+]
+permission = "passthrough"
+reason = "flag causes side-effect"
+
 # Read-only commands - always allow
 [[rules]]
 commands = [
