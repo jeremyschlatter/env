@@ -4,7 +4,14 @@
 [user]
     name = Jeremy Schlatter
     email = jeremy@jeremyschlatter.com
-    signingkey = 4D081B793DF81368
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINJHJoYIFGXlBHxC0w09/NhyWSZ3aG3+XBv1qWrtPGih
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  allowedSignersFile = ~/.config/git/allowed-signers
 
 [commit]
     gpgsign = true
