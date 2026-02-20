@@ -146,9 +146,6 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         //   `unable to execute '': No such file or directory`
         ("SHELL", shell),
 
-        // Lame that gpg can't figure this out itself, but here we are.
-        ("GPG_TTY", "$(tty)"),
-
         ("OPCLI_AUTO_BACKUP_1PASSWORD_DB", "1"),
     ]
 }
