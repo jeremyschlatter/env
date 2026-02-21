@@ -1,5 +1,19 @@
 source $HOME/.nix-profile/share/nix-direnv/direnvrc
 
+_check_dotenv() {
+  local path=$1
+  local perms
+  perms=$(stat -c '%a' "$path")
+  if [[ $perms != "600" ]]; then
+    log_error "WARNING: $path has permissions $perms (expected 600)"
+  fi
+  local gitleaks_output
+  if ! gitleaks_output=$(gitleaks -v dir "$path" 2>&1); then
+    log_error "WARNING: gitleaks found potential secrets in $path:"
+    log_error "$gitleaks_output"
+  fi
+}
+
 dotenv() {
   local path=${1:-$PWD/.env}
   [[ -d $path ]] && path=$path/.env
@@ -8,6 +22,7 @@ dotenv() {
     log_error ".env at $path not found"
     return 1
   fi
+  _check_dotenv "$path"
   eval "$("$direnv" dotenv bash "$path")"
   if [[ -n "${OPCLI_INJECT:-}" ]]; then
     inject_dotenv "$path"
@@ -19,6 +34,7 @@ dotenv_if_exists() {
   [[ -d $path ]] && path=$path/.env
   watch_file "$path"
   [[ -f $path ]] || return
+  _check_dotenv "$path"
   eval "$("$direnv" dotenv bash "$path")"
   if [[ -n "${OPCLI_INJECT:-}" ]]; then
     inject_dotenv_if_exists "$path"

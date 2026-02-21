@@ -193,6 +193,7 @@
         (ls-colors fd)        # Find file by name.
         gh                    # GitHub CLI.
         git                   # Track version history for text files.
+        gitleaks              # Scan for secrets.
         git-lfs               # Efficiently store large files in git.
         gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
