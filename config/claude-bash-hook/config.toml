@@ -10,6 +10,20 @@ enable_advice = false
 # Rules are checked in order - first match wins
 # More specific rules should come before general ones
 
+[[rules]]
+commands = [
+    "git commit", "git push", "git add",
+]
+permission = "allow"
+reason = "regular git commands"
+
+[[rules]]
+commands = [
+    "_gitx", "_colorscheme", "model",
+]
+permission = "allow"
+reason = "custom jeremy command"
+
 # Exceptional flags to read-only commands
 [[rules]]
 commands = [
