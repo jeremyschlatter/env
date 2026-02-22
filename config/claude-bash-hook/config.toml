@@ -57,6 +57,7 @@ commands = [
     "openssl s_client -connect", "openssl x509 -noout -text", "openssl x509 -noout -dates",
     "flatpak list", "snap list", "npm --version", "npm root", "npm run typecheck", "xdg-settings get", "xdg-mime query",
     "youtube search", "youtube info", "youtube playlist",
+    "otool",
 ]
 permission = "allow"
 reason = "read-only commands"
