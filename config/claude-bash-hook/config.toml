@@ -12,24 +12,13 @@ enable_advice = false
 
 [[rules]]
 commands = [
-    "nix build", "nix search", "nix develop", "nix fmt", "nix why-depends", "nix hash", "nix log", "nix eval",
-]
-permission = "allow"
-reason = "safe nix commands"
-
-[[rules]]
-commands = [
-    "git commit", "git push", "git add",
-]
-permission = "allow"
-reason = "regular git commands"
-
-[[rules]]
-commands = [
     "_gitx", "_colorscheme", "model",
+    "git commit", "git push", "git add",
+    "nix build", "nix search", "nix develop", "nix fmt", "nix why-depends", "nix hash", "nix log", "nix eval",
+    "uv add", "uv sync",
 ]
 permission = "allow"
-reason = "custom jeremy command"
+reason = "jeremy-approved commands"
 
 # Exceptional flags to read-only commands
 [[rules]]
