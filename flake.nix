@@ -209,7 +209,7 @@
             llm-ollama
             ipython      # Better Python repl than the default.
           ]))
-        nodejs_22
+        nodejs_24
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
         vim                   # Edit text.
