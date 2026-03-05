@@ -59,4 +59,7 @@ threading.Thread(
     target=lambda: webbrowser.open(url), daemon=True
 ).start()
 print(f"Clock running at {url} — Ctrl+C to stop")
-server.serve_forever()
+try:
+    server.serve_forever()
+except KeyboardInterrupt:
+    pass
