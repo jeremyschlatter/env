@@ -105,6 +105,7 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("rt", "opcli run --tui"),
 
         ("w", "claude --worktree"),
+        ("ws", "git worktree list"),
     ]
 }
 
