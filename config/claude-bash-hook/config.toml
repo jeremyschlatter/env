@@ -12,6 +12,24 @@ enable_advice = false
 
 [[rules]]
 commands = [
+    "opcli run --tui",
+    "opcli run --no-masking",
+]
+permission = "ask"
+reason = "1Password: MIGHT LEAK SECRETS"
+
+[[rules]]
+commands = [ "opcli run" ]
+permission = "allow"
+reason = "opcli run is allowed"
+
+[[rules]]
+commands = [ "op", "opcli" ]
+permission = "ask"
+reason = "1Password: MIGHT LEAK SECRETS"
+
+[[rules]]
+commands = [
     "_gitx", "_colorscheme", "model",
     "git commit", "git push", "git add",
     "nix build", "nix search", "nix develop", "nix fmt", "nix why-depends", "nix hash", "nix log", "nix eval",
