@@ -1,0 +1,5 @@
+[whitelist]
+prefix = [
+  "/Users/jeremy/src/my",
+  "/Users/jeremy/src/palisade",
+]
