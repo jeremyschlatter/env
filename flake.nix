@@ -185,7 +185,6 @@
         (themed "BAT_THEME" "Catppuccin Latte" "Catppuccin Mocha"
          bat)                 # Display files, with syntax highlighting.
         calc                  # A simple arbitrary-precision calculator.
-        coreutils             # Basic file, shell and text manipulation utilities.
         (themed "DELTA_FEATURES" "catppuccin-latte" "catppuccin-mocha"
          delta)               # Better git diffs.
         direnv                # Set environment variables per-project.
