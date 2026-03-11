@@ -39,7 +39,7 @@ write('flake.nix', '''
     flake-utils.lib.eachDefaultSystem (system:
     with nixpkgs.legacyPackages.${system};
     {
-      devShell = mkShellNoCC {
+      devShells.default = mkShellNoCC {
         packages = [
         ];
       };
