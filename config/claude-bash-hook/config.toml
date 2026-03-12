@@ -340,7 +340,7 @@ host_rules = [
     { pattern = "::1", permission = "allow" },
     { pattern = "[::1]", permission = "allow" },
     { pattern = "0.0.0.0", permission = "allow" },
-    { pattern = "*", permission = "ask" },
+    { pattern = "*", permission = "passthrough" },
 ]
 
 # { pattern = "claude-agent.globalcomixdev.com", permission = "allow" },
