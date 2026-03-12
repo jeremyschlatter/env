@@ -151,5 +151,6 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         ("SHELL", shell),
 
         ("OPCLI_AUTO_BACKUP_1PASSWORD_DB", "1"),
+        ("OPCLI_RUN_SUBSTITUTE_ARGS", "1"),
     ]
 }
