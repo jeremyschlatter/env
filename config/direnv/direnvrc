@@ -3,7 +3,11 @@ source $HOME/.nix-profile/share/nix-direnv/direnvrc
 _check_dotenv() {
   local path=$1
   local perms
-  perms=$(stat -f '%A' "$path" 2>/dev/null || stat -c '%a' "$path")
+  if stat --version 2>/dev/null | grep -q GNU; then
+    perms=$(stat -c '%a' "$path")
+  else
+    perms=$(stat -f '%Lp' "$path")
+  fi
   if [[ $perms != "600" ]]; then
     log_error "WARNING: $path has permissions $perms (expected 600)"
   fi
