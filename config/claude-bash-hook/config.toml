@@ -324,7 +324,7 @@ commands = ["ssh", "scp", "rsync"]
 permission = "check_host"
 reason = "remote connection"
 host_rules = [
-    # { pattern = "*", permission = "allow" },
+    { pattern = "*", permission = "passthrough" },
 ]
 
 # Curl with host rules (localhost always allowed)
