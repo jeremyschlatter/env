@@ -24,6 +24,11 @@ permission = "allow"
 reason = "opcli run is allowed"
 
 [[rules]]
+commands = [ "op item list", "opcli-describe" ]
+permission = "allow"
+reason = "1Password read-only metadata (no secret values)"
+
+[[rules]]
 commands = [ "op", "opcli" ]
 permission = "ask"
 reason = "1Password: MIGHT LEAK SECRETS"
