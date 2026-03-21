@@ -9,17 +9,13 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     crane.url = github:ipetkov/crane;
-    personal = {
-      url = github:jeremyschlatter/packages;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     starship-jj = {
       url = gitlab:lanastara_foss/starship-jj;
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, crane, personal, starship-jj }:
+  outputs = { self, nixpkgs, crane, starship-jj }:
   let
     forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
     pkgsFor = system: import nixpkgs { inherit system; config.allowUnfree = true; };
@@ -138,7 +134,7 @@
         execToStr = cmd: builtins.readFile (runCommand "exec" {} "${cmd} > $out");
         ls-colors = let v = c: execToStr "${vivid}/bin/vivid generate catppuccin-${c}"; in
           themed "LS_COLORS" (v "latte") (v "mocha");
-        mypkgs = personal.packages.${system};
+        mypkgs = builtins.mapAttrs (name: _: pkgs.callPackage ./pkgs/${name}/package.nix { }) (builtins.readDir ./pkgs);
         patch = pkg: patches: pkg.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or []) ++ patches;
         });
@@ -177,6 +173,8 @@
         starship-jj.packages.${system}.starship-jj
         ast-grep
         btop
+        flyctl
+        imagemagick
 
         # Life on the command line.
         _1password-cli
