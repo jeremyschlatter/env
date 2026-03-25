@@ -150,6 +150,7 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         //   `unable to execute '': No such file or directory`
         ("SHELL", shell),
 
+        ("OPCLI_AUTO_ACCOUNT", "1"),
         ("OPCLI_AUTO_BACKUP_1PASSWORD_DB", "1"),
         ("OPCLI_RUN_SUBSTITUTE_ARGS", "1"),
     ]
