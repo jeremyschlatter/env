@@ -144,6 +144,8 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         // npm defaults to ~/.npmrc for user config. Need this to get my checked-in config.
         ("NPM_CONFIG_USERCONFIG", "$HOME/.config/npmrc"),
 
+        ("UV_CONFIG_FILE", "$HOME/.nix-profile/config/uv/uv.toml"),
+
         // with SHELL=fish, nix remote building says
         //   `Couldn't execute fish -c "echo started": No such file or directory`
         // with SHELL= , nix remote building works but nix shell says
