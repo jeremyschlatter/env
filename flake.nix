@@ -47,9 +47,16 @@
             })));
       });
 
+    # Packages in ./pkgs, exposed as flake packages.
+    mypkgs = pkgs: builtins.mapAttrs (name: _: pkgs.callPackage ./pkgs/${name}/package.nix { })
+      (builtins.readDir ./pkgs);
+
     # Packages exposed by this flake.
     packages = forAllSystems (system:
-      self.scripts (pkgsFor system) ./scripts // { default = (self.merge [self]).${system}; });
+      let pkgs = pkgsFor system; in
+      self.scripts pkgs ./scripts
+      // self.mypkgs pkgs
+      // { default = (self.merge [self]).${system}; });
 
     # Legacy. As of 2026-01-20, all of my installed systems depend on this attribute name.
     # I'm leaving it here until such time as I update all of them.
@@ -134,7 +141,7 @@
         execToStr = cmd: builtins.readFile (runCommand "exec" {} "${cmd} > $out");
         ls-colors = let v = c: execToStr "${vivid}/bin/vivid generate catppuccin-${c}"; in
           themed "LS_COLORS" (v "latte") (v "mocha");
-        mypkgs = builtins.mapAttrs (name: _: pkgs.callPackage ./pkgs/${name}/package.nix { }) (builtins.readDir ./pkgs);
+        mypkgs = self.mypkgs pkgs;
         patch = pkg: patches: pkg.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or []) ++ patches;
         });
