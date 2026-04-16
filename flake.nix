@@ -13,9 +13,13 @@
       url = gitlab:lanastara_foss/starship-jj;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gws = {
+      url = github:googleworkspace/cli;
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, crane, starship-jj }:
+  outputs = { self, nixpkgs, crane, starship-jj, gws }:
   let
     forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
     pkgsFor = system: import nixpkgs { inherit system; config.allowUnfree = true; };
@@ -178,6 +182,7 @@
 
         jujutsu
         starship-jj.packages.${system}.starship-jj
+        gws.packages.${system}.default
         ast-grep
         btop
         flyctl
