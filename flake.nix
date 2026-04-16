@@ -15,7 +15,10 @@
     };
     gws = {
       url = github:googleworkspace/cli;
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "starship-jj/flake-utils";
+      };
     };
   };
 
@@ -95,8 +98,7 @@
                 camelcasemotion
                 ctrlp-vim
                 fzf-vim
-                fzfWrapper
-                leap-nvim
+                fzf-wrapper
                 nvim-config-local
                 (nvim-treesitter.withPlugins (p:
                   # Workaround for bugs in tree-sitter-dockerfile. Remove if fixed:

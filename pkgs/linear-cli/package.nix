@@ -2,7 +2,6 @@
   lib,
   stdenvNoCC,
   fetchzip,
-  system,
 }:
 
 let
@@ -24,7 +23,7 @@ let
       hash = "sha256-b8g41e2Ql7x4ANifOMmUDCeOhkfPeL8MEEywQDaYcnc=";
     };
   };
-  src = fetchzip sources.${system};
+  src = fetchzip sources.${stdenvNoCC.hostPlatform.system};
 in
 stdenvNoCC.mkDerivation {
   pname = "linear-cli";
