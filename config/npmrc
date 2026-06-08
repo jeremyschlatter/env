@@ -1,2 +1,3 @@
 prefix=~/.npm-global
 min-release-age=7
+ignore-scripts=true
