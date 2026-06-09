@@ -189,6 +189,8 @@
         btop
         flyctl
         imagemagick
+        uv
+        timg
 
         # Life on the command line.
         _1password-cli
