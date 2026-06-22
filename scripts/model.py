@@ -30,11 +30,11 @@ from typing import Dict, List, Optional, Any
 CACHE_DIR = Path.home() / ".cache" / "llm-model-browser"
 
 keys = {
-    "openai": "op://Private/Openai/API keys/default",
+    "openai": "op://Jeremy/Openai/API keys/default",
     "anthropic": "op://Guy Intern/Anthropic API key/key",
-    "google": "op://Private/Gemini API Keys/default",
+    "google": "op://Jeremy/Gemini API Keys/default",
     "xai": "op://Employee/LLM API keys/Keys/xAI - palisade team",
-    "openrouter": "op://Private/cvwcuhinwlmid5st3chafx7adq/openrouter",
+    "openrouter": "op://Jeremy/cvwcuhinwlmid5st3chafx7adq/openrouter",
 }
 
 class Provider:
