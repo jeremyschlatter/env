@@ -34,7 +34,7 @@ keys = {
     "anthropic": "op://Guy Intern/Anthropic API key/key",
     "google": "op://Jeremy/Gemini API Keys/default",
     "xai": "op://Employee/LLM API keys/Keys/xAI - palisade team",
-    "openrouter": "op://Jeremy/cvwcuhinwlmid5st3chafx7adq/openrouter",
+    "openrouter": "op://Jeremy/fjx54s53svt6tcganpkbpkn7fa/openrouter",
 }
 
 class Provider:
