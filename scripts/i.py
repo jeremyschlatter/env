@@ -47,5 +47,9 @@ stdio = {
     '_err': sys.stderr,
 }
 
-sh.nix('profile', 'upgrade', package_name, **stdio)
-sh.Command('_jeremy-post-install')(**stdio)
+# nix already streamed its error; the sh traceback would only bury it.
+try:
+    sh.nix('profile', 'upgrade', package_name, **stdio)
+    sh.Command('_jeremy-post-install')(**stdio)
+except sh.ErrorReturnCode as e:
+    sys.exit(e.exit_code)
