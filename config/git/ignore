@@ -6,3 +6,5 @@ jeremy-scratch
 .direnv
 .ipynb_checkpoints
 .claude/settings.local.json
+
+CLAUDE.local.md
