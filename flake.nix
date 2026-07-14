@@ -223,6 +223,7 @@
             ipython      # Better Python repl than the default.
           ]))
         nodejs_26
+        poppler-utils         # PDF tools: pdftoppm, pdftotext, etc.
         ripgrep               # Text search. (Phenomenal grep replacement.)
         starship              # Nice command prompt.
         vim                   # Edit text.
