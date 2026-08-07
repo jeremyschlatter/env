@@ -100,6 +100,7 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("gemma", "llm -m gemma3:12b"),
 
         ("zw", "z $(work)"),
+        ("zc", "z $HOME/claude"),
 
         ("r", "opcli run"),
         ("rt", "opcli run --tui"),
