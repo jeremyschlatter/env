@@ -73,5 +73,11 @@
 [hub]
     protocol = ssh
 
+[credential]
+    # Empty value first: credential.helper is a list, and Xcode's system
+    # gitconfig prepends osxkeychain, which prompts for Touch ID on every fetch.
+    helper = ""
+    helper = "!gh auth git-credential"
+
 [diff "lfs"]
     textconv = cat
