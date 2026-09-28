@@ -18,7 +18,8 @@
 status=0
 timeout 15 opcli ssh-sign "op://Jeremy/commit signing/private key" "$@" || status=$?
 if [ $status -eq 124 ]; then
-    echo "git signing: no Touch ID approval within 15s, committing unsigned" >&2
+    # stdout, not stderr: git only relays a signer's stderr when it fails.
+    echo "git signing: no Touch ID approval within 15s, committing unsigned"
     : > "${@: -1}.sig"
     exit 0
 fi
