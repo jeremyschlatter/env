@@ -30,11 +30,13 @@ from typing import Dict, List, Optional, Any
 CACHE_DIR = Path.home() / ".cache" / "llm-model-browser"
 
 keys = {
-    "openai": "op://Jeremy/Openai/API keys/default",
-    "anthropic": "op://Guy Intern/Anthropic API key/key",
-    "google": "op://Jeremy/Gemini API Keys/default",
-    "xai": "op://Employee/LLM API keys/Keys/xAI - palisade team",
-    "openrouter": "op://Jeremy/fjx54s53svt6tcganpkbpkn7fa/openrouter",
+    "openai": "op://Employee/LLM API keys/Keys/openai - jeremy",
+    "openrouter": "op://Employee/LLM API keys/Keys/openrouter - jeremy - exp 2026-09-13",
+    "anthropic": "op://Fable/Anthropic/credential",
+    # "anthropic": "op://Guy Intern/Anthropic API key/key",
+    # "google": "op://Jeremy/Gemini API Keys/default",
+    # "xai": "op://Employee/LLM API keys/Keys/xAI - palisade team",
+    # "openrouter": "op://Jeremy/fjx54s53svt6tcganpkbpkn7fa/openrouter",
 }
 
 class Provider:
@@ -165,7 +167,7 @@ def update_provider_cache(provider: str, config: Provider) -> Dict[str, Any]:
         write_cache(provider, models)
         return {"provider": provider, "success": True, "count": len(models)}
     except Exception as e:
-        return {"provider": provider, "success": False, "error": str(e)}
+        return {"provider": provider, "success": False, "error": f'{type(e)}: {str(e)}'}
 
 
 # Get all cached models
@@ -284,7 +286,7 @@ def main():
             print("Failed to update models:", file=sys.stderr)
             for r in failures:
                 print(f"  {r['provider']}: {r['error']}", file=sys.stderr)
-            sys.exit(1)
+            # sys.exit(1)
         for model in get_all_cached_models():
             print(model)
         return
@@ -311,7 +313,7 @@ def main():
         print("Failed to update models:", file=sys.stderr)
         for r in failures:
             print(f"  {r['provider']}: {r['error']}", file=sys.stderr)
-        sys.exit(1)
+        # sys.exit(1)
 
     models = get_all_cached_models()
 
