@@ -142,7 +142,7 @@
         };
         themed = var: light: dark: wrapBin ''
             [[ $(_colorscheme read) = 'light' ]] && c='${light}' || c='${dark}'
-            env "${var}=$c" _BIN_ "$@"
+            exec env "${var}=$c" _BIN_ "$@"
         '';
         execToStr = cmd: builtins.readFile (runCommand "exec" {} "${cmd} > $out");
         ls-colors = let v = c: execToStr "${vivid}/bin/vivid generate catppuccin-${c}"; in
@@ -160,10 +160,10 @@
         skills  # Claude Code skills.
 
         # Shells.
-        (writeShellScriptBin "shell" ''$HOME/.nix-profile/bin/fish "$@"'' // { pname = "shell"; version = fish.version; })
+        (writeShellScriptBin "shell" ''exec $HOME/.nix-profile/bin/fish "$@"'' // { pname = "shell"; version = fish.version; })
         blesh my-bash # See blesh note in config/bash/bashrc.sh
-        (wrapBin ''_BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source" "$@"'' fish)
-        (wrapBin ''ZDOTDIR=$HOME/.config/zsh _BIN_ "$@"'' zsh)
+        (wrapBin ''exec _BIN_ -C "$HOME/.nix-profile/bin/_jeremy-shell-init fish | source" "$@"'' fish)
+        (wrapBin ''ZDOTDIR=$HOME/.config/zsh exec _BIN_ "$@"'' zsh)
 
         # Undollar: ignore leading $'s from copy-pasted commands.
         (writeShellScriptBin "$" "\"$@\"" // { pname = "dollar"; version = "1"; })
