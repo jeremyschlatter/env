@@ -45,7 +45,9 @@ Run `i` to rebuild and install the nix environment.
 
 Test it yourself if possible, or ask Jeremy to test if it requires restarting the terminal or Claude Code.
 
-### 5. Commit and push (if Jeremy approves)
+### 5. Commit and push
+
+Once the change is installed and tested, commit and push it by default — no need to ask first.
 
 Only commit your changes — don't include any pre-existing uncommitted changes.
 

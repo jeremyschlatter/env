@@ -153,6 +153,19 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         //   `unable to execute '': No such file or directory`
         ("SHELL", shell),
 
+        // macOS's /usr/bin/curl (and anything else on Apple's LibreSSL) trusts
+        // /etc/ssl/cert.pem, which is SIP-protected and only updated with OS releases.
+        // Point it at the nix CA bundle instead, which I can update immediately.
+        // Prompted by eMudhra's weak-key CA incident (Oct 2026): Apple's cert.pem still
+        // trusted emSign ECC Root CA - G3 after Mozilla dropped it.
+        // Must be the no-trust-rules variant: ca-bundle.crt includes email-only roots
+        // (eg Comodo AAA, which cross-signed the bad eMudhra intermediates) as
+        // "TRUSTED CERTIFICATE" entries, and LibreSSL ignores those rules and trusts
+        // them for TLS. Test (both should fail):
+        //   curl https://dv-g3b-emudhra.we-have-a-problem.com/
+        //   curl https://dv-g3b-aaa-emudhra.we-have-a-problem.com/
+        ("SSL_CERT_FILE", "/nix/var/nix/profiles/default/etc/ssl/certs/ca-no-trust-rules-bundle.crt"),
+
         ("OPCLI_AUTO_ACCOUNT", "1"),
         ("OPCLI_AUTO_BACKUP_1PASSWORD_DB", "1"),
         ("OPCLI_RUN_SUBSTITUTE_ARGS", "1"),
