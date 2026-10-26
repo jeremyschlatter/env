@@ -29,57 +29,55 @@ fn ensure_symlink(link_from: &Path, link_to: &Path, description: &str) -> Result
     Ok(())
 }
 
-fn main() -> Result<()> {
-    let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
-    let nix_conf = home.join(".nix-profile/config");
-    let home_conf = home.join(".config");
-
-    // Make ~/.config if it does not yet exist.
-    fs::create_dir_all(&home_conf)?;
+// Symlink each entry of `src` into `dst`, and remove symlinks in `dst` that point
+// at entries no longer in `src`.
+fn link_entries(src: &Path, dst: &Path, kind: &str) -> Result<()> {
+    fs::create_dir_all(dst)?;
 
     let mut want_symlink = HashSet::new();
-
-    // Symlink ~/.nix-profile/config/* into ~/.config.
-    for entry in fs::read_dir(&nix_conf)? {
+    for entry in fs::read_dir(src)? {
         let name = entry?.file_name();
         if name == "README.md" {
             continue;
         }
         want_symlink.insert(name.clone());
-        ensure_symlink(
-            &home_conf.join(&name),
-            &nix_conf.join(&name),
-            &format!("{:?} config", name),
-        )?;
+        ensure_symlink(&dst.join(&name), &src.join(&name), &format!("{:?} {}", name, kind))?;
     }
 
-    // Remove old symlinks from ~/.config.
-    for entry in fs::read_dir(&home_conf)? {
+    for entry in fs::read_dir(dst)? {
         let entry = entry?;
         let name = entry.file_name();
-        match fs::read_link(home_conf.join(&name)) {
-            Ok(link) if link.starts_with(&nix_conf) && !want_symlink.contains(&name) => {
-                println!("removing {:?} config...", name);
+        match fs::read_link(entry.path()) {
+            Ok(link) if link.starts_with(src) && !want_symlink.contains(&name) => {
+                println!("removing {:?} {}...", name, kind);
                 fs::remove_file(entry.path())?;
             }
             _ => (),
         }
     }
+    Ok(())
+}
 
-    // Symlink ~/.claude/skills to ~/.nix-profile/skills
+fn main() -> Result<()> {
+    let home = dirs::home_dir().ok_or(anyhow!("no HOME"))?;
+
+    // Symlink ~/.nix-profile/config/* into ~/.config.
+    link_entries(&home.join(".nix-profile/config"), &home.join(".config"), "config")?;
+
+    // Symlink ~/.nix-profile/skills/* into ~/.claude/skills.
     {
-        let claude_dir = home.join(".claude");
-        fs::create_dir_all(&claude_dir)?;
-        ensure_symlink(
-            &claude_dir.join("skills"),
-            &home.join(".nix-profile/skills"),
-            "claude skills",
-        )?;
+        let skills = home.join(".claude/skills");
+        // ~/.claude/skills used to be a symlink to the whole skills dir.
+        if fs::symlink_metadata(&skills).is_ok_and(|m| m.file_type().is_symlink()) {
+            println!("replacing {:?} symlink with a directory...", skills);
+            fs::remove_file(&skills)?;
+        }
+        link_entries(&home.join(".nix-profile/skills"), &skills, "skill")?;
     }
 
     // Build bat cache if bat config changed. (Or we haven't built it before.)
     {
-        let bat_config = nix_conf.join("bat");
+        let bat_config = home.join(".nix-profile/config/bat");
         let bat_cache = home.join(".cache/bat");
         let config_hash = bat_cache.join("config-hash.txt");
         if !(config_hash.exists()
