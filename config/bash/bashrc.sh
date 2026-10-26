@@ -20,19 +20,13 @@ source $(blesh-share)/ble.sh
 eval "$(_jeremy-shell-init bash)"
 
 # source bash completions
-. $NIX_PROFILE/etc/profile.d/bash_completion.sh
-if [ -d $NIX_PROFILE/etc/bash_completion.d ]; then
-    for completion in $NIX_PROFILE/etc/bash_completion.d/*; do
-        . $completion
-    done
-fi
-if [ -d $NIX_PROFILE/share/bash-completion ]; then
-    . $NIX_PROFILE/share/bash-completion/bash_completion
-    # for completion in $NIX_PROFILE/share/bash-completion/completions/*; do
-        # . $completion
-    # done
-    . $NIX_PROFILE/share/bash-completion/completions/git
-fi
+#
+# The system may have already loaded its own (older) bash-completion, e.g. via
+# Ubuntu's /etc/profile.d/bash_completion.sh. Clear its guard variable so we
+# load the nix one instead. It also loads $NIX_PROFILE/etc/bash_completion.d.
+unset BASH_COMPLETION_VERSINFO
+. $NIX_PROFILE/share/bash-completion/bash_completion
+. $NIX_PROFILE/share/bash-completion/completions/git
 
 # git tab completion with 'g' alias
 __git_complete g __git_main
