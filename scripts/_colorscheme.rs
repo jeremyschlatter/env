@@ -41,8 +41,8 @@ fn read_theme() -> Result<()> {
                 )
                 .read()?
                 {
-                    "prefer-light" => "light",
-                    "prefer-dark" => "dark",
+                    "'prefer-light'" => "light",
+                    "'prefer-dark'" => "dark",
                     x => bail!("unexpected color-scheme: {}", x),
                 }
             }
