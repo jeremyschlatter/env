@@ -1,8 +1,11 @@
 # {"deps": ["coreutils"]} #nix
 #
-# git's gpg.ssh.program. Signs with my 1Password SSH key via opcli, but if I
-# don't approve the Touch ID prompt within the timeout (eg because I'm AFK and
-# an agent is committing), the commit is made unsigned instead of failing.
+# git's gpg.ssh.program. Signs with my 1Password SSH key via opcli, but if
+# Touch ID doesn't approve (eg because I'm AFK and an agent is committing),
+# the commit is made unsigned instead of failing. That covers two cases: the
+# prompt goes unanswered until the timeout, or opcli exits 3 because the
+# prompt was cancelled or macOS wouldn't show it (eg the screen is locked).
+# Any other failure means signing itself is broken, and fails the commit.
 #
 # git calls this as: $0 -Y sign -n git -f <pubkeyfile> -U <bufferfile>, and
 # reads the signature from <bufferfile>.sig. If that file is empty, git omits
@@ -17,10 +20,11 @@
 [ "$2" = sign ] || exec ssh-keygen "$@"
 status=0
 timeout 15 opcli ssh-sign "op://Jeremy/commit signing/private key" "$@" || status=$?
-if [ $status -eq 124 ]; then
-    # stdout, not stderr: git only relays a signer's stderr when it fails.
-    echo "git signing: no Touch ID approval within 15s, committing unsigned"
-    : > "${@: -1}.sig"
-    exit 0
-fi
-exit $status
+# stdout, not stderr: git only relays a signer's stderr when it fails.
+case $status in
+    124) echo "git signing: no Touch ID approval within 15s, committing unsigned" ;;
+    3) echo "git signing: Touch ID cancelled or unavailable, committing unsigned" ;;
+    *) exit $status ;;
+esac
+: > "${@: -1}.sig"
+exit 0
