@@ -213,7 +213,6 @@
         google-cloud-sdk      # Google Cloud CLI.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
-        inetutils             # Ping.
         jq                    # Zoom in on large JSON objects.
         nix-direnv            # Optimized direnv+nix integration.
         (python3.withPackages # Run Python.
@@ -232,6 +231,7 @@
         zoxide                # A smarter cd command.
       ] ++ lib.optionals (system == "x86_64-linux") [
         file                  # Get high-level semantic info about a file.
+        inetutils             # Ping, for a Linux box that lacked it. macOS has its own.
         # ghostty               # My terminal. Installed separately on macOS.
         # obsidian
       ] ++ lib.optionals stdenv.isDarwin [
