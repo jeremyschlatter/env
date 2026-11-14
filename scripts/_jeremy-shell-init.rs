@@ -132,6 +132,9 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         ("PATH", "$HOME/.npm-global/bin:$PATH"),
         ("PATH", "$NIX_PROFILE/bin:$PATH"),
         ("PATH", "$HOME/go/bin:$PATH"),
+        // opcli shell plugin shims (symlinks to opcli named for the CLIs they
+        // authenticate). Must come before the real executables.
+        ("PATH", "$HOME/.opcli/shims:$PATH"),
 
         // Don't log starship warnings.
         // (Most common warning: git command timed out in large git directory).
