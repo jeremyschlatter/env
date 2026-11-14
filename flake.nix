@@ -9,20 +9,15 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     crane.url = github:ipetkov/crane;
-    starship-jj = {
-      url = gitlab:lanastara_foss/starship-jj;
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     gws = {
       url = github:googleworkspace/cli;
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "starship-jj/flake-utils";
       };
     };
   };
 
-  outputs = { self, nixpkgs, crane, starship-jj, gws }:
+  outputs = { self, nixpkgs, crane, gws }:
   let
     forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
     pkgsFor = system: import nixpkgs { inherit system; config.allowUnfree = true; };
@@ -183,8 +178,6 @@
         mypkgs.linear-cli
 
         jujutsu
-        # nixpkgs' cargo setup hook sets LIBGIT2_NO_VENDOR=1, and upstream's flake doesn't provide a system libgit2.
-        (starship-jj.packages.${system}.starship-jj.overrideAttrs (old: { buildInputs = old.buildInputs ++ [ libgit2 ]; }))
         gws.packages.${system}.default
         ast-grep
         btop
