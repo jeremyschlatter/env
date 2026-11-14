@@ -183,7 +183,8 @@
         mypkgs.linear-cli
 
         jujutsu
-        starship-jj.packages.${system}.starship-jj
+        # nixpkgs' cargo setup hook sets LIBGIT2_NO_VENDOR=1, and upstream's flake doesn't provide a system libgit2.
+        (starship-jj.packages.${system}.starship-jj.overrideAttrs (old: { buildInputs = old.buildInputs ++ [ libgit2 ]; }))
         gws.packages.${system}.default
         ast-grep
         btop
