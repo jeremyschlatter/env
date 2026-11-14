@@ -69,11 +69,11 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("kg", "kubectl get"),
         ("kgp", "kubectl get pods"),
 
-        ("e",   "exa --classify"),
-        ("ea",  "exa --classify --all"),
-        ("ee",  "exa --classify --long --header --git"),
-        ("ert", "exa --classify --long --sort time"),
-        ("et",  "exa --classify --tree"),
+        ("e",   "exa"),
+        ("ea",  "exa --all"),
+        ("ee",  "exa --long --header --git"),
+        ("ert", "exa --long --sort time"),
+        ("et",  "exa --tree"),
 
         ("g", "git"),
         ("gst", "git status"),
