@@ -210,7 +210,6 @@
         git-lfs               # Efficiently store large files in git.
         gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
-        google-cloud-sdk      # Google Cloud CLI.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
         jq                    # Zoom in on large JSON objects.

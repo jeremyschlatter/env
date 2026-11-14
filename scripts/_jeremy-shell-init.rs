@@ -80,9 +80,6 @@ fn aliases() -> Vec<(&'static str, &'static str)> {
         ("gdiff", "git diff"),
         ("gadd", "git add"),
 
-        ("c",  "gcloud compute"),
-        ("cs", "gcloud compute instances"),
-
         ("cd", "z"),
 
         ("cd..", "cd .."),
