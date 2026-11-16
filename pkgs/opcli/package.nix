@@ -5,7 +5,7 @@
 }:
 
 let
-  version = "0.20.1";
+  version = "0.21.0";
   arch = if stdenv.hostPlatform.isAarch64 then "arm64" else "x86_64";
 in
 
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/jeremyschlatter/opcli/releases/download/v${version}/opcli-v${version}-darwin-${arch}.tar.gz";
-    hash = "sha256-s0WsaH/u/VIbWnxS/FBJvj4ljAqc588WsX4WOYnMnHY=";
+    hash = "sha256-JiSluz9D6UAHg+T5fXL9fG5pWRkH70YCYojJLS8SV4M=";
   };
 
   sourceRoot = ".";
