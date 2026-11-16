@@ -166,6 +166,11 @@ fn env(shell: &'static str) -> Vec<(&'static str, &'static str)> {
         //   curl https://dv-g3b-aaa-emudhra.we-have-a-problem.com/
         ("SSL_CERT_FILE", "/nix/var/nix/profiles/default/etc/ssl/certs/ca-no-trust-rules-bundle.crt"),
 
+        // timg only autodetects kitty graphics support for a hardcoded list of
+        // terminals, which does not include rex. Without this it falls back to
+        // blurry quarter-block rendering.
+        ("TIMG_PIXELATION", "kitty"),
+
         ("OPCLI_AUTO_ACCOUNT", "1"),
         ("OPCLI_AUTO_BACKUP_1PASSWORD_DB", "1"),
         ("OPCLI_RUN_SUBSTITUTE_ARGS", "1"),
