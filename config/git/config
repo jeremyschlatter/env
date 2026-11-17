@@ -77,6 +77,13 @@
     # Empty value first: credential.helper is a list, and Xcode's system
     # gitconfig prepends osxkeychain, which prompts for Touch ID on every fetch.
     helper = ""
+
+# Scoped to GitHub so that the opcli gh shim isn't invoked (and doesn't prompt)
+# for other https hosts.
+[credential "https://github.com"]
+    helper = "!gh auth git-credential"
+
+[credential "https://gist.github.com"]
     helper = "!gh auth git-credential"
 
 [diff "lfs"]
