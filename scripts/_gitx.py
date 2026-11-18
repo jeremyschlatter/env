@@ -25,7 +25,12 @@ def say(msg):
 
 if not dest.is_dir():
     dest.parent.mkdir(parents=True, exist_ok=True)
-    if git('clone', f'git@{host}.com:{repo}.git', dest).returncode:
+    # GitHub goes over https, where git authenticates through gh (see the
+    # credential sections of the git config). GitLab has no such helper.
+    url = f'git@{host}.com:{repo}.git'
+    if host == 'github':
+        url = f'https://github.com/{repo}.git'
+    if git('clone', url, dest).returncode:
         sys.exit(1)
 else:
     def read(*args):

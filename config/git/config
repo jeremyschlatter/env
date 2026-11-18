@@ -73,6 +73,13 @@
 [hub]
     protocol = ssh
 
+# Fetch and push GitHub ssh remotes over https, so that git and gh share one
+# credential (the gh token, via the helper below) instead of also needing the
+# ssh key. Delete this section to go back to ssh.
+[url "https://github.com/"]
+    insteadOf = git@github.com:
+    insteadOf = ssh://git@github.com/
+
 [credential]
     # Empty value first: credential.helper is a list, and Xcode's system
     # gitconfig prepends osxkeychain, which prompts for Touch ID on every fetch.
