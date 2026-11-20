@@ -174,7 +174,6 @@
 
         man
         mypkgs.claude-bash-hook
-        mypkgs.daylight
         mypkgs.linear-cli
 
         gws.packages.${system}.default
@@ -201,7 +200,6 @@
         git                   # Track version history for text files.
         gitleaks              # Scan for secrets.
         git-lfs               # Efficiently store large files in git.
-        gnupg                 # gpg, I use it to sign git commits
         go                    # Run Go code.
         htop                  # Show CPU + memory usage.
         httpie                # Create and execute HTTP queries.
