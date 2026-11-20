@@ -224,7 +224,7 @@
         inetutils             # Ping, for a Linux box that lacked it. macOS has its own.
         # ghostty               # My terminal. Installed separately on macOS.
         # obsidian
-      ] ++ lib.optionals stdenv.isDarwin [
+      ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
         mypkgs.opcli          # Fast 1Password CLI (macOS only).
       ];
   };

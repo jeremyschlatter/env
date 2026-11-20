@@ -28,7 +28,7 @@ crane: pkgs: src:
           writePython3Bin name { libraries = map (p: getAttr p python3Packages) requirements; };
         rs = _: name: _: (crane.mkLib pkgs).buildPackage {
           src = lib.sources.sourceFilesBySuffices src ([".rs" "bin" ".toml" ".lock"]);
-          buildInputs = lib.optional stdenv.isDarwin libiconv;
+          buildInputs = lib.optional stdenv.hostPlatform.isDarwin libiconv;
           cargoExtraArgs = "--bin ${name}";
         };
         js = _: name: path: writeJSBin name {} (lib.strings.fileContents path);
