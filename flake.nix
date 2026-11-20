@@ -177,7 +177,6 @@
         mypkgs.daylight
         mypkgs.linear-cli
 
-        jujutsu
         gws.packages.${system}.default
         ast-grep
         btop
