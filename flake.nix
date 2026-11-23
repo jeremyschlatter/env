@@ -175,7 +175,6 @@
         man
         mypkgs.claude-bash-hook
         mypkgs.linear-cli
-        mypkgs.sfcompute      # SF Compute CLI (sf).
 
         gws.packages.${system}.default
         ast-grep
